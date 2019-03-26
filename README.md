@@ -1,2 +1,2 @@
-# trab1-ed1
-1º trabalho da disciplina Estruturas de Dados 1 (2019/1)
+# Projetando um jogo de bisca utilizando C
+Repositório destinado ao primeiro trabalho computacional da disciplina de Estruturas de Dados II, em 2019/1.
