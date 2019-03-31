@@ -1,28 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-// #include "../include/modulo2.h"
+#include "../include/Baralho.h"
+#include "../include/Jogo.h"
 
 // Define os valores possíveis para número e naipe das cartas do baralho
 #define VALORES "A234567QJK"
 #define NAIPES "COPE"
 
-typedef struct
-{
-    char valor;
-    char naipe;
-} carta;
+tCarta *escreveBaralho();
+void imprimeMao(tJogador p);
+void imprimeBaralho(tCarta *baralho, int nCartas);
+void embaralhaBaralho(tCarta *baralho);
 
-carta *escreveBaralho();
-void imprimeBaralho(carta *baralho, int nCartas);
-void embaralhaBaralho(carta *baralho);
-
-carta *escreveBaralho()
+tCarta *escreveBaralho()
 {
     int posNaipe = 0, posValor = 0;
-    carta *baralho;
+    tCarta *baralho;
 
-    baralho = (carta *)malloc(40 * sizeof(carta));
+    baralho = (tCarta *)malloc(40 * sizeof(tCarta));
     if (baralho == NULL)
     {
         return (NULL);
@@ -41,7 +37,20 @@ carta *escreveBaralho()
     return (baralho);
 }
 
-void imprimeBaralho(carta *baralho, int nCartas)
+void imprimeMao(tJogador p)
+{
+    int i = 0, nCartasMao = 3;
+
+    imprimeBaralho(p.mao, nCartasMao);
+
+    // for (i = 0; i < nCartasMao; i++)
+    // {
+    //     printf("%c", p.mao[i].valor);
+    //     printf("%c", p.mao[i].naipe);
+    // }
+}
+
+void imprimeBaralho(tCarta *baralho, int nCartas)
 {
     if (baralho == NULL)
     {
@@ -74,10 +83,10 @@ void imprimeBaralho(carta *baralho, int nCartas)
     printf("\n");
 }
 
-void embaralhaBaralho(carta *baralho)
+void embaralhaBaralho(tCarta *baralho)
 {
     int posAleatoria = 0;
-    carta aux;
+    tCarta aux;
 
     if (baralho == NULL)
     {
@@ -87,6 +96,7 @@ void embaralhaBaralho(carta *baralho)
     for (int i = 0; i < 40; i++)
     {
         posAleatoria = rand() % 40;
+
         aux = baralho[i];
         baralho[i] = baralho[posAleatoria];
         baralho[posAleatoria] = aux;

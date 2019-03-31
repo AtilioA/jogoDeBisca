@@ -4,19 +4,18 @@
 #ifndef __BARALHO_H
 #define __BARALHO_H
 
-typedef struct
-{
-    char valor;
-    char naipe;
-} carta;
+#include "../include/Jogo.h"
 
 // Cria o vetor com todas as cartas do baralho
-carta *escreveBaralho();
+tCarta *escreveBaralho();
+
+// Imprime todas as cartas da mão de um jogador
+void imprimeMao(tJogador jogador);
 
 // Exibe todas as cartas de um baralho
-void imprimeBaralho(carta *baralho, int nCartas);
+void imprimeBaralho(tCarta *baralho, int nCartas);
 
 // Rearranja as cartas de um baralho em ordem aleatória
-void embaralhaBaralho(carta *baralho);
+void embaralhaBaralho(tCarta *baralho);
 
 #endif
