@@ -1,3 +1,12 @@
+/*
+ * Esta biblioteca contém o código que permite manipular o baralho de um jogo de bisca.
+ * Auxilia a biblioteca Jogo.h. Esta biblioteca é mais específica,
+ * lidando com funções mais básicas relevantes a uma partida.
+ *
+ * EM CONSTRUÇÃO
+ *
+ */
+
 /* Módulo com funções para manipulação do baralho */
 
 // Guard para evitar dupla inclusão
