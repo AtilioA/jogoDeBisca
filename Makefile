@@ -1,22 +1,24 @@
 OBJ      := obj
-OBJS 	 := Baralho.o Jogo.o trab1.o
-DEPS 	 := Baralho.h Jogo.h
 SRC      := src
 INC      := include
-CFLAGS   := -lm -g
+CFLAGS   := -lm -g -Wall -O3
 EXE 	 := bisca
-CC		 := gcc
 
 
 all: main
 
 # Cria objetos de todos os arquivos de código-fonte para então linká-los no executável final
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+main: $(OBJ)/Baralho.o $(OBJ)/Jogo.o $(OBJ)/trab1.o
+	gcc $(OBJ)/*.o -o bisca $(CFLAGS)
 
-main: $(OBJS)
-	$(CC) -o $@ $^ $(CFLAGS)
+$(OBJ)/Baralho.o: $(SRC)/Baralho.c $(INC)/Baralho.h
+	gcc -c $(CFLAGS) "$(SRC)/Baralho.c" -o "$(OBJ)/Baralho.o"
 
+$(OBJ)/Jogo.o: $(SRC)/Jogo.c $(INC)/Jogo.h
+	gcc -c $(CFLAGS) "$(SRC)/Jogo.c" -o "$(OBJ)/Jogo.o"
+
+$(OBJ)/trab1.o: trab1.c
+	gcc -c $(CFLAGS) trab1.c -o "$(OBJ)/trab1.o"
 
 # Roda o programa
 run:
