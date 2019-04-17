@@ -42,7 +42,7 @@ void exibeAjuda()
 {
     printf("\n\n--------- AJUDA ---------\n");
     printf("Digite um valor e pressione Enter para escolher uma opcao\n");
-    printf("Voce podera jogar contra um computador ou em duplas (jogador + computador vs. 2 computadores\n");
+    printf("Voce podera jogar contra um computador ou em duplas (jogador + computador vs. 2 computadores)\n");
     printf("Sobre a bisca: http://tiny.cc/bisca\n\n\n");
 }
 

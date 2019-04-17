@@ -1,0 +1,22 @@
+#Como simplificação final, vamos usar as macros especiais $@ e $ ^, que são os lados esquerdo e direito de :, respectivamente, para tornar a regra geral de compilação mais geral.
+#No exemplo abaixo, todos os arquivos de inclusão devem ser listados como parte da macro DEPS e todos os arquivos de objetos devem ser listados como parte da macro OBJ.
+
+CC=gcc
+CFLAGS=-I. -Wall -g -lm
+DEPS = matriz.h
+OBJ = matriz.o progmat.o
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+matriz: $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+run:
+	matriz
+
+val:
+	valgrind --leak-check=full -v ./matriz
+
+clean:
+	rm -f *.o

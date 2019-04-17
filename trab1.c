@@ -10,14 +10,15 @@
 
 int main()
 {
-    // Teste de mão de um jogador
-    tJogador euzinho;
-    euzinho.mao[0].valor = '2';
-    euzinho.mao[0].naipe = 'C';
-    euzinho.mao[1].valor = '9';
-    euzinho.mao[1].naipe = 'O';
-    euzinho.mao[2].valor = '3';
-    euzinho.mao[2].naipe = 'P';
+    // nada de interessante
+
+    // tJogador euzinho;
+    // euzinho.mao[0].valor = '2';
+    // euzinho.mao[0].naipe = 'C';
+    // euzinho.mao[1].valor = '9';
+    // euzinho.mao[1].naipe = 'O';
+    // euzinho.mao[2].valor = '3';
+    // euzinho.mao[2].naipe = 'P';
 
     // tCarta *baralho;
 
@@ -27,8 +28,8 @@ int main()
     // embaralhaBaralho(baralho);
     // imprimeBaralho(baralho, 40);
 
-    imprimeMao(euzinho);
-    exibeMenu();
+    // imprimeMao(euzinho);
+    // exibeMenu();
 
     // free(baralho);
 
