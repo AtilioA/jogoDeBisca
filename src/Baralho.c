@@ -8,6 +8,69 @@
 #define VALORES "A234567QJK"
 #define NAIPES "COPE"
 
+void FLVazia(tLista *lista)
+{
+    lista->primeiro = (tLista *)malloc(sizeof(tCelula));
+    lista->ultimo = lista->primeiro;
+    lista->primeiro->prox = NULL;
+}
+
+int estaVazia(tLista lista)
+{
+    if (lista.primeiro == lista.ultimo)
+    {
+        return 1;
+    }
+
+    else
+    {
+        return 0;
+    }
+}
+
+void insere(tCarta x, tLista *lista)
+{
+    lista->ultimo->prox = (tCelula *)malloc(sizeof(tCelula));
+    lista->ultimo = lista->ultimo->prox; // ?
+    lista->ultimo->carta = x;
+    lista->ultimo->prox == NULL;
+}
+
+void retira(tCelula *p, tLista *lista, tCarta *carta)
+{
+    tCelula *q;
+
+    if (Vazia(*lista) || p == NULL || p->prox == NULL)
+    {
+        printf("Erro: lista vazia ou posicao nao existe.\n");
+        return;
+    }
+
+    q = p->prox;
+    *carta = q->carta;
+    p->prox = q->prox;
+
+    if (p->prox == NULL)
+    {
+        lista->ultimo = p;
+    }
+
+    free(q); // ?
+}
+
+void imprimeLista(tLista lista)
+{
+    tCelula *aux;
+    aux = lista.primeiro->prox;
+
+    // Percorre a lista até chegar em NULL
+    for (aux; aux != NULL; aux = aux->prox)
+    {
+        printf("%i", aux->carta.chave); // ?
+    }
+}
+
+
 tCarta *escreveBaralho();
 void imprimeMao(tJogador p);
 void imprimeBaralho(tCarta *baralho, int nCartas);
@@ -24,7 +87,7 @@ tCarta *escreveBaralho()
         return (NULL);
     }
 
-    srand(time(NULL));  // Inicializa o gerador de números aleatórios com o valor da função time(NULL)
+    srand(time(NULL)); // Inicializa o gerador de números aleatórios com o valor da função time(NULL)
     for (int i = 0; i < 40; i++)
     {
         posValor = i % 10;
