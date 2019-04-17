@@ -29,7 +29,7 @@ typedef struct
 typedef struct tCelula
 {
     tCarta carta;
-    tCelula *prox;
+    struct tCelula *prox;
 } tCelula;
 
 typedef struct
@@ -57,7 +57,7 @@ void imprimeLista(tLista Lista);
 tCarta *escreveBaralho();
 
 // Imprime todas as cartas da mão de um jogador
-void imprimeMao(tJogador jogador);
+// void imprimeMao(tJogador jogador);
 
 // Exibe todas as cartas de um baralho
 void imprimeBaralho(tCarta *baralho, int nCartas);

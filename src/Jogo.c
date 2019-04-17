@@ -16,7 +16,7 @@ void exibeInfo(tJogador *jogadores, int nJogadores)
     tJogador J1 = jogadores[0]; // Jogador 1 ("eu") O Eu penso é a unidade originária e suprema da autoconsciência comandada pelas 12 categorias, portanto, princípio de todo conhecimento humano. Além do mais, intuição e conceito são heterogêneos entre si (um dado, o outro pensado) exigindo um terceiro termo que seja homogêneo entre estes para possibilitar o conhecimento. Juízos feitos somente por intuição (sem conceito) são juízos cegos, vagos. Juízos feitos somente com conceito (portanto, sem intuição) levam-nos aos erros da imaginação (paralogismo). Logo, o juízo que pode ser feito para que conheçamos algo tem de aliar intuição em conceito, necessariamente. O fenômeno dado na intuição, aliado às categorias do intelecto, torna a coisa objeto para mim. Kant chama esse procedimento de Esquema Transcendental, produzido pela Imaginação Transcendental.
 
     printf("Sua mao:\n");
-    imprimeMao(J1);
+    // imprimeMao(J1);
 
     printf("Cartas restantes no baralho: ");
     /* Mostra cartas restantes no baralho */

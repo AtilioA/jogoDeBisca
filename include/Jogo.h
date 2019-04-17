@@ -17,17 +17,12 @@
 #ifndef __JOGO_H
 #define __JOGO_H
 
-// Estrutura de dados que abstrai uma carta, que possui valor e naipe
-typedef struct
-{
-    char valor;
-    char naipe;
-} tCarta;
+#include "Baralho.h"
 
 // Estrutura de dados que abstrai um jogador, que possui "mão" e pontuação
 typedef struct
 {
-    tCarta mao[3];
+    // tCarta mao[3];
     int pontuacao;
 } tJogador;
 

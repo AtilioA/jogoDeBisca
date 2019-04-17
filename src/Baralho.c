@@ -40,7 +40,7 @@ void retira(tCelula *p, tLista *lista, tCarta *carta)
 {
     tCelula *q;
 
-    if (Vazia(*lista) || p == NULL || p->prox == NULL)
+    if (estaVazia(*lista) || p == NULL || p->prox == NULL)
     {
         printf("Erro: lista vazia ou posicao nao existe.\n");
         return;
@@ -61,7 +61,7 @@ void retira(tCelula *p, tLista *lista, tCarta *carta)
 void imprimeLista(tLista lista)
 {
     tCelula *aux;
-    aux = lista.primeiro->prox;
+    aux = (lista.primeiro->prox);
 
     // Percorre a lista até chegar em NULL
     for (aux; aux != NULL; aux = aux->prox)
@@ -70,11 +70,6 @@ void imprimeLista(tLista lista)
     }
 }
 
-
-tCarta *escreveBaralho();
-void imprimeMao(tJogador p);
-void imprimeBaralho(tCarta *baralho, int nCartas);
-void embaralhaBaralho(tCarta *baralho);
 
 tCarta *escreveBaralho()
 {
@@ -102,9 +97,9 @@ tCarta *escreveBaralho()
 
 void imprimeMao(tJogador p)
 {
-    int i = 0, nCartasMao = 3;
+    // int i = 0, nCartasMao = 3;
 
-    imprimeBaralho(p.mao, nCartasMao);
+    // imprimeBaralho(p.mao, nCartasMao);
 
     // for (i = 0; i < nCartasMao; i++)
     // {
