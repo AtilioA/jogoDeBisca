@@ -12,16 +12,81 @@ void FLVazia(tLista *lista)
     lista->tamanho = 0;
 }
 
+void criaListaBaralho(tLista *lista)
+{
+    FLVazia(lista);
+
+    int nCartas = 1, i = 0, j = 0;
+    tCelula *atual = lista->primeiro->prox;
+
+    for (i = 0; i < nVALORES; i++)
+    {
+        for (j = 0; j < nNAIPES; j++)
+        {
+            tCarta atual = criaCarta(VALORES[i], NAIPES[j]);
+            insere(atual, lista);
+        }
+    }
+}
+
+tCarta *escreveBaralho()
+{
+    int posNaipe = 0, posValor = 0;
+    tCarta *baralho;
+
+    baralho = (tCarta *)malloc(40 * sizeof(tCarta));
+    if (baralho == NULL)
+    {
+        return (NULL);
+    }
+
+    srand(time(NULL)); // Inicializa o gerador de números aleatórios com o valor da função time(NULL)
+    for (int i = 0; i < 40; i++)
+    {
+        posValor = i % 10;
+        posNaipe = i / 10;
+
+        baralho[i].valor = VALORES[posValor];
+        baralho[i].naipe = NAIPES[posNaipe];
+    }
+
+    return (baralho);
+}
+
+
 int estaVazia(tLista *lista)
 {
-    if (lista->primeiro )
+    if (lista->primeiro)
     {
         return 1;
     }
-
     else
     {
         return 0;
+    }
+}
+
+char valorCarta(tCarta *carta)
+{
+    if (!(cartaValida(carta)))
+    {
+        return (' ');
+    }
+    else
+    {
+        return carta->valor;
+    }
+}
+
+char naipeCarta(tCarta *carta)
+{
+    if (!(cartaValida(carta)))
+    {
+        return (' ');
+    }
+    else
+    {
+        return carta->naipe;
     }
 }
 
@@ -82,30 +147,6 @@ int quantidadeLista(tLista *lista)
     return lista->tamanho;
 }
 
-char valorCarta(tCarta *carta)
-{
-    if (!(cartaValida(carta)))
-    {
-        return (' ');
-    }
-    else
-    {
-        return carta->valor;
-    }
-}
-
-char naipeCarta(tCarta *carta)
-{
-    if (!(cartaValida(carta)))
-    {
-        return (' ');
-    }
-    else
-    {
-        return carta->naipe;
-    }
-}
-
 void insere(tCarta x, tLista *lista)
 {
     //? Precisa verificar carta já existente?
@@ -142,6 +183,20 @@ void retira(char valor, char naipe, tLista *lista, tCarta *cartaRetirada)
     }
 }
 
+void corta(char valor, char naipe, tLista *lista, tCarta *cartaCorte)
+{
+    if (valor != 'A' && valor != '7')
+    {
+        retira(valor, naipe, lista, cartaCorte);
+    }
+    else
+    {
+        printf("Nao e permitido cortar As ou 7\n");
+    }
+
+    // ???
+}
+
 void recupera(char valor, char naipe, tLista *lista, tCarta *cartaRecuperada)
 {
     tCelula *anterior = NULL;
@@ -163,11 +218,102 @@ void recupera(char valor, char naipe, tLista *lista, tCarta *cartaRecuperada)
     }
 }
 
+
+void moveCelula(tLista *lista, tCelula *celula, int pos)
+{
+    int i = 1;
+
+    if (pos < quantidadeLista(lista))
+    {
+        tCelula *atual = lista->primeiro;
+        tCelula *anterior = NULL;
+        while (atual != NULL && atual != celula)
+        {
+            anterior = atual;
+            atual = atual->prox;
+            // printf("Buscando celula original...\n");
+        }
+
+        if (atual == NULL)
+        {
+            printf("Nao foi possivel chegar na celula original!\n");
+        }
+        else
+        {
+            anterior->prox = celula->prox;
+        }
+
+        if (pos == 1)
+        {
+            tCelula *aux = malloc(sizeof(tCelula));
+            aux = lista->primeiro->prox;
+            aux->prox = lista->primeiro->prox->prox;
+            celula->prox = aux;
+            lista->primeiro->prox = celula;
+        }
+        else
+        {
+            atual = lista->primeiro->prox;
+            anterior = NULL;
+            while (atual != NULL && i < pos)
+            {
+                i++;
+                anterior = atual;
+                atual = atual->prox;
+                // printf("Buscando posicao destino...\n");
+            }
+
+            if (atual == NULL)
+            {
+                printf("Nao foi possivel chegar na posicao!\n");
+            }
+            else
+            {
+                anterior->prox = celula;
+                celula->prox = atual;
+            }
+        }
+    }
+    else
+    {
+        printf("A posicao fica fora da lista.\n");
+    }
+}
+
+// Para cada célula da lista, gerar uma posição aleatória dentro da lista e mover a célula pra esta posição
+void embaralhaLista(tLista *lista)
+{
+    int posAleatoria = 0, tamLista = quantidadeLista(lista);
+    tCelula *anterior = NULL;
+    tCelula *atual = lista->primeiro->prox;
+
+    srand(time(NULL));
+    if (tamLista != 0)
+    {
+        while (atual != NULL)
+        {
+            anterior = atual;
+            atual = atual->prox;
+
+            posAleatoria = rand() % tamLista;
+            if (posAleatoria < 1) // ??? Precisa disso mas não sei por quê
+            {
+                posAleatoria = 1;
+            }
+            // printf("%i, %i\n\n", tamLista, posAleatoria);
+            moveCelula(lista, anterior, posAleatoria);
+        }
+    }
+}
+
 void imprimeCarta(tCarta *carta)
 {
+    char valor = valorCarta(carta);
+    char naipe = naipeCarta(carta);
+
     if (cartaValida(carta))
     {
-        printf("Carta %c %c\n", carta->valor, carta->naipe);
+        printf("Carta %c %c\n", valor, naipe);
     }
     else
     {
@@ -177,22 +323,25 @@ void imprimeCarta(tCarta *carta)
 
 void imprimeCartaLinux(tCarta carta)
 {
-    printf("%c", carta.valor);
+    char valor = valorCarta(&carta);
+    char naipe = naipeCarta(&carta);
+
+    printf("%c", valor);
 
     // Não funciona em Windows
-    if (carta.naipe == 'C')
+    if (naipe == 'C')
     {
         printf("\u2665\n");
     }
-    else if (carta.naipe == 'O')
+    else if (naipe == 'O')
     {
         printf("\u2666\n");
     }
-    else if (carta.naipe == 'P')
+    else if (naipe == 'P')
     {
         printf("\u2663\n");
     }
-    else if (carta.naipe == 'E')
+    else if (naipe == 'E')
     {
         printf("\u2660\n");
     }
@@ -201,13 +350,12 @@ void imprimeCartaLinux(tCarta carta)
 // Usando imprimeCarta
 void imprimeLista(tLista *lista)
 {
-    if (!(estaVazia(lista)))
+    if (quantidadeLista(lista) > 0)
     {
         tCelula *atual = NULL;
 
         printf("Quantidade de itens: %i\n", quantidadeLista(lista));
-        // Percorre a lista até chegar em NULL
-        for (atual = lista->primeiro; atual != NULL; atual = atual->prox)
+        for (atual = lista->primeiro->prox; atual != NULL; atual = atual->prox)
         {
             imprimeCarta(&atual->carta);
         }
