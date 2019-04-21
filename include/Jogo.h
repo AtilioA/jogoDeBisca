@@ -17,7 +17,7 @@
 #ifndef __JOGO_H
 #define __JOGO_H
 
-#include "Baralho.h"
+#include "BaralhoEncadeado.h"
 
 // Estrutura de dados que abstrai um jogador, que possui "mão" e pontuação
 typedef struct
