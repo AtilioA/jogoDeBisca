@@ -53,17 +53,9 @@ tCarta *escreveBaralho()
     return (baralho);
 }
 
-
 int estaVazia(tLista *lista)
 {
-    if (lista->primeiro)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
+    return (lista->primeiro == lista->ultimo);
 }
 
 char valorCarta(tCarta *carta)
@@ -218,7 +210,6 @@ void recupera(char valor, char naipe, tLista *lista, tCarta *cartaRecuperada)
     }
 }
 
-
 void moveCelula(tLista *lista, tCelula *celula, int pos)
 {
     int i = 1;
@@ -350,7 +341,7 @@ void imprimeCartaLinux(tCarta carta)
 // Usando imprimeCarta
 void imprimeLista(tLista *lista)
 {
-    if (quantidadeLista(lista) > 0)
+    if (quantidadeLista(lista) != 0)
     {
         tCelula *atual = NULL;
 

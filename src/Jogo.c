@@ -33,9 +33,9 @@ void exibeInfo(tJogador *jogadores, int nJogadores)
 // Opções extras para modo desenvolvedor (para printar mais facilmente)
 void exibeMenuDev()
 {
-    printf("[?] - Mostrar cartas do baralho\n");
-    printf("[?] - Embaralhar\n");
-    printf("[?] - Cortar\n");
+    printf("[10] - Mostrar cartas do baralho\n");
+    printf("[11] - Embaralhar\n");
+    printf("[12] - Cortar\n");
 }
 
 void exibeAjuda()
@@ -81,12 +81,34 @@ void exibeMenu(/* parâmetros */)
             modoDev = 1;
             // Função que começa o jogo
             break;
-        }
 
-        while (op < '1' || op > '4')
-        {
-            printf("Opcao invalida. Tente novamente: ");
-            scanf(" %c", &op);
+        // Quando o jogo estiver ativo
+        case '7':
+            modoDev = 1;
+            // imprimeLista(baralho);
+
+            break;
+
+        case '8':
+            modoDev = 1;
+            // embaralhaLista(baralho);
+            break;
+
+        case '9':
+            modoDev = 1;
+            char valorCortado, naipeCortado;
+            tCarta cartaCortada;
+            printf("Informe a carta a ser cortada [Valor/Naipe]:\n");
+            scanf(" %c %c", &valorCortado, &naipeCortado);
+            // corta(valorCortado, naipeCortado, &baralho, &cartaCortada)
+            break;
+
+            while (op < '1' || op > '9')
+            {
+                printf("Opcao invalida. Tente novamente: ");
+                scanf(" %c", &op);
+
+            }
         }
     }
 }
