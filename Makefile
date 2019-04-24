@@ -1,7 +1,7 @@
 OBJ      := obj
 SRC      := src
 INC      := include
-CFLAGS   := -lm -g -O3
+CFLAGS   := -lm -g -Wall -O3
 EXE 	 := bisca
 
 

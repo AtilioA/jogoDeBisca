@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <sys/time.h>
 #include "../include/BaralhoEncadeado.h"
 #include "../include/Jogo.h"
 
@@ -40,7 +40,6 @@ tCarta *escreveBaralho()
         return (NULL);
     }
 
-    srand(time(NULL)); // Inicializa o gerador de números aleatórios com o valor da função time(NULL)
     for (int i = 0; i < 40; i++)
     {
         posValor = i % 10;
@@ -119,6 +118,16 @@ tCarta criaCartaVazia()
     cartinhaVaziaDeGwent.naipe = ' ';
 
     return cartinhaVaziaDeGwent;
+}
+
+tCelula criaCelulaVazia()
+{
+    tCelula celulaVazia;
+
+    celulaVazia.prox = NULL;
+    celulaVazia.carta = criaCartaVazia();
+
+    return celulaVazia;
 }
 
 void preencheCarta(char valor, char naipe, tCarta *carta)
@@ -274,11 +283,14 @@ void moveCelula(tLista *lista, tCelula *celula, int pos)
 // Para cada célula da lista, gerar uma posição aleatória dentro da lista e mover a célula pra esta posição
 void embaralhaLista(tLista *lista)
 {
+    struct timeval t;
     int posAleatoria = 0, tamLista = quantidadeLista(lista);
     tCelula *anterior = NULL;
     tCelula *atual = lista->primeiro->prox;
 
-    srand(time(NULL));
+    gettimeofday(&t,NULL);
+    srand((unsigned int)t.tv_usec); // Inicializa o gerador de números aleatórios com o valor da função time(NULL)
+
     if (tamLista != 0)
     {
         while (atual != NULL)
@@ -367,3 +379,12 @@ void destroiLista(tLista *lista)
 
     lista->tamanho = 0;
 }
+
+/* implementar: */
+void pop(tLista *lista, tCarta *cartaRetirada);
+void deleta(char valor, char naipe, tLista *lista);
+void deletaNaipe(char naipe, tLista *lista);
+void deletaValor(char valor, tLista *lista);
+int indiceCarta(char valor, char naipe, tLista *lista);
+tCarta cartaNoIndice(int pos, tLista *lista);
+void swapCelulas (int pos1, int pos2, tLista *lista);

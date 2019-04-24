@@ -17,19 +17,19 @@ int main()
     printf("Lista vazia criada com sucesso!\n");
 
     printf("Inserindo cartas...\n");
-    // criaListaBaralho(&lista);
-    carta = criaCarta('2', 'C');
-    insere(carta, &lista);
-    carta = criaCarta('4', 'O');
-    insere(carta, &lista);
-    carta = criaCarta('7', 'C');
-    insere(carta, &lista);
-    carta = criaCarta('A', 'C');
-    insere(carta, &lista);
-    carta = criaCarta('K', 'E');
-    insere(carta, &lista);
-    carta = criaCarta('J', 'P');
-    insere(carta, &lista);
+    criaListaBaralho(&lista);
+    // carta = criaCarta('2', 'C');
+    // insere(carta, &lista);
+    // carta = criaCarta('4', 'O');
+    // insere(carta, &lista);
+    // carta = criaCarta('7', 'C');
+    // insere(carta, &lista);
+    // carta = criaCarta('A', 'C');
+    // insere(carta, &lista);
+    // carta = criaCarta('K', 'E');
+    // insere(carta, &lista);
+    // carta = criaCarta('J', 'P');
+    // insere(carta, &lista);
 
     printf("Imprimindo a lista:\n");
     imprimeLista(&lista);
