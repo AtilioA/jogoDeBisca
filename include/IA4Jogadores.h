@@ -4,7 +4,6 @@
 #include <time.h>
 #include "Maos.h"
 #include "IA2Jogadores.h"
-#include "BaralhoEncadeado.h"
 
 typedef struct tBaralho tBaralho;
 struct {
@@ -15,6 +14,8 @@ struct {
 typedef struct {
   tBaralho *primeira, *ultima;
 } tMonte;
+
+int CartasIguais (tCarta carta1, tCarta carta2);
 
 tCarta PC4Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
 

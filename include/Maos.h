@@ -12,13 +12,13 @@ void CriaMao (tMao *mao);
 
 void LiberaMao (tMao *mao);
 
-tCarta PegaCartaMao (int p, tMao mao);
+tCarta PegaCarta (int p, tMao mao);
 
 int EstaNaMao (char valor, char naipe, tMao mao);
 
-void ColocaNaMao(tCarta carta, tMao *mao);
+void ColocaNaMao (tCarta carta, tMao *mao) ;
 
-void RetiraDaMao(char valor, char naipe, tMao *mao, tCarta *cartaRetirada);
+void RetiraDaMao (tCarta carta, tMao *mao);
 
 int TamanhoMao (tMao mao);
 

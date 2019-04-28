@@ -1,6 +1,3 @@
-#include "../include/BaralhoEncadeado.h"
-#include "../include/Cartas.h"
-#include "../include/Maos.h"
 #include "../include/IA2Jogadores.h"
 
 int PontoAlto (tCarta carta) {
@@ -16,7 +13,7 @@ int ETrunfo (tCarta carta, tCarta corte) {
 }
 
 tCarta PC2Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
-    ordenaMao (mao);
+    OrdenaMao (mao);
     tCarta jogada, mesa;
     mesa = CartaNoIndice (1, monte);
 
@@ -79,7 +76,7 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
     //caida e trunfo
     if (ETrunfo (mesa, corte)) {
         if (Valor (mesa) == '7') {
-            PreencheCarta ('A', Naipe (corte), &heley);
+            tCarta heley = PreencheCarta ('A', Naipe (corte));
             if (EstaNaMao (Valor (heley), Naipe (heley), *mao)) {
                 RetiraDaMao (heley, mao);
                 Insere (heley, monte);
@@ -108,7 +105,7 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
         if (PontoAlto (mesa)) {
             if (Valor (mesa) == '7') { //A sobre 7
                 for (int i = 0; i < 4; i ++) {
-                    PreencheCarta ('A', NAIPES[i], &heley);
+                    tCarta heley = PreencheCarta ('A', NAIPES[i]);
                     if (EstaNaMao (Valor (heley), Naipe (heley), *mao)) {
                         RetiraDaMao (heley, mao);
                         Insere (jogada, monte);
@@ -233,11 +230,16 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
 
 tCarta PC2JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
     tCarta jogada;
-    srand (time (NULL));
-    jogada = PegaCartaMao ((rand ( ) % mao->n)+1, *mao);
-    while (ETrunfo (jogada) && (Valor (jogada) == 'A') && (! (seteSaiu))) {
-        srand (time (NULL));
-        jogada = PegaCartaMao ((rand ( ) % mao->n)+1 , *mao);
+
+    struct timeval t;
+    gettimeofday (&t, NULL);
+    srand ((unsigned int) t.tv_usec);
+
+    jogada = PegaCartaMao (((rand ( ) % mao->n) + 1), *mao);
+    while (ETrunfo (jogada, corte) && (Valor (jogada) == 'A') && (! (seteSaiu))) {
+        gettimeofday (&t, NULL);
+        srand ((unsigned int) t.tv_usec);
+        jogada = PegaCartaMao (((rand ( ) % mao->n) + 1), *mao);
     }
     RetiraDaMao (jogada, mao);
     Insere (jogada, monte);
