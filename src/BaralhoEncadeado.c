@@ -377,7 +377,8 @@ void destroiLista(tLista *lista)
     lista->tamanho = 0;
 }
 
-/* implementar: */
+/* implementando: */
+
 void pop(tLista *lista, tCarta *cartaRetirada);
 
 void deleta(char valor, char naipe, tLista *lista)
