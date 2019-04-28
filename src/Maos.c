@@ -1,4 +1,4 @@
-#include "maos.h"
+#include "../include/Maos.h"
 
 void CriaMao(tMao *mao)
 {

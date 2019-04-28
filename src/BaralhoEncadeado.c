@@ -168,23 +168,27 @@ void MoveCelula (tMonte *monte, tCelula *celula, int pos)
 void Embaralha (tMonte *monte)
 {
     struct timeval t;
-    int posAleatoria = 0, tammonte = QuantidadeMonte (monte);
+    int posAleatoria = 0, tamMonte = QuantidadeMonte(monte);
     tCelula *anterior = NULL;
     tCelula *atual = monte->primeiro->prox;
 
     gettimeofday (&t, NULL);
-    srand ((unsigned int) t.tv_usec); // Inicializa o gerador de números aleatórios com o valor da função time(NULL)
+    srand ((unsigned int) t.tv_usec); // Inicializa o gerador de números aleatórios
 
-    if (tammonte != 0)
+    if (tamMonte != 0)
     {
         while (atual != NULL)
         {
             anterior = atual;
             atual = atual->prox;
 
-            posAleatoria = (rand ( ) % tammonte) + 1;
+            posAleatoria = (rand ( ) % tamMonte);
+            if (posAleatoria < 1) // ??? Precisa disso mas não sei por quê
+            {
+                posAleatoria = 1;
+            }
 
-            // printf("%i, %i\n\n", tammonte, posAleatoria);
+            // printf("%i, %i\n\n", tamMonte, posAleatoria);
             MoveCelula (monte, anterior, posAleatoria);
         }
     }
@@ -199,7 +203,7 @@ void ImprimeMonte (tMonte *monte)
 
         printf ("Quantidade de itens: %i\n", QuantidadeMonte (monte));
         for (atual = monte->primeiro->prox; atual != NULL; atual = atual->prox)
-            ImprimeCartaLinux  (atual->carta);
+            ImprimeCarta(atual->carta);
     }
 }
 

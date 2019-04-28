@@ -29,21 +29,22 @@ tCarta CartaVazia()
     return (PreencheCarta(' ', ' '));
 }
 
-void ImprimeCartaLinux(tCarta carta)
+void ImprimeCarta(tCarta carta)
 {
     if (!(CartaValida(carta)))
         return;
 
-    printf("%c", carta.valor);
+    printf("%c ", carta.valor);
+    printf("%c\n", carta.naipe);
 
-    if (carta.naipe == NAIPES[0])
-        printf("\u2665");
-    else if (carta.naipe == NAIPES[1])
-        printf("\u2666");
-    else if (carta.naipe == NAIPES[2])
-        printf("\u2663");
-    else if (carta.naipe == NAIPES[3])
-        printf("\u2660");
+    // if (carta.naipe == NAIPES[0])
+    //     printf("\u2665");
+    // else if (carta.naipe == NAIPES[1])
+    //     printf("\u2666");
+    // else if (carta.naipe == NAIPES[2])
+    //     printf("\u2663");
+    // else if (carta.naipe == NAIPES[3])
+    //     printf("\u2660");
 }
 
 char Valor(tCarta carta)
