@@ -99,4 +99,10 @@ void imprimeLista(tLista *lista);
 // Libera as células de uma lista e define seu tamanho para 0
 void destroiLista(tLista *lista);
 
+// Retorna uma carta da lista dado um índice
+tCarta cartaNoIndice(int pos, tLista *lista);
+
+// Retorna o índice de uma dada carta da lista
+int indiceCarta(char valor, char naipe, tLista *lista);
+
 #endif

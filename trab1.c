@@ -5,8 +5,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "include/BaralhoEncadeado.h"
 #include "include/Jogo.h"
+#include "include/BaralhoEncadeado.h"
 
 int main()
 {
@@ -18,6 +18,15 @@ int main()
 
     printf("Inserindo cartas...\n");
     criaListaBaralho(&lista);
+    printf("Inserindo cartas...\n");
+    criaListaBaralho(&lista);
+    // int indice = indiceCarta("A", "E", &lista);
+    // tCarta recuperada = cartaNoIndice(indice, &lista);
+    // imprimeCarta(&recuperada);
+
+    // deletaNaipe('C', &lista);
+    // deletaNaipe('O', &lista);
+    // deletaNaipe('P', &lista);
     // carta = criaCarta('2', 'C');
     // insere(carta, &lista);
     // carta = criaCarta('4', 'O');
@@ -40,6 +49,7 @@ int main()
     // printf("Imprimindo a lista:\n");
     // imprimeLista(&lista);
 
+    // free(baralho);
     // printf("Movendo a terceira carta para a primeira posicao...\n");
     // moveCelula(&lista, lista.primeiro->prox->prox->prox, 1);
 
@@ -77,10 +87,10 @@ int main()
     printf("Imprimindo a lista:\n");
     imprimeLista(&lista);
 
-    printf("\nEmbaralhando lista...\n");
-    embaralhaLista(&lista);
-    printf("Imprimindo a lista:\n");
-    imprimeLista(&lista);
+    // printf("\nEmbaralhando lista...\n");
+    // embaralhaLista(&lista);
+    // printf("Imprimindo a lista:\n");
+    // imprimeLista(&lista);
 
     destroiLista(&lista);
     printf("\nLista destruida com sucesso!\n");

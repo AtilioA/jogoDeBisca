@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include "../include/BaralhoEncadeado.h"
 #include "../include/Jogo.h"
+#include "../include/BaralhoEncadeado.h"
 
 void FLVazia(tLista *lista)
 {
@@ -16,8 +16,7 @@ void criaListaBaralho(tLista *lista)
 {
     FLVazia(lista);
 
-    int nCartas = 1, i = 0, j = 0;
-    tCelula *atual = lista->primeiro->prox;
+    int i = 0, j = 0;
 
     for (i = 0; i < nVALORES; i++)
     {
@@ -161,8 +160,8 @@ void insere(tCarta x, tLista *lista)
 
 void retira(char valor, char naipe, tLista *lista, tCarta *cartaRetirada)
 {
-    tCelula *anterior = NULL;
     tCelula *atual = lista->primeiro;
+    tCelula *anterior = NULL;
 
     while (atual != NULL && (atual->carta.valor != valor || atual->carta.naipe != naipe))
     {
@@ -200,12 +199,10 @@ void corta(char valor, char naipe, tLista *lista, tCarta *cartaCorte)
 
 void recupera(char valor, char naipe, tLista *lista, tCarta *cartaRecuperada)
 {
-    tCelula *anterior = NULL;
     tCelula *atual = lista->primeiro;
 
     while (atual != NULL && (atual->carta.valor != valor || atual->carta.naipe != naipe))
     {
-        anterior = atual;
         atual = atual->prox;
     }
 
@@ -380,11 +377,95 @@ void destroiLista(tLista *lista)
     lista->tamanho = 0;
 }
 
-/* implementar: */
+/* implementando: */
+
 void pop(tLista *lista, tCarta *cartaRetirada);
-void deleta(char valor, char naipe, tLista *lista);
-void deletaNaipe(char naipe, tLista *lista);
-void deletaValor(char valor, tLista *lista);
-int indiceCarta(char valor, char naipe, tLista *lista);
-tCarta cartaNoIndice(int pos, tLista *lista);
+
+void deleta(char valor, char naipe, tLista *lista)
+{
+    tCelula *atual = lista->primeiro;
+    tCelula *anterior = NULL;
+
+    while (atual != NULL && (atual->carta.valor != valor || atual->carta.naipe != naipe))
+    {
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    if (atual != NULL)
+    {
+        anterior->prox = atual->prox;
+        free(atual);
+    }
+}
+
+void deletaNaipe(char naipe, tLista *lista)
+{
+    int i = 0;
+
+    for(i = 0; i < nVALORES; i++)
+    {
+        char valor = VALORES[i];
+        deleta(valor, naipe, lista);
+    }
+}
+
+void deletaValor(char valor, tLista *lista)
+{
+    int i = 0;
+
+    for(i = 0; i < nVALORES; i++)
+    {
+        char valor = VALORES[i];
+        deleta(valor, valor, lista);
+    }
+}
+
+int indiceCarta(char valor, char naipe, tLista *lista)
+{
+    tCelula *atual = lista->primeiro->prox;
+    int indice = 0;
+
+    while (atual != NULL || (atual->carta.valor != valor && atual->carta.naipe != naipe))
+    {
+        indice++;
+        atual = atual->prox;
+    }
+
+    if (atual == NULL)
+    {
+        return -1;
+    }
+    else
+    {
+        return indice;
+    }
+}
+
+
+tCarta cartaNoIndice(int pos, tLista *lista)
+{
+    if (pos >= 0)
+    {
+        int i = 0;
+        tCelula *atual = lista->primeiro->prox;
+
+        while(atual != NULL && i < pos)
+        {
+            i++;
+            atual = atual->prox;
+        }
+
+        if (atual != NULL)
+        {
+            return atual->carta;
+        }
+    }
+    else
+    {
+        return criaCartaVazia();
+    }
+}
+
+
 void swapCelulas (int pos1, int pos2, tLista *lista);
