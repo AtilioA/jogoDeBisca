@@ -293,23 +293,21 @@ tCarta CartaNoIndice (int pos, tMonte *monte)
         return (CartaVazia ( ));
 
     int cont = 0;
-    for (tCelula *p = monte->primeiro; p != NULL; p = p->prox, cont ++) {
+    tCelula *atual = monte->primeiro->prox;
+
+
+    while (atual != NULL)
+    {
         if (cont == (pos - 1))
-            return (p->carta);
+            return (atual->carta);
+        cont ++;
+        atual = atual->prox;
     }
+
     return (CartaVazia ( ));
 }
 
 
 void SwapCelulas (int pos1, int pos2, tMonte *monte);
 
-void MaiorMesa (tMonte *mesa, tCarta corte) {
-    trunfo = Naipe (corte);
-
-    tCarta maior = mesa->primeiro->carta;
-    tCelula *p, *ant;
-    for (ant = p = mesa->primeiro; p != NULL; p = ant->prox) {
-        if ((! (ETrunfo (maior))) && (ETrunfo (p->carta)))
-            MoveCelula (monte, p, 0);
-    }
-}
+void MaiorMesa (tMonte *mesa, tCarta corte);

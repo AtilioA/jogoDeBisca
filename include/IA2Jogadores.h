@@ -3,6 +3,7 @@
 
 #include <time.h>
 #include "Maos.h"
+#include "BaralhoEncadeado.h"
 
 int PontoAlto (tCarta carta);
 

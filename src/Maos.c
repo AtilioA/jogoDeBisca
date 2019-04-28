@@ -42,7 +42,7 @@ int EstaNaMao(char valor, char naipe, tMao mao)
 
 void ColocaNaMao(tCarta carta, tMao *mao)
 {
-    if ((TamanhoMao(*mao) >= nMAO) || (!(CartaValida(carta))) || (EstaNaMao(carta, *mao)))
+    if ((TamanhoMao(*mao) >= nMAO) || (!(CartaValida(carta))) || (EstaNaMao(Valor (carta), Naipe (carta), *mao)))
         return;
 
     mao->carta[mao->n].valor = carta.valor;
@@ -52,7 +52,7 @@ void ColocaNaMao(tCarta carta, tMao *mao)
 
 void RetiraDaMao(tCarta carta, tMao *mao)
 {
-    if (!(EstaNaMao(carta, *mao)))
+    if (!(EstaNaMao(Valor (carta), Naipe (carta), *mao)))
         return;
 
     for (int i = 0; i < (TamanhoMao(*mao)); i++)
