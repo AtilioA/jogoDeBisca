@@ -5,11 +5,9 @@ CFLAGS   := -lm -g -Wall -O3
 EXE 	 := bisca
 
 
-all: main
-
 # Cria objetos de todos os arquivos de código-fonte para então linká-los no executável final
 main: $(OBJ)/Cartas.o $(OBJ)/BaralhoEncadeado.o $(OBJ)/Jogo.o $(OBJ)/trab1.o
-	gcc $(OBJ)/*.o -o bisca $(CFLAGS)
+	gcc $(OBJ)/*.o -o $(EXE) $(CFLAGS)
 
 $(OBJ)/Cartas.o: $(SRC)/Cartas.c $(INC)/Cartas.h
 	gcc -c $(CFLAGS) "$(SRC)/Cartas.c" -o "$(OBJ)/Cartas.o"
@@ -37,7 +35,7 @@ run:
 	./$(EXE)
 
 # Compila e roda o programa
-voado: all run
+voado: main run
 
 # Roda o programa com valgrind e flags úteis
 val:

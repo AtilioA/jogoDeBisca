@@ -3,11 +3,21 @@
 #define NAIPES "COPE"
 #define nVALORES 10
 #define nNAIPES 4
-// Número padrão de cartas em uma mão
-#define nMAO 3
+#define nMAO 3 // Número padrão de cartas em uma mão
 
 #include "include/BaralhoEncadeado.h"
+#include "include/Cartas.h"
 
-int main () {
+int main()
+{
+    tMonte monte;
+
+    CriaBaralho(&monte);
+    ImprimeMonte(&monte);
+
+    printf("Embaralhando...\n");
+    Embaralha(&monte);
+    ImprimeMonte(&monte);
+
     return 0;
 }

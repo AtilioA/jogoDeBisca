@@ -13,26 +13,27 @@
 #define nMAO 3
 
 // Estrutura de dados que abstrai uma carta, que possui valor e naipe
-typedef struct {
+typedef struct
+{
     char valor;
     char naipe;
 } tCarta;
 
 // Verifica se uma carta é válida
-int CartaValida (tCarta carta);
+int CartaValida(tCarta carta);
 
 // Cria uma carta e retorna-a
-tCarta PreencheCarta (char valor, char naipe);
+tCarta PreencheCarta(char valor, char naipe);
 
-tCarta CartaVazia ( );
+tCarta CartaVazia();
 
 // Com caracteres dos naipe
-void ImprimeCartaLinux (tCarta carta);
+void ImprimeCarta(tCarta carta);
 
 // Retorna o valor de uma carta
-char Valor (tCarta carta);
+char Valor(tCarta carta);
 
 // Retorna o naipe de uma carta
-char Naipe (tCarta carta);
+char Naipe(tCarta carta);
 
 #endif
