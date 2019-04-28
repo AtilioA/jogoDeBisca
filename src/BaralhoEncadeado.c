@@ -1,166 +1,60 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include "../include/Jogo.h"
 #include "../include/BaralhoEncadeado.h"
 
-void FLVazia(tLista *lista)
+void FMVazio (tMonte *monte)
 {
-    lista->primeiro = (tCelula *)malloc(sizeof(tCelula)); // lista->primeiro será a cabeça da lista
-    lista->ultimo = lista->primeiro;
-    lista->ultimo->prox = NULL;
-    lista->tamanho = 0;
+    monte->primeiro = (tCelula *) malloc (sizeof (tCelula)); // monte->primeiro será a cabeça do monte
+    monte->ultimo = monte->primeiro;
+    monte->ultimo->prox = NULL;
+    monte->tamanho = 0;
 }
 
-void criaListaBaralho(tLista *lista)
+void CriaBaralho (tMonte *monte)
 {
-    FLVazia(lista);
+    FMVazio (monte);
 
-    int i = 0, j = 0;
+    tCarta atual;
 
-    for (i = 0; i < nVALORES; i++)
+    for (int i = 0; i < nVALORES * nNAIPES; i ++)
     {
-        for (j = 0; j < nNAIPES; j++)
-        {
-            tCarta atual = criaCarta(VALORES[i], NAIPES[j]);
-            insere(atual, lista);
-        }
+        atual = PreencheCarta (VALORES[i % 10], NAIPES[i / 10]);
+        Insere (atual, monte);
     }
 }
 
-tCarta *escreveBaralho()
+int EstaVazio (tMonte *monte)
 {
-    int posNaipe = 0, posValor = 0;
-    tCarta *baralho;
-
-    baralho = (tCarta *)malloc(40 * sizeof(tCarta));
-    if (baralho == NULL)
-    {
-        return (NULL);
-    }
-
-    for (int i = 0; i < 40; i++)
-    {
-        posValor = i % 10;
-        posNaipe = i / 10;
-
-        baralho[i].valor = VALORES[posValor];
-        baralho[i].naipe = NAIPES[posNaipe];
-    }
-
-    return (baralho);
+    return (QuantidadeMonte (monte) == 0);
 }
 
-int estaVazia(tLista *lista)
-{
-    return (lista->primeiro == lista->ultimo);
-}
-
-char valorCarta(tCarta *carta)
-{
-    if (!(cartaValida(carta)))
-    {
-        return (' ');
-    }
-    else
-    {
-        return carta->valor;
-    }
-}
-
-char naipeCarta(tCarta *carta)
-{
-    if (!(cartaValida(carta)))
-    {
-        return (' ');
-    }
-    else
-    {
-        return carta->naipe;
-    }
-}
-
-int cartaValida(tCarta *carta)
-{
-    if ((carta->naipe == NAIPES[0]) ||
-        (carta->naipe == NAIPES[1]) ||
-        (carta->naipe == NAIPES[2]) ||
-        (carta->naipe == NAIPES[3]))
-    {
-        for (int i = 0; i < nVALORES; i++)
-        {
-            if (carta->valor == VALORES[i])
-            {
-                return 1;
-            }
-        }
-    }
-
-    return 0;
-}
-
-tCarta criaCarta(char valor, char naipe)
-{
-    tCarta cartinhaDeGwent;
-
-    cartinhaDeGwent.valor = valor;
-    cartinhaDeGwent.naipe = naipe;
-
-    return cartinhaDeGwent;
-}
-
-tCarta criaCartaVazia()
-{
-    tCarta cartinhaVaziaDeGwent;
-
-    cartinhaVaziaDeGwent.valor = ' ';
-    cartinhaVaziaDeGwent.naipe = ' ';
-
-    return cartinhaVaziaDeGwent;
-}
-
-tCelula criaCelulaVazia()
+tCelula CriaCelulaVazia ( )
 {
     tCelula celulaVazia;
 
+    celulaVazia.carta = CartaVazia ( );
     celulaVazia.prox = NULL;
-    celulaVazia.carta = criaCartaVazia();
 
     return celulaVazia;
 }
 
-void preencheCarta(char valor, char naipe, tCarta *carta)
+int QuantidadeMonte (tMonte *monte)
 {
-    if (!(cartaValida(carta)))
-    {
-        carta->valor = carta->naipe = ' ';
-    }
-    else
-    {
-        carta->valor = valor;
-        carta->naipe = naipe;
-    }
+    return (monte->tamanho);
 }
 
-int quantidadeLista(tLista *lista)
+void Insere (tCarta x, tMonte *monte)
 {
-    return lista->tamanho;
+    //? Precisa verificar carta já existente? SIM
+    monte->ultimo->prox = (tCelula *) malloc (sizeof (tCelula));
+    monte->ultimo = monte->ultimo->prox;
+    monte->ultimo->carta = x;
+    monte->ultimo->prox = NULL;
+
+    monte->tamanho ++;
 }
 
-void insere(tCarta x, tLista *lista)
+void Retira (char valor, char naipe, tMonte *monte, tCarta *cartaRetirada)
 {
-    //? Precisa verificar carta já existente?
-    lista->ultimo->prox = (tCelula *)malloc(sizeof(tCelula));
-    lista->ultimo = lista->ultimo->prox;
-    lista->ultimo->carta = x;
-    lista->ultimo->prox = NULL;
-
-    lista->tamanho++;
-}
-
-void retira(char valor, char naipe, tLista *lista, tCarta *cartaRetirada)
-{
-    tCelula *atual = lista->primeiro;
+    tCelula *atual = monte->primeiro;
     tCelula *anterior = NULL;
 
     while (atual != NULL && (atual->carta.valor != valor || atual->carta.naipe != naipe))
@@ -171,58 +65,51 @@ void retira(char valor, char naipe, tLista *lista, tCarta *cartaRetirada)
 
     if (atual == NULL)
     {
-        printf("Nao existe a carta especificada!\n");
-        *cartaRetirada = criaCartaVazia();
+        printf ("Nao existe a carta especificada!\n");
+        *cartaRetirada = CartaVazia ( );
     }
     else
     {
         anterior->prox = atual->prox;
         *cartaRetirada = atual->carta;
-        free(atual);
-        lista->tamanho--;
+        free (atual);
+        monte->tamanho --;
     }
 }
 
-void corta(char valor, char naipe, tLista *lista, tCarta *cartaCorte)
+void Corta (char valor, char naipe, tMonte *monte, tCarta *cartaCorte)
 {
     if (valor != 'A' && valor != '7')
     {
-        retira(valor, naipe, lista, cartaCorte);
+        Retira (valor, naipe, monte, cartaCorte);
     }
     else
     {
-        printf("Nao e permitido cortar As ou 7\n");
+        printf ("Nao e permitido cortar As ou 7\n");
     }
 
     // ???
 }
 
-void recupera(char valor, char naipe, tLista *lista, tCarta *cartaRecuperada)
+int Recupera (char valor, char naipe, tMonte *monte)
 {
-    tCelula *atual = lista->primeiro;
+    tCelula *atual;
 
-    while (atual != NULL && (atual->carta.valor != valor || atual->carta.naipe != naipe))
-    {
-        atual = atual->prox;
+    for (atual = monte->primeiro ; atual != NULL; atual = atual->prox) {
+        if ((Valor (atual->carta) == valor) && (Naipe (atual->carta) == naipe))
+            return (1);
     }
 
-    if (atual == NULL)
-    {
-        printf("Nao existe a carta especificada!\n");
-    }
-    else
-    {
-        *cartaRecuperada = atual->carta;
-    }
+    return (0);
 }
 
-void moveCelula(tLista *lista, tCelula *celula, int pos)
+void MoveCelula (tMonte *monte, tCelula *celula, int pos)
 {
     int i = 1;
 
-    if (pos < quantidadeLista(lista))
+    if (pos < QuantidadeMonte(monte))
     {
-        tCelula *atual = lista->primeiro;
+        tCelula *atual = monte->primeiro;
         tCelula *anterior = NULL;
         while (atual != NULL && atual != celula)
         {
@@ -233,7 +120,7 @@ void moveCelula(tLista *lista, tCelula *celula, int pos)
 
         if (atual == NULL)
         {
-            printf("Nao foi possivel chegar na celula original!\n");
+            printf ("Nao foi possivel chegar na celula original!\n");
         }
         else
         {
@@ -242,15 +129,15 @@ void moveCelula(tLista *lista, tCelula *celula, int pos)
 
         if (pos == 1)
         {
-            tCelula *aux = malloc(sizeof(tCelula));
-            aux = lista->primeiro->prox;
-            aux->prox = lista->primeiro->prox->prox;
+            tCelula *aux = (tCelula *) malloc (sizeof (tCelula));
+            aux = monte->primeiro->prox;
+            aux->prox = monte->primeiro->prox->prox;
             celula->prox = aux;
-            lista->primeiro->prox = celula;
+            monte->primeiro->prox = celula;
         }
         else
         {
-            atual = lista->primeiro->prox;
+            atual = monte->primeiro->prox;
             anterior = NULL;
             while (atual != NULL && i < pos)
             {
@@ -262,7 +149,7 @@ void moveCelula(tLista *lista, tCelula *celula, int pos)
 
             if (atual == NULL)
             {
-                printf("Nao foi possivel chegar na posicao!\n");
+                printf ("Nao foi possivel chegar na posicao!\n");
             }
             else
             {
@@ -273,117 +160,71 @@ void moveCelula(tLista *lista, tCelula *celula, int pos)
     }
     else
     {
-        printf("A posicao fica fora da lista.\n");
+        printf ("A posicao fica fora da monte.\n");
     }
 }
 
-// Para cada célula da lista, gerar uma posição aleatória dentro da lista e mover a célula pra esta posição
-void embaralhaLista(tLista *lista)
+// Para cada célula da monte, gerar uma posição aleatória dentro da monte e mover a célula pra esta posição
+void Embaralha (tMonte *monte)
 {
     struct timeval t;
-    int posAleatoria = 0, tamLista = quantidadeLista(lista);
+    int posAleatoria = 0, tammonte = QuantidadeMonte (monte);
     tCelula *anterior = NULL;
-    tCelula *atual = lista->primeiro->prox;
+    tCelula *atual = monte->primeiro->prox;
 
-    gettimeofday(&t,NULL);
-    srand((unsigned int)t.tv_usec); // Inicializa o gerador de números aleatórios com o valor da função time(NULL)
+    gettimeofday (&t, NULL);
+    srand ((unsigned int) t.tv_usec); // Inicializa o gerador de números aleatórios com o valor da função time(NULL)
 
-    if (tamLista != 0)
+    if (tammonte != 0)
     {
         while (atual != NULL)
         {
             anterior = atual;
             atual = atual->prox;
 
-            posAleatoria = rand() % tamLista;
-            if (posAleatoria < 1) // ??? Precisa disso mas não sei por quê
-            {
-                posAleatoria = 1;
-            }
-            // printf("%i, %i\n\n", tamLista, posAleatoria);
-            moveCelula(lista, anterior, posAleatoria);
+            posAleatoria = (rand ( ) % tammonte) + 1;
+
+            // printf("%i, %i\n\n", tammonte, posAleatoria);
+            MoveCelula (monte, anterior, posAleatoria);
         }
-    }
-}
-
-void imprimeCarta(tCarta *carta)
-{
-    char valor = valorCarta(carta);
-    char naipe = naipeCarta(carta);
-
-    if (cartaValida(carta))
-    {
-        printf("Carta %c %c\n", valor, naipe);
-    }
-    else
-    {
-        printf("A carta nao e valida.\n");
-    }
-}
-
-void imprimeCartaLinux(tCarta carta)
-{
-    char valor = valorCarta(&carta);
-    char naipe = naipeCarta(&carta);
-
-    printf("%c", valor);
-
-    // Não funciona em Windows
-    if (naipe == 'C')
-    {
-        printf("\u2665\n");
-    }
-    else if (naipe == 'O')
-    {
-        printf("\u2666\n");
-    }
-    else if (naipe == 'P')
-    {
-        printf("\u2663\n");
-    }
-    else if (naipe == 'E')
-    {
-        printf("\u2660\n");
     }
 }
 
 // Usando imprimeCarta
-void imprimeLista(tLista *lista)
+void ImprimeMonte (tMonte *monte)
 {
-    if (quantidadeLista(lista) != 0)
+    if (QuantidadeMonte (monte) != 0)
     {
         tCelula *atual = NULL;
 
-        printf("Quantidade de itens: %i\n", quantidadeLista(lista));
-        for (atual = lista->primeiro->prox; atual != NULL; atual = atual->prox)
-        {
-            imprimeCarta(&atual->carta);
-        }
+        printf ("Quantidade de itens: %i\n", QuantidadeMonte (monte));
+        for (atual = monte->primeiro->prox; atual != NULL; atual = atual->prox)
+            ImprimeCartaLinux  (atual->carta);
     }
 }
 
-void destroiLista(tLista *lista)
+void DestroiMonte (tMonte *monte)
 {
     tCelula *anterior = NULL;
-    tCelula *atual = lista->primeiro;
+    tCelula *atual = monte->primeiro;
 
     while (atual != NULL)
     {
         anterior = atual;
         atual = atual->prox;
-        free(anterior);
+        free (anterior);
     }
 
-    lista->tamanho = 0;
+    monte->tamanho = 0;
 }
 
 /* implementando: */
 
-void pop(tLista *lista, tCarta *cartaRetirada);
+void Pop (tMonte *monte, tCarta *cartaRetirada);
 
-void deleta(char valor, char naipe, tLista *lista)
+void Deleta (char valor, char naipe, tMonte *monte)
 {
-    tCelula *atual = lista->primeiro;
+    tCelula *atual = monte->primeiro;
     tCelula *anterior = NULL;
 
     while (atual != NULL && (atual->carta.valor != valor || atual->carta.naipe != naipe))
@@ -395,35 +236,35 @@ void deleta(char valor, char naipe, tLista *lista)
     if (atual != NULL)
     {
         anterior->prox = atual->prox;
-        free(atual);
+        free (atual);
     }
 }
 
-void deletaNaipe(char naipe, tLista *lista)
+void DeletaNaipe (char naipe, tMonte *monte)
 {
     int i = 0;
 
     for(i = 0; i < nVALORES; i++)
     {
         char valor = VALORES[i];
-        deleta(valor, naipe, lista);
+        Deleta (valor, naipe, monte);
     }
 }
 
-void deletaValor(char valor, tLista *lista)
+void DeletaValor (char valor, tMonte *monte)
 {
     int i = 0;
 
     for(i = 0; i < nVALORES; i++)
     {
         char valor = VALORES[i];
-        deleta(valor, valor, lista);
+        Deleta (valor, valor, monte);
     }
 }
 
-int indiceCarta(char valor, char naipe, tLista *lista)
+int IndiceCarta (char valor, char naipe, tMonte *monte)
 {
-    tCelula *atual = lista->primeiro->prox;
+    tCelula *atual = monte->primeiro->prox;
     int indice = 0;
 
     while (atual != NULL || (atual->carta.valor != valor && atual->carta.naipe != naipe))
@@ -443,12 +284,12 @@ int indiceCarta(char valor, char naipe, tLista *lista)
 }
 
 
-tCarta cartaNoIndice(int pos, tLista *lista)
+tCarta CartaNoIndice (int pos, tMonte *monte)
 {
     if (pos >= 0)
     {
         int i = 0;
-        tCelula *atual = lista->primeiro->prox;
+        tCelula *atual = monte->primeiro->prox;
 
         while(atual != NULL && i < pos)
         {
@@ -463,9 +304,10 @@ tCarta cartaNoIndice(int pos, tLista *lista)
     }
     else
     {
-        return criaCartaVazia();
+        return CartaVazia ( );
     }
+    return CartaVazia ( );
 }
 
 
-void swapCelulas (int pos1, int pos2, tLista *lista);
+void SwapCelulas (int pos1, int pos2, tMonte *monte);

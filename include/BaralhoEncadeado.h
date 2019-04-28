@@ -4,26 +4,13 @@
  *
  */
 
+ #include <sys/time.h>
+ #include "../include/Cartas.h"
+
 // Guard para evitar dupla inclusão
 #ifndef __BARALHO_ENCADEADO_H
 #define __BARALHO_ENCADEADO_H
 
-// Define os valores possíveis para número e naipe das cartas do baralho
-#define VALORES "23456QJK7A"
-#define NAIPES "COPE"
-#define nVALORES 10
-#define nNAIPES 4
-// Número padrão de cartas em uma mão
-#define nMAO 3
-
-#include "Jogo.h"
-
-// Estrutura de dados que abstrai uma carta, que possui valor e naipe
-typedef struct tCarta
-{
-    char valor;
-    char naipe;
-} tCarta;
 
 // Lista encadeada que abstrai um conjunto de cartas
 typedef struct tCelula
@@ -36,73 +23,28 @@ typedef struct
 {
     int tamanho;
     tCelula *primeiro, *ultimo;
-} tLista;
-// Ou tMonte
+} tMonte;
 
-// Move uma célula para uma dada posição na lista
-void moveCelula(tLista *lista, tCelula *celula, int pos);
 
-// Embaralha as posições das células em uma lista
-void embaralhaLista(tLista *lista);
-
-// Faz a lista ficar vazia
-void FLVazia(tLista *lista);
-
-// Verifica se a lista está vazia
-int estaVazia(tLista *lista);
-
-// Verifica se uma carta é válida
-int cartaValida(tCarta *carta);
-
-// Cria uma carta e retorna-a
-tCarta criaCarta(char valor, char naipe);
-
-// Cria uma carta vazia e retorna-a
-tCarta criaCartaVazia();
-
-// Preenche uma carta já existente
-void preencheCarta(char valor, char naipe, tCarta *carta);
-
-// Preenche uma lista com todas as cartas possíveis de um baralho padrão de bisca
-void criaListaBaralho(tLista *lista);
-
-// Retorna a quantidade de elementos dentro da lista encadeada
-int quantidadeLista(tLista *lista);
-
-// Retorna o valor de uma carta
-char valorCarta(tCarta *carta);
-
-// Retorna o naipe de uma carta
-char naipeCarta(tCarta *carta);
-
-// Insere uma carta na lista
-void insere(tCarta x, tLista *lista);
-
-// Retira uma carta da lista e retorna o elemento por referência
-void retira(char valor, char naipe, tLista *lista, tCarta *cartaRetirada);
-
-// "Corta" uma carta (caso específico da função retira)
-void corta(char valor, char naipe, tLista *lista, tCarta *cartaCorte);
-
-// Retorna uma carta da lista por referência
-void recupera(char valor, char naipe, tLista *lista, tCarta *cartaRetirada);
-
-// Imprime uma carta
-void imprimeCarta(tCarta *carta);
-
-// Com caracteres dos naipe
-void imprimeCartaLinux(tCarta carta);
-
-// Imprime as cartas da lista
-void imprimeLista(tLista *lista);
-
-// Libera as células de uma lista e define seu tamanho para 0
-void destroiLista(tLista *lista);
-
-// Retorna uma carta da lista dado um índice
-tCarta cartaNoIndice(int pos, tLista *lista);
-
-// Retorna o índice de uma dada carta da lista
-int indiceCarta(char valor, char naipe, tLista *lista);
+void FMVazio (tMonte *monte);
+void CriaMonte (tMonte *monte);
+int EstaVazio (tMonte *monte);
+tCelula CriaCelulaVazia ( );
+int QuantidadeMonte (tMonte *monte);
+void Insere (tCarta x, tMonte *monte);
+void Retira (char valor, char naipe, tMonte *monte, tCarta *cartaRetirada);
+void Corta (char valor, char naipe, tMonte *monte, tCarta *cartaCorte);
+int Recupera (char valor, char naipe, tMonte *monte);
+void MoveCelula (tMonte *monte, tCelula *celula, int pos);
+void Embaralha (tMonte *monte);
+void ImprimeMonte (tMonte *monte);
+void DestroiMonte (tMonte *monte);
+void Pop (tMonte *monte, tCarta *cartaRetirada);
+void Deleta (char valor, char naipe, tMonte *monte);
+void DeletaNaipe (char naipe, tMonte *monte);
+void DeletaValor (char valor, tMonte *monte);
+int IndiceCarta (char valor, char naipe, tMonte *monte);
+tCarta CartaNoIndice (int pos, tMonte *monte);
+void SwapCelulas (int pos1, int pos2, tMonte *monte);
 
 #endif

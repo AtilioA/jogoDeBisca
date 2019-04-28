@@ -1,7 +1,7 @@
 #ifndef MAOS_H_
 #define MAOS_H_
 
-#include "cartas.h"
+#include "Cartas.h"
 
 typedef struct {
     tCarta *carta;
@@ -16,7 +16,7 @@ tCarta PegaCarta (int p, tMao mao);
 
 int EstaNaMao (tCarta carta, tMao mao);
 
-void ColocaNaMao (tCarta carta, tMao *mao) ;
+void ColocaNaMao (tCarta carta, tMao *mao);
 
 void RetiraDaMao (tCarta carta, tMao *mao);
 

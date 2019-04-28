@@ -2,7 +2,7 @@
 #define IA2JOGADORES_H_
 
 #include <time.h>
-#include "maos.h"
+#include "Maos.h"
 
 int PontoAlto (tCarta carta);
 
