@@ -15,14 +15,14 @@ typedef struct {
   tBaralho *primeira, *ultima;
 } tMonte;
 
-tCarta PC4Jogadores1 (tMao *mao, tCarta corte, int seteSaiu);
+tCarta PC4Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
 
-tCarta PC4Jogadores2 (tMao *mao, tBaralho *mesa, tCarta corte, int seteSaiu);
+tCarta PC4Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
 
-tCarta PC4Jogadores3 (tMao *mao, tBaralho *mesa, tCarta corte, int seteSaiu);
+tCarta PC4Jogadores3 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
 
-tCarta PC4Jogadores4 (tMao *mao, tBaralho *mesa, tCarta corte, int seteSaiu);
+tCarta PC4Jogadores4 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
 
-tCarta PC4JogadoresAleatorio (tMao *mao, tCarta corte, int seteSaiu);
+tCarta PC4JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
 
 #endif

@@ -228,11 +228,16 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
     return (jogada);
 }
 
-tCarta PC2JogadoresAleatorio (tMao *mao) {
+tCarta PC2JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
     tCarta jogada;
     srand (time (NULL));
     jogada = PegaCartaMao ((rand ( ) % mao->n)+1 , *mao);
+    while (ETrunfo (jogada) && (Valor (jogada) == 'A') && (! (seteSaiu))) {
+        srand (time (NULL));
+        jogada = PegaCartaMao ((rand ( ) % mao->n)+1 , *mao);
+    }
     RetiraDaMao (jogada, mao);
-
+    Insere (jogada, monte);
+    
     return (jogada);
 }

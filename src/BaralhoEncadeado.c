@@ -302,3 +302,14 @@ tCarta CartaNoIndice (int pos, tMonte *monte)
 
 
 void SwapCelulas (int pos1, int pos2, tMonte *monte);
+
+void MaiorMesa (tMonte *mesa, tCarta corte) {
+    trunfo = Naipe (corte);
+
+    tCarta maior = mesa->primeiro->carta;
+    tCelula *p, *ant;
+    for (ant = p = mesa->primeiro; p != NULL; p = ant->prox) {
+        if ((! (ETrunfo (maior))) && (ETrunfo (p->carta)))
+            MoveCelula (monte, p, 0);
+    }
+}
