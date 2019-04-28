@@ -44,7 +44,6 @@ int QuantidadeMonte (tMonte *monte)
 
 void Insere (tCarta x, tMonte *monte)
 {
-    //? Precisa verificar carta já existente? SIM
     monte->ultimo->prox = (tCelula *) malloc (sizeof (tCelula));
     monte->ultimo = monte->ultimo->prox;
     monte->ultimo->carta = x;
