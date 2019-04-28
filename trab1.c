@@ -9,5 +9,11 @@
 #include "include/BaralhoEncadeado.h"
 
 int main () {
+    tMonte monte;
+    FMVazio (&monte);
+    CriaBaralho (&monte);
+    ImprimeMonte (&monte);
+    DestroiMonte (&monte);
+
     return 0;
 }

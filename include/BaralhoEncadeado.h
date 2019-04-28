@@ -26,7 +26,7 @@ typedef struct
 
 
 void FMVazio (tMonte *monte);
-void CriaMonte (tMonte *monte);
+void CriaBaralho (tMonte *monte);
 int EstaVazio (tMonte *monte);
 tCelula CriaCelulaVazia ( );
 int QuantidadeMonte (tMonte *monte);
@@ -35,11 +35,13 @@ void Retira (char valor, char naipe, tMonte *monte, tCarta *cartaRetirada);
 void Corta (char valor, char naipe, tMonte *monte, tCarta *cartaCorte);
 int Recupera (char valor, char naipe, tMonte *monte);
 void MoveCelula (tMonte *monte, tCelula *celula, int pos);
+
+// Para cada célula da monte, gerar uma posição aleatória dentro da monte e mover a célula pra esta posição
 void Embaralha (tMonte *monte);
 void ImprimeMonte (tMonte *monte);
-
-
 void DestroiMonte (tMonte *monte);
+/* implementando: */
+
 void Pop (tMonte *monte, tCarta *cartaRetirada);
 void Deleta (char valor, char naipe, tMonte *monte);
 void DeletaNaipe (char naipe, tMonte *monte);
