@@ -1,3 +1,4 @@
+#include "../include/Cartas.h"
 #include "../include/BaralhoEncadeado.h"
 
 void FMVazio (tMonte *monte)

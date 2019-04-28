@@ -4,13 +4,12 @@
  *
  */
 
- #include <sys/time.h>
- #include "../include/Cartas.h"
-
 // Guard para evitar dupla inclusão
 #ifndef __BARALHO_ENCADEADO_H
 #define __BARALHO_ENCADEADO_H
 
+ #include <sys/time.h>
+ #include "../include/Cartas.h"
 
 // Lista encadeada que abstrai um conjunto de cartas
 typedef struct tCelula
