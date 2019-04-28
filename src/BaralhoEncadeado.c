@@ -100,7 +100,6 @@ int Recupera (char valor, char naipe, tMonte *monte)
         if ((Valor (atual->carta) == valor) && (Naipe (atual->carta) == naipe))
             return (1);
     }
-
     return (0);
 }
 
@@ -291,27 +290,15 @@ int IndiceCarta (char valor, char naipe, tMonte *monte)
 
 tCarta CartaNoIndice (int pos, tMonte *monte)
 {
-    if (pos >= 0)
-    {
-        int i = 0;
-        tCelula *atual = monte->primeiro->prox;
+    if (pos <= 0)
+        return (CartaVazia ( ));
 
-        while(atual != NULL && i < pos)
-        {
-            i++;
-            atual = atual->prox;
-        }
-
-        if (atual != NULL)
-        {
-            return atual->carta;
-        }
+    int cont = 0;
+    for (tCelula *p = monte->primeiro; p != NULL; p = p->prox, cont ++) {
+        if (cont == (pos - 1))
+            return (p->carta);
     }
-    else
-    {
-        return CartaVazia ( );
-    }
-    return CartaVazia ( );
+    return (CartaVazia ( ));
 }
 
 

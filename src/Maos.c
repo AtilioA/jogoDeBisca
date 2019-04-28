@@ -17,7 +17,7 @@ void LiberaMao(tMao *mao)
     mao->n = 0;
 }
 
-tCarta PegaCarta(int p, tMao mao)
+tCarta PegaCartaMaoMaoMao(int p, tMao mao)
 {
     tCarta escolhida;
 
@@ -29,15 +29,12 @@ tCarta PegaCarta(int p, tMao mao)
     return (escolhida);
 }
 
-int EstaNaMao(tCarta carta, tMao mao)
+int EstaNaMao(char valor, char naipe, tMao mao)
 {
-    if (!(CartaValida(carta)))
-        return (0);
-
     for (int i = 0; i < (TamanhoMao(mao)); i++)
     {
-        if ((Valor(carta) == Valor(PegaCarta(i + 1, mao))) &&
-            (Naipe(carta) == Naipe(PegaCarta(i + 1, mao))))
+        if (valor == Valor(PegaCartaMaoMao(i + 1, mao))) &&
+            (naipe == Naipe(PegaCartaMaoMao(i + 1, mao))))
             return (1);
     }
     return (0);
@@ -60,8 +57,8 @@ void RetiraDaMao(tCarta carta, tMao *mao)
 
     for (int i = 0; i < (TamanhoMao(*mao)); i++)
     {
-        if ((Valor(carta) == Valor(PegaCarta(i + 1, *mao))) &&
-            (Naipe(carta) == Naipe(PegaCarta(i + 1, *mao))))
+        if ((Valor(carta) == Valor(PegaCartaMaoMao(i + 1, *mao))) &&
+            (Naipe(carta) == Naipe(PegaCartaMaoMao(i + 1, *mao))))
         {
             mao->n--;
             for (int j = i; j < (TamanhoMao(*mao)); j++)
@@ -84,7 +81,7 @@ void ImprimeMao(tMao mao)
     }
 }
 
-void ordenaMao(tMao *mao)
+void OrdenaMao(tMao *mao)
 {
     int valori, valorj;
     tCarta aux;
