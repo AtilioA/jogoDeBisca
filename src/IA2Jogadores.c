@@ -229,17 +229,19 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
 }
 
 tCarta PC2JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
+    int posAleatoria;
     tCarta jogada;
 
     struct timeval t;
     gettimeofday (&t, NULL);
     srand ((unsigned int) t.tv_usec);
-
-    jogada = PegaCartaMao (((rand ( ) % mao->n) + 1), *mao);
+    posAleatoria = (rand ( ) % mao->n) + 1;
+    jogada = PegaCarta (posAleatoria, *mao);
     while (ETrunfo (jogada, corte) && (Valor (jogada) == 'A') && (! (seteSaiu))) {
         gettimeofday (&t, NULL);
         srand ((unsigned int) t.tv_usec);
-        jogada = PegaCartaMao (((rand ( ) % mao->n) + 1), *mao);
+        posAleatoria = (rand ( ) % mao->n) + 1;
+        jogada = PegaCarta (posAleatoria, *mao);
     }
     RetiraDaMao (jogada, mao);
     Insere (jogada, monte);

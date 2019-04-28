@@ -4,16 +4,8 @@
 #include <time.h>
 #include "Maos.h"
 #include "IA2Jogadores.h"
+#include "BaralhoEncadeado.h"
 
-typedef struct tBaralho tBaralho;
-struct {
-    tCarta carta;
-    struct tBaralho *proxima;
-};
-
-typedef struct {
-  tBaralho *primeira, *ultima;
-} tMonte;
 
 int CartasIguais (tCarta carta1, tCarta carta2);
 
