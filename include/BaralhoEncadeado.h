@@ -37,6 +37,8 @@ int Recupera (char valor, char naipe, tMonte *monte);
 void MoveCelula (tMonte *monte, tCelula *celula, int pos);
 void Embaralha (tMonte *monte);
 void ImprimeMonte (tMonte *monte);
+
+
 void DestroiMonte (tMonte *monte);
 void Pop (tMonte *monte, tCarta *cartaRetirada);
 void Deleta (char valor, char naipe, tMonte *monte);
