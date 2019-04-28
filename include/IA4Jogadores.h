@@ -4,6 +4,7 @@
 #include <time.h>
 #include "Maos.h"
 #include "IA2Jogadores.h"
+#include "BaralhoEncadeado.h"
 
 typedef struct tBaralho tBaralho;
 struct {

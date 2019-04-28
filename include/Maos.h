@@ -16,9 +16,9 @@ tCarta PegaCartaMao (int p, tMao mao);
 
 int EstaNaMao (char valor, char naipe, tMao mao);
 
-void ColocaNaMao (tCarta carta, tMao *mao);
+void ColocaNaMao(tCarta carta, tMao *mao);
 
-void RetiraDaMao (tCarta carta, tMao *mao);
+void RetiraDaMao(char valor, char naipe, tMao *mao, tCarta *cartaRetirada);
 
 int TamanhoMao (tMao mao);
 

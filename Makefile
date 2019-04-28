@@ -6,7 +6,7 @@ EXE 	 := bisca
 
 
 # Cria objetos de todos os arquivos de código-fonte para então linká-los no executável final
-main: $(OBJ)/Cartas.o $(OBJ)/BaralhoEncadeado.o $(OBJ)/Jogo.o $(OBJ)/trab1.o
+main: $(OBJ)/Cartas.o $(OBJ)/Maos.o $(OBJ)/BaralhoEncadeado.o $(OBJ)/IA2Jogadores.o $(OBJ)/IA4Jogadores.o $(OBJ)/Jogo.o $(OBJ)/trab1.o
 	gcc $(OBJ)/*.o -o $(EXE) $(CFLAGS)
 
 $(OBJ)/Cartas.o: $(SRC)/Cartas.c $(INC)/Cartas.h

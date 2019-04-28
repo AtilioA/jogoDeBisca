@@ -1,4 +1,5 @@
 #include "../include/Cartas.h"
+#include "../include/Maos.h"
 #include "../include/BaralhoEncadeado.h"
 
 void FMVazio (tMonte *monte)
@@ -311,3 +312,11 @@ tCarta CartaNoIndice (int pos, tMonte *monte)
 void SwapCelulas (int pos1, int pos2, tMonte *monte);
 
 void MaiorMesa (tMonte *mesa, tCarta corte);
+
+void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)
+{
+    tCarta *retirada = NULL;
+
+    Retira(Valor(*carta), Naipe(*carta), monte, retirada);
+    ColocaNaMao(*retirada, mao);
+}

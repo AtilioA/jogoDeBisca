@@ -1,3 +1,6 @@
+#include "../include/BaralhoEncadeado.h"
+#include "../include/Cartas.h"
+#include "../include/Maos.h"
 #include "../include/IA2Jogadores.h"
 
 int PontoAlto (tCarta carta) {

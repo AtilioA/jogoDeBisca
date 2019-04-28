@@ -1,4 +1,5 @@
 #include "../include/Maos.h"
+#include "../include/BaralhoEncadeado.h"
 
 void CriaMao(tMao *mao)
 {
@@ -17,7 +18,7 @@ void LiberaMao(tMao *mao)
     mao->n = 0;
 }
 
-tCarta PegaCartaMaoMaoMao(int p, tMao mao)
+tCarta PegaCartaMao(int p, tMao mao)
 {
     tCarta escolhida;
 
@@ -33,8 +34,8 @@ int EstaNaMao(char valor, char naipe, tMao mao)
 {
     for (int i = 0; i < (TamanhoMao(mao)); i++)
     {
-        if (valor == Valor(PegaCartaMaoMao(i + 1, mao))) &&
-            (naipe == Naipe(PegaCartaMaoMao(i + 1, mao))))
+        if ((valor == Valor(PegaCartaMao(i + 1, mao))) &&
+            (naipe == Naipe(PegaCartaMao(i + 1, mao))))
             return (1);
     }
     return (0);
@@ -43,22 +44,42 @@ int EstaNaMao(char valor, char naipe, tMao mao)
 void ColocaNaMao(tCarta carta, tMao *mao)
 {
     if ((TamanhoMao(*mao) >= nMAO) || (!(CartaValida(carta))) || (EstaNaMao(Valor (carta), Naipe (carta), *mao)))
+    if ((TamanhoMao(*mao) >= nMAO) || (!(CartaValida(carta))) || (EstaNaMao(Valor(carta), Naipe(carta), *mao)))
         return;
 
-    mao->carta[mao->n].valor = carta.valor;
-    mao->carta[mao->n].naipe = carta.naipe;
+    mao->carta[mao->n].valor = Valor(carta);
+    mao->carta[mao->n].naipe = Naipe(carta);
     mao->n++;
 }
 
-void RetiraDaMao(tCarta carta, tMao *mao)
+void RetiraDaMao(char valor, char naipe, tMao *mao, tCarta *cartaRetirada)
 {
-    if (!(EstaNaMao(Valor (carta), Naipe (carta), *mao)))
+    if (!(EstaNaMao(valor, naipe, *mao)))
+        return;
+
+    cartaRetirada = NULL;
+    for (int i = 0; i < (TamanhoMao(*mao)); i++)
+    {
+        if ((valor == Valor(PegaCartaMao(i + 1, *mao))) &&
+            (naipe == Naipe(PegaCartaMao(i + 1, *mao))))
+        {
+            *cartaRetirada = mao->carta[i];
+            mao->n--;
+            for (int j = i; j < (TamanhoMao(*mao)); j++)
+                mao->carta[j] = mao->carta[j + 1];
+        }
+    }
+}
+
+void DeletaDaMao(tCarta carta, tMao *mao)
+{
+    if (!(EstaNaMao(Valor(carta), Naipe(carta), *mao)))
         return;
 
     for (int i = 0; i < (TamanhoMao(*mao)); i++)
     {
-        if ((Valor(carta) == Valor(PegaCartaMaoMao(i + 1, *mao))) &&
-            (Naipe(carta) == Naipe(PegaCartaMaoMao(i + 1, *mao))))
+        if ((Valor(carta) == Valor(PegaCartaMao(i + 1, *mao))) &&
+            (Naipe(carta) == Naipe(PegaCartaMao(i + 1, *mao))))
         {
             mao->n--;
             for (int j = i; j < (TamanhoMao(*mao)); j++)
@@ -83,7 +104,7 @@ void ImprimeMao(tMao mao)
 
 void OrdenaMao(tMao *mao)
 {
-    int valori, valorj;
+    int valori = 0, valorj = 0;
     tCarta aux;
 
     for (int i = 0; i < (TamanhoMao(*mao)); i++)
@@ -105,4 +126,10 @@ void OrdenaMao(tMao *mao)
             }
         }
     }
+}
+
+
+void MaoParaMonte(tMao *mao, tMonte *monte)
+{
+
 }

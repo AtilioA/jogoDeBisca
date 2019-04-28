@@ -1,11 +1,8 @@
-// Define os valores possíveis para número e naipe das cartas do baralho
-#define VALORES "23456QJK7A"
-#define NAIPES "COPE"
-#define nVALORES 10
-#define nNAIPES 4
-#define nMAO 3 // Número padrão de cartas em uma mão
-
 #include "include/IA2Jogadores.h"
+#include "include/IA4Jogadores.h"
+#include "include/Maos.h"
+#include "include/Cartas.h"
+#include "include/BaralhoEncadeado.h"
 #include <time.h>
 
 int main()
@@ -33,7 +30,7 @@ int main()
         ImprimeMao(mao);
         printf("\n");
 
-        ImprimeCarta (PC2Jogadores1 (&mao, &joao, corte, 0));
+        ImprimeCarta (PC2Jogadores1(&mao, &joao, corte, 0));
 
         DestroiMonte(&joao);
     }
