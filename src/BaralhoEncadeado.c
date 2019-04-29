@@ -43,14 +43,41 @@ int QuantidadeMonte (tMonte *monte)
     return (monte->tamanho);
 }
 
+int ExisteCarta(tCarta x, tMonte *monte)
+{
+    tCelula *atual = monte->primeiro;
+
+    while (atual != NULL && (Valor(atual->carta) != Valor(x) || Naipe(atual->carta) != Naipe(x)))
+    {
+        atual = atual->prox;
+    }
+
+    if (atual == NULL)
+    {
+        return 0;
+    }
+
+    else
+    {
+        return 1;
+    }
+}
+
 void Insere (tCarta x, tMonte *monte)
 {
-    monte->ultimo->prox = (tCelula *) malloc (sizeof (tCelula));
-    monte->ultimo = monte->ultimo->prox;
-    monte->ultimo->carta = x;
-    monte->ultimo->prox = NULL;
+    if (!ExisteCarta(x, monte))
+    {
+        monte->ultimo->prox = (tCelula *) malloc (sizeof (tCelula));
+        monte->ultimo = monte->ultimo->prox;
+        monte->ultimo->carta = x;
+        monte->ultimo->prox = NULL;
 
-    monte->tamanho ++;
+        monte->tamanho ++;
+    }
+    else
+    {
+        printf("A carta ja existe no monte.\n");
+    }
 }
 
 void Retira (char valor, char naipe, tMonte *monte, tCarta *cartaRetirada)
@@ -212,7 +239,7 @@ void DestroiMonte (tMonte *monte)
     tCelula *anterior = NULL;
     tCelula *atual = monte->primeiro;
 
-    while (atual != NULL)
+    while (anterior != NULL)
     {
         anterior = atual;
         atual = atual->prox;

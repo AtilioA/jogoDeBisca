@@ -1,5 +1,6 @@
 #include "../include/Cartas.h"
 #include "../include/Maos.h"
+#include "../include/BaralhoEncadeado.h"
 
 void CriaMao (tMao *mao) {
     mao->carta = (tCarta *) malloc (nMAO * sizeof (tCarta));
@@ -58,6 +59,21 @@ void RetiraDaMao (tCarta carta, tMao *mao) {
     }
 }
 
+void RemoveDaMao (tCarta carta, tMao *mao, tCarta *cartaRetirada) {
+    if (!(EstaNaMao (Valor (carta), Naipe (carta), *mao)))
+        return;
+
+    for (int i = 0; i < (TamanhoMao (*mao)); i ++) {
+        if ((Valor (carta) == Valor (PegaCarta (i+1, *mao))) &&
+            (Naipe (carta) == Naipe (PegaCarta (i+1, *mao)))) {
+                *cartaRetirada = mao->carta[i];
+                mao->n --;
+                for (int j = i; j < (TamanhoMao (*mao)); j ++)
+                    mao->carta[j] = mao->carta[j+1];
+            }
+    }
+}
+
 int TamanhoMao (tMao mao) {
     return (mao.n);
 }
@@ -70,7 +86,7 @@ void ImprimeMao (tMao mao) {
 }
 
 void OrdenaMao (tMao *mao) {
-    int valori, valorj;
+    int valori = 0, valorj = 0;
     tCarta aux;
 
     for (int i = 0; i < (TamanhoMao (*mao)); i ++) {
@@ -88,4 +104,12 @@ void OrdenaMao (tMao *mao) {
             }
         }
     }
+}
+
+void MaoParaMonte(tCarta *carta, tMonte *monte, tMao *mao)
+{
+    tCarta *retirada = NULL;
+
+    RemoveDaMao(*carta, mao, retirada);
+    Insere(*retirada, monte);
 }
