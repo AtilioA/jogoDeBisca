@@ -5,35 +5,35 @@
 #include "../include/BaralhoEncadeado.h"
 
 /* As opções
-- Mostrar cartas do Baralho (na ordem que ela estiver)
+- Mostrar cartas do monte (na ordem que ela estiver)
 - Embaralhar
 - Cortar
 estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor */
 
-void exibeInfo(tJogador *jogadores, int nJogadores)
-{
-    int i = 0;
-    tJogador J1 = jogadores[0]; // Jogador 1 ("eu")
+// void exibeInfo(tJogador *jogadores, int nJogadores)
+// {
+//     int i = 0;
+//     tJogador J1 = jogadores[0]; // Jogador 1 ("eu")
 
-    printf("Sua mao:\n");
-    // imprimeMao(J1);
+//     printf("Sua mao:\n");
+//     // imprimeMao(J1);
 
-    printf("Cartas restantes no baralho: ");
-    /* Mostra cartas restantes no baralho */
+//     printf("Cartas restantes no monte: ");
+//     /* Mostra cartas restantes no monte */
 
-    printf("Pontuação dos jogadores: ");
-    for (i = 0; i < nJogadores; i++)
-    {
-        printf("Pontuacao do %i jogador: %i.\n", i + 1, jogadores[i].pontuacao);
-    }
+//     printf("Pontuação dos jogadores: ");
+//     for (i = 0; i < nJogadores; i++)
+//     {
+//         printf("Pontuacao do %i jogador: %i.\n", i + 1, jogadores[i].pontuacao);
+//     }
 
-    printf("\n");
-}
+//     printf("\n");
+// }
 
 // Opções extras para modo desenvolvedor (para printar mais facilmente)
 void exibeMenuDev()
 {
-    printf("[10] - Mostrar cartas do baralho\n");
+    printf("[10] - Mostrar cartas do monte\n");
     printf("[11] - Embaralhar\n");
     printf("[12] - Cortar\n");
 }
@@ -46,7 +46,7 @@ void exibeAjuda()
     printf("Sobre a bisca: http://tiny.cc/bisca\n\n\n");
 }
 
-void exibeMenu(/* parâmetros */)
+void exibeMenu(tMonte *monte)
 {
     int modoDev = 0;
     char op = '1';
@@ -85,13 +85,13 @@ void exibeMenu(/* parâmetros */)
         // Quando o jogo estiver ativo
         case '7':
             modoDev = 1;
-            // imprimeLista(baralho);
+            // imprimeLista(monte);
 
             break;
 
         case '8':
             modoDev = 1;
-            // embaralhaLista(baralho);
+            // embaralhaLista(monte);
             break;
 
         case '9':
@@ -100,14 +100,13 @@ void exibeMenu(/* parâmetros */)
             tCarta cartaCortada;
             printf("Informe a carta a ser cortada [Valor/Naipe]:\n");
             scanf(" %c %c", &valorCortado, &naipeCortado);
-            // corta(valorCortado, naipeCortado, &baralho, &cartaCortada)
+            Corta(valorCortado, naipeCortado, monte, &cartaCortada);
             break;
 
             while (op < '1' || op > '9')
             {
                 printf("Opcao invalida. Tente novamente: ");
                 scanf(" %c", &op);
-
             }
         }
     }
