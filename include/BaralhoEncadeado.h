@@ -73,9 +73,9 @@ void Pop(tMonte *monte, tCarta *cartaRetirada);
 void Deleta(char valor, char naipe, tMonte *monte);
 void DeletaNaipe(char naipe, tMonte *monte);
 void DeletaValor(char valor, tMonte *monte);
-// Retorna uma carta do monte dado um índice
-int IndiceCarta(char valor, char naipe, tMonte *monte);
 // Retorna o índice de uma dada carta do monte
+int IndiceCarta(char valor, char naipe, tMonte *monte);
+// Retorna uma carta do monte dado um índice
 tCarta CartaNoIndice(int pos, tMonte *monte);
 // Troca duas células de posição no monte
 void SwapCelulas(int pos1, int pos2, tMonte *monte);

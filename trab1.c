@@ -30,12 +30,19 @@ int main()
         ImprimeMao(mao);
         printf("\n");
 
-        ImprimeCarta (PC2Jogadores1(&mao, &joao, corte, 0));
+        // ImprimeCarta (PC2Jogadores1(&mao, &joao, corte, 0));
 
         DestroiMonte(&joao);
     }
 
     printf("\n");
+
+    /* Teste da CartaNoIndice */
+    tCarta achadoNaoERoubado = CartaNoIndice(1, &monte);
+    ImprimeCarta(achadoNaoERoubado);
+    achadoNaoERoubado = CartaNoIndice(40, &monte);
+    ImprimeCarta(achadoNaoERoubado);
+
     DestroiMonte(&monte);
 
     return 0;

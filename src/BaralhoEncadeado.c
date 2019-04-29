@@ -317,21 +317,26 @@ int IndiceCarta(char valor, char naipe, tMonte *monte)
 
 tCarta CartaNoIndice(int pos, tMonte *monte)
 {
-    if (pos <= 0)
-        return (CartaVazia());
-
-    int cont = 0;
-    tCelula *atual = monte->primeiro->prox;
-
-    while (atual != NULL)
+    if (pos >= 1) // 1 como sendo o primeiro elemento
     {
-        if (cont == (pos - 1))
-            return (atual->carta);
-        cont++;
-        atual = atual->prox;
-    }
+        int i = 1;
+        tCelula *atual = monte->primeiro->prox; // cabeça da lista
 
-    return (CartaVazia());
+        while(atual != NULL && i < pos)
+        {
+            i++;
+            atual = atual->prox;
+        }
+
+        if (atual != NULL)
+        {
+            return atual->carta;
+        }
+    }
+    else
+    {
+        return CartaVazia();
+    }
 }
 
 void SwapCelulas(int pos1, int pos2, tMonte *monte);
