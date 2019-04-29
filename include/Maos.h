@@ -3,10 +3,14 @@
 
 #include "Cartas.h"
 
+// Chame antes as bibliotecas necessárias para suas structs
+// Neste caso, apenas a Cartas.h, pois nela está definida a estrutura tCarta
 typedef struct {
     tCarta *carta;
     int n;
 } tMao;
+
+#include "BaralhoEncadeado.h"
 
 void CriaMao (tMao *mao);
 
@@ -25,5 +29,7 @@ int TamanhoMao (tMao mao);
 void ImprimeMao (tMao mao);
 
 void OrdenaMao (tMao *mao);
+
+void MaoParaMonte(tCarta *carta, tMonte *monte, tMao *mao);
 
 #endif

@@ -8,8 +8,9 @@
 #ifndef __BARALHO_ENCADEADO_H
 #define __BARALHO_ENCADEADO_H
 
-#include <sys/time.h>
-#include "../include/Cartas.h"
+// Chame as bibliotecas necessárias para suas structs
+// Neste caso, apenas a Cartas.h, pois nela está definida a estrutura tCarta
+#include "Cartas.h"
 
 // Lista encadeada que abstrai um conjunto de cartas
 typedef struct tCelula
@@ -24,6 +25,8 @@ typedef struct
     tCelula *primeiro, *ultimo;
 } tMonte;
 
+#include "Maos.h"
+#include <sys/time.h>
 
 // Faz a lista (monte) ficar vazia
 void FMVazio(tMonte *monte);
@@ -39,6 +42,8 @@ tCelula CriaCelulaVazia();
 
 // Retorna a quantidade de elementos dentro do monte
 int QuantidadeMonte(tMonte *monte);
+
+int ExisteCarta(tCarta x, tMonte *monte);
 
 // Insere uma carta no monte
 void Insere(tCarta x, tMonte *monte);
@@ -74,5 +79,7 @@ int IndiceCarta(char valor, char naipe, tMonte *monte);
 tCarta CartaNoIndice(int pos, tMonte *monte);
 // Troca duas células de posição no monte
 void SwapCelulas(int pos1, int pos2, tMonte *monte);
+
+void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao);
 
 #endif
