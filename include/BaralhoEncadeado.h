@@ -88,17 +88,4 @@ int PontuacaoCarta(tCarta x);
 // Retorna o total de pontos das cartas de um monte
 int ContaPontos(tMonte *monte);
 
-
-/* implementando: */
-/*
-void Pop(tMonte *monte, tCarta *cartaRetirada);
-void Deleta(char valor, char naipe, tMonte *monte);
-void DeletaNaipe(char naipe, tMonte *monte);
-void DeletaValor(char valor, tMonte *monte);
-
-// Troca duas células de posição no monte
-void SwapCelulas(int pos1, int pos2, tMonte *monte);
-*/
-
-
 #endif

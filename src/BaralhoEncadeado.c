@@ -327,7 +327,7 @@ int PontuacaoCarta(tCarta x)
 int ContaPontos(tMonte *monte)
 {
     tCelula *atual = monte->primeiro;
-    int pontos = 0, pontuacaoAtual = 0;
+    int pontos = 0;
 
     while(atual != NULL)
     {
@@ -337,52 +337,3 @@ int ContaPontos(tMonte *monte)
 
     return pontos;
 }
-
-
-/* //implementando:
-
-void Pop(tMonte *monte, tCarta *cartaRetirada);
-
-void Deleta(char valor, char naipe, tMonte *monte)
-{
-    tCelula *atual = monte->primeiro;
-    tCelula *anterior = NULL;
-
-    while (atual != NULL && (atual->carta.valor != valor || atual->carta.naipe != naipe))
-    {
-        anterior = atual;
-        atual = atual->prox;
-    }
-
-    if (atual != NULL)
-    {
-        anterior->prox = atual->prox;
-        free(atual);
-    }
-}
-
-void DeletaNaipe(char naipe, tMonte *monte)
-{
-    int i = 0;
-
-    for (i = 0; i < nVALORES; i++)
-    {
-        char valor = VALORES[i];
-        Deleta(valor, naipe, monte);
-    }
-}
-
-void DeletaValor(char valor, tMonte *monte)
-{
-    int i = 0;
-
-    for (i = 0; i < nVALORES; i++)
-    {
-        char valor = VALORES[i];
-        Deleta(valor, valor, monte);
-    }
-}
-
-void SwapCelulas(int pos1, int pos2, tMonte *monte);
-
-*/
