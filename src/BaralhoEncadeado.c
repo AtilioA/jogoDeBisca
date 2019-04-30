@@ -254,7 +254,37 @@ void DestroiMonte(tMonte *monte)
     monte->tamanho = 0;
 }
 
-/* implementando: */
+tCarta CartaNoIndice(int pos, tMonte *monte)
+{
+    if (pos >= 1) // 1 como sendo o primeiro elemento
+    {
+        int i = 1;
+        tCelula *atual = monte->primeiro->prox; // cabeça da lista
+
+        while(atual != NULL && i < pos)
+        {
+            i++;
+            atual = atual->prox;
+        }
+
+        if (atual != NULL)
+        {
+            return atual->carta;
+        }
+    }
+
+    return CartaVazia();
+}
+
+void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)
+{
+    tCarta *retirada = NULL;
+
+    Retira(Valor(*carta), Naipe(*carta), monte, retirada);
+    ColocaNaMao(*retirada, mao);
+}
+
+/* //implementando:
 
 void Pop(tMonte *monte, tCarta *cartaRetirada);
 
@@ -319,36 +349,7 @@ int IndiceCarta(char valor, char naipe, tMonte *monte)
     }
 }
 
-tCarta CartaNoIndice(int pos, tMonte *monte)
-{
-    if (pos >= 1) // 1 como sendo o primeiro elemento
-    {
-        int i = 1;
-        tCelula *atual = monte->primeiro->prox; // cabeça da lista
-
-        while(atual != NULL && i < pos)
-        {
-            i++;
-            atual = atual->prox;
-        }
-
-        if (atual != NULL)
-        {
-            return atual->carta;
-        }
-    }
-
-    return CartaVazia();
-}
 
 void SwapCelulas(int pos1, int pos2, tMonte *monte);
 
-void MaiorMesa(tMonte *mesa, tCarta corte);
-
-void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)
-{
-    tCarta *retirada = NULL;
-
-    Retira(Valor(*carta), Naipe(*carta), monte, retirada);
-    ColocaNaMao(*retirada, mao);
-}
+*/

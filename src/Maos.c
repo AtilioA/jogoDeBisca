@@ -95,10 +95,7 @@ int TamanhoMao(tMao mao)
 void ImprimeMao(tMao mao)
 {
     for (int i = 0; i < (TamanhoMao(mao)); i++)
-    {
         ImprimeCarta(mao.carta[i]);
-        printf("\n");
-    }
 }
 
 void OrdenaMao(tMao *mao)
