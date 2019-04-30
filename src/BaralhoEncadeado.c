@@ -233,12 +233,6 @@ void ImprimeMonte(tMonte *monte)
     }
 }
 
-void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao)
-{
-    RetiraDaMao(carta, mao);
-    Insere(carta, monte);
-}
-
 void DestroiMonte(tMonte *monte)
 {
     tCelula *anterior, *atual;
@@ -252,6 +246,27 @@ void DestroiMonte(tMonte *monte)
     }
 
     monte->tamanho = 0;
+}
+
+int IndiceCarta(char valor, char naipe, tMonte *monte)
+{
+    tCelula *atual = monte->primeiro->prox;
+    int indice = 1; // 1 como sendo o primeiro elemento
+
+    while (atual != NULL || (atual->carta.valor != valor && atual->carta.naipe != naipe))
+    {
+        indice++;
+        atual = atual->prox;
+    }
+
+    if (atual == NULL)
+    {
+        return -1;
+    }
+    else
+    {
+        return indice;
+    }
 }
 
 tCarta CartaNoIndice(int pos, tMonte *monte)
@@ -276,6 +291,12 @@ tCarta CartaNoIndice(int pos, tMonte *monte)
     return CartaVazia();
 }
 
+void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao)
+{
+    RetiraDaMao(carta, mao);
+    Insere(carta, monte);
+}
+
 void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)
 {
     tCarta *retirada = NULL;
@@ -283,6 +304,40 @@ void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)
     Retira(Valor(*carta), Naipe(*carta), monte, retirada);
     ColocaNaMao(*retirada, mao);
 }
+
+int PontuacaoCarta(tCarta x)
+{
+    switch (Valor(x))
+    {
+        case 'A':
+            return 11;
+        case '7':
+            return 10;
+        case 'K':
+            return 4;
+        case 'Q':
+            return 3;
+        case 'J':
+            return 2;
+        default:
+            return 0;
+    }
+}
+
+int ContaPontos(tMonte *monte)
+{
+    tCelula *atual = monte->primeiro;
+    int pontos = 0, pontuacaoAtual = 0;
+
+    while(atual != NULL)
+    {
+        pontos += PontuacaoCarta(atual->carta);
+        atual = atual->prox;
+    }
+
+    return pontos;
+}
+
 
 /* //implementando:
 
@@ -327,28 +382,6 @@ void DeletaValor(char valor, tMonte *monte)
         Deleta(valor, valor, monte);
     }
 }
-
-int IndiceCarta(char valor, char naipe, tMonte *monte)
-{
-    tCelula *atual = monte->primeiro->prox;
-    int indice = 0;
-
-    while (atual != NULL || (atual->carta.valor != valor && atual->carta.naipe != naipe))
-    {
-        indice++;
-        atual = atual->prox;
-    }
-
-    if (atual == NULL)
-    {
-        return -1;
-    }
-    else
-    {
-        return indice;
-    }
-}
-
 
 void SwapCelulas(int pos1, int pos2, tMonte *monte);
 

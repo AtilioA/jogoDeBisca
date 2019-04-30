@@ -8,8 +8,8 @@
 #ifndef __BARALHO_ENCADEADO_H
 #define __BARALHO_ENCADEADO_H
 
-// Chame as bibliotecas necessárias para suas structs
-// Neste caso, apenas a Cartas.h, pois nela está definida a estrutura tCarta
+// Chame as bibliotecas necessárias para suas structs antes de declará-las
+// Neste caso, a Cartas.h, pois nela está definida a estrutura tCarta
 #include "Cartas.h"
 #include "Maos.h"
 #include <sys/time.h>
@@ -43,6 +43,7 @@ tCelula CriaCelulaVazia();
 // Retorna a quantidade de elementos dentro do monte
 int QuantidadeMonte(tMonte *monte);
 
+// Verifica se uma carta existe no monte
 int ExisteCarta(tCarta x, tMonte *monte);
 
 // Insere uma carta no monte
@@ -62,10 +63,9 @@ void MoveCelula(tMonte *monte, tCelula *celula, int pos);
 
 // Embaralha as posições das células em umo monte
 void Embaralha(tMonte *monte);
+
 // Imprime as cartas do monte
 void ImprimeMonte(tMonte *monte);
-
-void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao);
 
 // Libera as células de um monte e define seu tamanho para 0
 void DestroiMonte(tMonte *monte);
@@ -73,7 +73,21 @@ void DestroiMonte(tMonte *monte);
 // Retorna uma carta do monte dado um índice
 tCarta CartaNoIndice(int pos, tMonte *monte);
 
+// Retorna o índice de uma dada carta do monte
+int IndiceCarta(char valor, char naipe, tMonte *monte);
+
+// Manda uma carta do monte para a mão
 void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao);
+
+// Manda uma carta da mão para o monte
+void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao);
+
+// Retorna a pontuação de uma carta
+int PontuacaoCarta(tCarta x);
+
+// Retorna o total de pontos das cartas de um monte
+int ContaPontos(tMonte *monte);
+
 
 /* implementando: */
 /*
@@ -81,8 +95,6 @@ void Pop(tMonte *monte, tCarta *cartaRetirada);
 void Deleta(char valor, char naipe, tMonte *monte);
 void DeletaNaipe(char naipe, tMonte *monte);
 void DeletaValor(char valor, tMonte *monte);
-// Retorna o índice de uma dada carta do monte
-int IndiceCarta(char valor, char naipe, tMonte *monte);
 
 // Troca duas células de posição no monte
 void SwapCelulas(int pos1, int pos2, tMonte *monte);
