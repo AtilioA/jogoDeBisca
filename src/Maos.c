@@ -126,11 +126,3 @@ void OrdenaMao(tMao *mao)
         }
     }
 }
-
-void MaoParaMonte(tCarta *carta, tMonte *monte, tMao *mao)
-{
-    tCarta *retirada = NULL;
-
-    RemoveDaMao(*carta, mao, retirada);
-    Insere(*retirada, monte);
-}

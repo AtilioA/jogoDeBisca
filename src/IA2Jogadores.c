@@ -14,60 +14,51 @@ int ETrunfo (tCarta carta, tCarta corte) {
 
 tCarta PC2Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
     OrdenaMao (mao);
-    tCarta jogada, mesa;
-    mesa = CartaNoIndice (1, monte);
+    tCarta jogada;
 
     for (int i = TamanhoMao (*mao); i >= 1; i --) {
         jogada = PegaCarta (i, *mao);
         if ((PontoBaixo (jogada)) && (!(ETrunfo (jogada, corte)))) {
-            RetiraDaMao (jogada, mao);
-            Insere (jogada, monte);
+            MaoParaMonte (jogada, monte, mao);
             return (jogada);
         }
     }
     for (int i = 1; i <= TamanhoMao (*mao); i ++) {
         jogada = PegaCarta (i, *mao);
         if ((Valor (jogada) <= '6') && (!(ETrunfo (jogada, corte)))) {
-            RetiraDaMao (jogada, mao);
-            Insere (jogada, monte);
+            MaoParaMonte (jogada, monte, mao);
             return (jogada);
         }
     }
     for (int i = 1; i <= TamanhoMao (*mao); i ++) {
         jogada = PegaCarta (i, *mao);
         if (Valor (jogada) <= '6') {
-            RetiraDaMao (jogada, mao);
-            Insere (jogada, monte);
+            MaoParaMonte (jogada, monte, mao);
             return (jogada);
         }
     }
     for (int i = 1; i <= TamanhoMao (*mao); i ++) {
         jogada = PegaCarta (i, *mao);
         if ((PontoAlto (jogada)) && (!(ETrunfo (jogada, corte)))) {
-            RetiraDaMao (jogada, mao);
-            Insere (jogada, monte);
+            MaoParaMonte (jogada, monte, mao);
             return (jogada);
         }
     }
     for (int i = 1; i <= TamanhoMao (*mao); i ++) {
         jogada = PegaCarta (i, *mao);
         if (PontoBaixo (jogada)) {
-            RetiraDaMao (jogada, mao);
-            Insere (jogada, monte);
+            MaoParaMonte (jogada, monte, mao);
             return (jogada);
         }
     }
     jogada = PegaCarta (1, *mao);
     while ((Valor (jogada) == 'A') && (ETrunfo (jogada, corte)) && (!(seteSaiu)) && (TamanhoMao (*mao) > 1))
         jogada = PegaCarta (1 , *mao);
-    RetiraDaMao (jogada, mao);
-    Insere (jogada, monte);
+    MaoParaMonte (jogada, monte, mao);
     return (jogada);
 }
 
 tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
-    int i = 0;
-    char trunfo = Naipe (corte);
     OrdenaMao (mao);
     //OrdenaMesa
     tCarta jogada, mesa;
@@ -78,24 +69,21 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
         if (Valor (mesa) == '7') {
             tCarta heley = PreencheCarta ('A', Naipe (corte));
             if (EstaNaMao (Valor (heley), Naipe (heley), *mao)) {
-                RetiraDaMao (heley, mao);
-                Insere (heley, monte);
+                MaoParaMonte (heley, monte, mao);
                 return (heley);
             }
         }
         for (int i = 1; i <= TamanhoMao (*mao); i ++) {
             jogada = PegaCarta (i, *mao);
             if ((Valor (jogada) <= '3') && (Valor (jogada) < Valor (mesa))) {
-                RetiraDaMao (jogada, mao);
-                Insere (jogada, monte);
+                MaoParaMonte (jogada, monte, mao);
                 return (jogada);
             }
         }
         for (int i = 1; i <= TamanhoMao (*mao); i ++) {
             jogada = PegaCarta (i, *mao);
             if ((!(ETrunfo (jogada, corte))) && (!(PontoAlto (jogada)))) {
-                RetiraDaMao (jogada, mao);
-                Insere (jogada, monte);
+                MaoParaMonte (jogada, monte, mao);
                 return (jogada);
             }
         }
@@ -107,8 +95,7 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
                 for (int i = 0; i < 4; i ++) {
                     tCarta heley = PreencheCarta ('A', NAIPES[i]);
                     if (EstaNaMao (Valor (heley), Naipe (heley), *mao)) {
-                        RetiraDaMao (heley, mao);
-                        Insere (jogada, monte);
+                        MaoParaMonte (heley, monte, mao);
                         return (heley);
                     }
                 }
@@ -119,14 +106,12 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
                     if (ETrunfo (jogada, corte)) {
                         if (Valor (jogada) == 'A') {
                             if (seteSaiu) {
-                                RetiraDaMao (jogada, mao);
-                                Insere (jogada, monte);
+                                MaoParaMonte (jogada, monte, mao);
                                 return (jogada);
                             }
                         }
                         else {
-                            RetiraDaMao (jogada, mao);
-                            Insere (jogada, monte);
+                            MaoParaMonte (jogada, monte, mao);
                             return (jogada);
                         }
                     }
@@ -138,16 +123,14 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
                 for (int i = TamanhoMao (*mao); i > 0; i --) {
                     jogada = PegaCarta (i, *mao);
                     if (((Valor (jogada) == '7') || (Valor (jogada) == 'A')) && (Naipe (jogada) == Naipe (mesa))) {
-                        RetiraDaMao (jogada, mao);
-                        Insere (jogada, monte);
+                        MaoParaMonte (jogada, monte, mao);
                         return (jogada);
                     }
                 }
                 for (int i = 1; i <= TamanhoMao (*mao); i ++) {
                     jogada = PegaCarta (i, *mao);
                     if ((Valor (jogada) <= '5') && (ETrunfo (jogada, corte))) {
-                        RetiraDaMao (jogada, mao);
-                        Insere (jogada, monte);
+                        MaoParaMonte (jogada, monte, mao);
                         return (jogada);
                     }
                 }
@@ -157,16 +140,14 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
                 for (int i = TamanhoMao (*mao); i > 0; i --) {
                     jogada = PegaCarta (i, *mao);
                     if (((Valor (jogada) == 'K') || (Valor (jogada) == '7') || (Valor (jogada) == 'A')) && (Naipe (jogada) == Naipe (mesa))) {
-                        RetiraDaMao (jogada, mao);
-                        Insere (jogada, monte);
+                        MaoParaMonte (jogada, monte, mao);
                         return (jogada);
                     }
                 }
                 for (int i = 1; i <= TamanhoMao (*mao); i ++) {
                     jogada = PegaCarta (i, *mao);
                     if ((Valor (jogada) <= '4') && (ETrunfo (jogada, corte))) {
-                        RetiraDaMao (jogada, mao);
-                        Insere (jogada, monte);
+                        MaoParaMonte (jogada, monte, mao);
                         return (jogada);
                     }
                 }
@@ -176,16 +157,14 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
                 for (int i = TamanhoMao (*mao); i > 0; i --) {
                     jogada = PegaCarta (i, *mao);
                     if (((Valor (jogada) == 'J') || (Valor (jogada) == 'K') || (Valor (jogada) == '7') || (Valor (jogada) == 'A')) && (Naipe (jogada) == Naipe (mesa))) {
-                        RetiraDaMao (jogada, mao);
-                        Insere (jogada, monte);
+                        MaoParaMonte (jogada, monte, mao);
                         return (jogada);
                     }
                 }
                 for (int i = 1; i <= TamanhoMao (*mao); i ++) {
                     jogada = PegaCarta (i, *mao);
                     if ((Valor (jogada) <= '3') && (ETrunfo (jogada, corte))) {
-                        RetiraDaMao (jogada, mao);
-                        Insere (jogada, monte);
+                        MaoParaMonte (jogada, monte, mao);
                         return (jogada);
                     }
                 }
@@ -195,8 +174,7 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
             for (int i = TamanhoMao (*mao); i > 0; i --) {
                 jogada = PegaCarta (i, *mao);
                 if ((!(ETrunfo (jogada, corte))) && ((PontoAlto (jogada)) || (PontoBaixo (jogada))) && (Naipe (jogada) == Naipe (mesa))) {
-                    RetiraDaMao (jogada, mao);
-                    Insere (jogada, monte);
+                    MaoParaMonte (jogada, monte, mao);
                     return (jogada);
                 }
             }
@@ -207,24 +185,20 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
         if (ETrunfo (jogada, corte)) {
             if (Valor (jogada) == 'A') {
                 if (seteSaiu) {
-                    RetiraDaMao (jogada, mao);
-                    Insere (jogada, monte);
+                    MaoParaMonte (jogada, monte, mao);
                     return (jogada);
                 }
             }
             if (Valor (jogada) <= '3') {
-                RetiraDaMao (jogada, mao);
-                Insere (jogada, monte);
+                MaoParaMonte (jogada, monte, mao);
                 return (jogada);
             }
         }
-        RetiraDaMao (jogada, mao);
-        Insere (jogada, monte);
+        MaoParaMonte (jogada, monte, mao);
         return (jogada);
     }
     jogada = PegaCarta (1, *mao);
-    RetiraDaMao (jogada, mao);
-    Insere (jogada, monte);
+    MaoParaMonte (jogada, monte, mao);
     return (jogada);
 }
 
@@ -243,8 +217,7 @@ tCarta PC2JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int seteSa
         posAleatoria = (rand ( ) % mao->n) + 1;
         jogada = PegaCarta (posAleatoria, *mao);
     }
-    RetiraDaMao (jogada, mao);
-    Insere (jogada, monte);
+    MaoParaMonte (jogada, monte, mao);
 
     return (jogada);
 }

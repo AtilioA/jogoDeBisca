@@ -3,12 +3,12 @@
 #include <string.h>
 #include "../include/Jogo.h"
 #include "../include/BaralhoEncadeado.h"
-
-/* As opções
+/*
+ As opções
 - Mostrar cartas do monte (na ordem que ela estiver)
 - Embaralhar
 - Cortar
-estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor */
+estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
 
 // void exibeInfo(tJogador *jogadores, int nJogadores)
 // {
@@ -19,7 +19,7 @@ estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor */
 //     // imprimeMao(J1);
 
 //     printf("Cartas restantes no monte: ");
-//     /* Mostra cartas restantes no monte */
+//     Mostra cartas restantes no monte
 
 //     printf("Pontuação dos jogadores: ");
 //     for (i = 0; i < nJogadores; i++)
@@ -48,7 +48,7 @@ void exibeAjuda()
 
 void exibeMenu(tMonte *monte)
 {
-    int modoDev = 0;
+    //int modoDev = 0;
     char op = '1';
 
     while (op != '2')
@@ -66,7 +66,7 @@ void exibeMenu(tMonte *monte)
         switch (op)
         {
         case '1':
-            modoDev = 0;
+            //modoDev = 0;
             // Função que começa o jogo
             break;
 
@@ -78,24 +78,24 @@ void exibeMenu(tMonte *monte)
             break;
 
         case '4':
-            modoDev = 1;
+            //modoDev = 1;
             // Função que começa o jogo
             break;
 
         // Quando o jogo estiver ativo
         case '7':
-            modoDev = 1;
+            //modoDev = 1;
             // imprimeLista(monte);
 
             break;
 
         case '8':
-            modoDev = 1;
+            //modoDev = 1;
             // embaralhaLista(monte);
             break;
 
         case '9':
-            modoDev = 1;
+            //modoDev = 1;
             char valorCortado, naipeCortado;
             tCarta cartaCortada;
             printf("Informe a carta a ser cortada [Valor/Naipe]:\n");
@@ -111,3 +111,4 @@ void exibeMenu(tMonte *monte)
         }
     }
 }
+*/

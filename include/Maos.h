@@ -31,6 +31,4 @@ void ImprimeMao(tMao mao);
 
 void OrdenaMao(tMao *mao);
 
-void MaoParaMonte(tCarta *carta, tMonte *monte, tMao *mao);
-
 #endif

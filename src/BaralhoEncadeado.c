@@ -12,8 +12,6 @@ void FMVazio(tMonte *monte)
 
 void CriaBaralho(tMonte *monte)
 {
-    FMVazio(monte);
-
     tCarta atual;
 
     for (int i = 0; i < nVALORES * nNAIPES; i++)
@@ -45,7 +43,7 @@ int QuantidadeMonte(tMonte *monte)
 
 int ExisteCarta(tCarta x, tMonte *monte)
 {
-    tCelula *atual = monte->primeiro;
+    tCelula *atual = monte->primeiro->prox;
 
     while (atual != NULL && (Valor(atual->carta) != Valor(x) || Naipe(atual->carta) != Naipe(x)))
     {
@@ -235,16 +233,22 @@ void ImprimeMonte(tMonte *monte)
     }
 }
 
+void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao)
+{
+    RetiraDaMao(carta, mao);
+    Insere(carta, monte);
+}
+
 void DestroiMonte(tMonte *monte)
 {
-    tCelula *anterior = NULL;
-    tCelula *atual = monte->primeiro;
+    tCelula *anterior, *atual;
 
-    while (anterior != NULL)
+    atual = monte->primeiro;
+    while (atual != NULL)
     {
         anterior = atual;
         atual = atual->prox;
-        free(anterior);
+        free (anterior);
     }
 
     monte->tamanho = 0;
@@ -333,10 +337,8 @@ tCarta CartaNoIndice(int pos, tMonte *monte)
             return atual->carta;
         }
     }
-    else
-    {
-        return CartaVazia();
-    }
+
+    return CartaVazia();
 }
 
 void SwapCelulas(int pos1, int pos2, tMonte *monte);

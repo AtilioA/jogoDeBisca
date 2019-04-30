@@ -11,6 +11,8 @@
 // Chame as bibliotecas necessárias para suas structs
 // Neste caso, apenas a Cartas.h, pois nela está definida a estrutura tCarta
 #include "Cartas.h"
+#include "Maos.h"
+#include <sys/time.h>
 
 // Lista encadeada que abstrai um conjunto de cartas
 typedef struct tCelula
@@ -25,8 +27,6 @@ typedef struct
     tCelula *primeiro, *ultimo;
 } tMonte;
 
-#include "Maos.h"
-#include <sys/time.h>
 
 // Faz a lista (monte) ficar vazia
 void FMVazio(tMonte *monte);
@@ -64,6 +64,9 @@ void MoveCelula(tMonte *monte, tCelula *celula, int pos);
 void Embaralha(tMonte *monte);
 // Imprime as cartas do monte
 void ImprimeMonte(tMonte *monte);
+
+void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao);
+
 // Libera as células de um monte e define seu tamanho para 0
 void DestroiMonte(tMonte *monte);
 
