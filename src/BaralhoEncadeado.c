@@ -108,18 +108,34 @@ void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada)
     }
 }
 
-void Corta(tCarta carta, tMonte *monte, tCarta *cartaCorte)
+tCarta Corta(tMonte *monte, int pos)
 {
-    if (Valor(carta) != 'A' && Valor(carta) != '7')
-    {
-        Retira(carta, monte, cartaCorte);
-    }
-    else
-    {
-        printf("Nao e permitido cortar As ou 7\n");
-    }
+    tCarta corte;
 
-    // ???
+    if ((pos >= 1) && (pos <= QuantidadeMonte (monte)))
+    {
+        int i = 1;
+        tCelula *atual, *ant;
+        ant = atual = monte->primeiro->prox;
+
+        while (atual != NULL && i < pos)
+        {
+            i ++;
+            ant = atual;
+            atual = atual->prox;
+        }
+
+        if (atual != NULL)
+        {
+            monte->ultimo->prox = monte->primeiro->prox;
+            monte->primeiro->prox = atual;
+            ant->prox = NULL;
+            corte = Carta (atual);
+        }
+        return (corte);
+    }
+    printf("ERRO! Nao foi possivel cortar.\n");
+    return (CartaVazia ());
 }
 
 int Recupera(char valor, char naipe, tMonte *monte)

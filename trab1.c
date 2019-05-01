@@ -16,9 +16,11 @@ int main()
 
     FMVazio(&monte);
     CriaBaralho(&monte);
-    Embaralha(&monte);
+    //Embaralha(&monte);
     ImprimeMonte(&monte);
-
+    ImprimeCarta(Corta(&monte, 10));
+    ImprimeMonte(&monte);
+/*
     for (size_t i = 0; i < 100; i++) {
         CriaMao(&mao);
         posAleatoria = (rand () % 40) + 1;
@@ -70,7 +72,7 @@ int main()
         LiberaMao(&mao);
         DestroiMonte(&mesa);
     }
-
+*/
     DestroiMonte(&monte);
 
     return 0;

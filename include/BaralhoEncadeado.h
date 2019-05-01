@@ -53,7 +53,7 @@ void Insere(tCarta x, tMonte *monte);
 void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada);
 
 // "Corta" uma carta (caso específico da função retira)
-void Corta(tCarta carta, tMonte *monte, tCarta *cartaCorte);
+tCarta Corta(tMonte *monte, int pos);
 
 // Retorna o naipe de uma carta
 int Recupera(char valor, char naipe, tMonte *monte);
