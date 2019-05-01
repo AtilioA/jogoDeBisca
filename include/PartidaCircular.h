@@ -16,7 +16,7 @@ typedef struct
 {
     int nJogadores;
     tCarta corte;
-    tMonte monte;
+    tMonte *monte;
     tJogador *inicial;
 } tPartida;
 
@@ -34,7 +34,7 @@ int QuantidadeJogadores (tPartida *partida);
 // Retorna o jogador inicial atual de uma partida
 tJogador *JogadorInicial(tPartida *partida);
 // Retorna o monte de uma  partida
-tMonte Monte(tPartida *partida);
+tMonte *Monte(tPartida *partida);
 // Retorna o corte de uma partida
 tCarta Corte(tPartida *partida);
 // Retorna a pontuação de um jogador

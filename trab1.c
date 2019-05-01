@@ -13,9 +13,8 @@ int main()
     tPartida partida;
     CriaBaralho (&baralho);
     CriaPartida (4, &partida, &baralho);
-
+    //exibeMenuDev (&partida);
     DestroiPartida (&partida);
-    DestroiMonte(&baralho);
     // TESTE DE IA
     //int posAleatoria;
     //tCarta carta;

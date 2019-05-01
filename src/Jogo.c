@@ -9,11 +9,11 @@ void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     int p;
     tCarta trunfo;
 
-    printf("Iniciando a partida...\n");
-
+    printf("Iniciando a partida de %d jogadores...\n", nJogadores);
     PreparaPartida (partida, nJogadores);
+    partida->monte = baralho;
     printf ("Embaralhando o baralho...\n");
-    Embaralha (baralho);
+    Embaralha (Monte (partida));
     sleep (2);
     printf ("Pronto! Agora sorteando quem sera o primeiro a jogar...\n");
     struct timeval t;
@@ -31,30 +31,23 @@ void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     printf ("Jogador %d, escolha uma posicao de 1 a 40 para cortar o baralho.\n", p);
     scanf ("%d", &p);
     p = (p % 40) + 1;
-    trunfo = Corta (baralho, p);
+    trunfo = Corta (Monte (partida), p);
     partida->corte = trunfo;
     printf ("O trunfo escolhido foi ");
     ImprimeCarta (trunfo);
+    printf ("Agora sera entregue as cartas...\n");
 }
 
-void exibeInfo(tMonte *monte, tJogador *jogadores, int nJogadores)
+void DistribuiCartas (tPartida *partida) {
+
+}
+
+//Informacoes do jogo
+void exibeInfo (tPartida *partida)
 {
-    int i = 0;
-    tJogador J1 = jogadores[0]; // Jogador 1 ("eu")
-
-    printf("Sua mao:\n");
-    ImprimeMao(Mao(&J1));
-
-    printf("Cartas restantes no monte: ");
-    ImprimeMonte(monte);
-
-    printf("Pontuação dos jogadores: ");
-    for (i = 0; i < nJogadores; i++)
-    {
-        // printf("Pontuacao do %i jogador: %i.\n", i + 1, Pontuacao(&jogadores[i]));
-    }
-
-    printf("\n");
+//Corte
+//ultima carta Jogada
+//quem inicia
 }
 
 
@@ -64,11 +57,35 @@ void exibeInfo(tMonte *monte, tJogador *jogadores, int nJogadores)
  * - Cortar
  * estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
  */
-void exibeMenuDev()
+void exibeMenuDev (tPartida *partida)
 {
-    printf("[10] - Mostrar cartas do monte\n");
-    printf("[11] - Embaralhar\n");
-    printf("[12] - Cortar\n");
+    int op, p;
+
+    printf ("[10] - Mostrar cartas do monte\n");
+    printf ("[11] - Embaralhar\n");
+    printf ("[12] - Cortar\n");
+
+    scanf ("%d", &op);
+    switch (op) {
+        case 10:
+            ImprimeMonte (Monte (partida));
+        break;
+
+        case 11:
+            Embaralha (Monte (partida));
+            ImprimeMonte (Monte (partida));
+        break;
+
+        case 12:
+            printf ("Escolha a posicao de 1 a 40 para cortar\n");
+            scanf ("%d", &p);
+            ImprimeCarta (Corta (Monte (partida), p));
+        break;
+
+        default:
+            printf ("Im sorry my dear.\n");
+        break;
+    }
 }
 
 void exibeAjuda()
@@ -79,12 +96,12 @@ void exibeAjuda()
     printf("Sobre a bisca: http://tiny.cc/bisca\n\n\n");
 }
 
-void exibeMenu(tMonte *monte)
+void exibeMenu ( )
 {
-    int modoDev = 0, nJogadores = 0;
-    char op = '1';
+    int modoDev, nJogadores;
+    int op = 1;
 
-    while (op != '2')
+    while (op != 2)
     {
         printf("-------------------------\n");
         printf("----- JOGO DE BISCA -----\n\n");
@@ -94,53 +111,40 @@ void exibeMenu(tMonte *monte)
         printf("[3] - Ajuda\n");
         printf("[4] - Jogar em modo desenvolvedor {h a c k e r m a n}\n");
         printf("Digite sua escolha: ");
-        scanf(" %c", &op);
+        scanf(" %d", &op);
 
         switch (op)
         {
-        case '1':
-            modoDev = 0;
-            printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
-            scanf("%i", &nJogadores);
+            case 1:
+                modoDev = 0;
+                printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
+                scanf("%d", &nJogadores);
+                //chama o jogo de jogadores
+                break;
+
+            case 2:
+                return;
+
+            case 3:
+                exibeAjuda();
+                break;
+
+            case 4:
+                modoDev = 1;
+                printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
+                scanf("%d", &nJogadores);
+                //chama o jogo de jogadores
             break;
 
-        case '2':
-            return;
-
-        case '3':
-            exibeAjuda();
-            break;
-
-        case '4':
-            modoDev = 1;
-            printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
-            scanf("%i", &nJogadores);
-            break;
-
-        // Quando o jogo estiver ativo
-        case '7':
-            if (modoDev == 1) // algo assim
-            {
-                ImprimeMonte(monte);
-            }
-            break;
-
-        case '8':
-            if (modoDev == 1)
-            {
-                Embaralha(monte);
-            }
-            break;
-
-        case '9':
-            // Vergonha alheia de cortar no meio do jogo
-            break;
-
-            while (op < '1' || op > '9')
+            while (op < 1 || op > 4)
             {
                 printf("Opcao invalida. Tente novamente: ");
-                scanf(" %c", &op);
+                scanf(" %d", &op);
             }
         }
     }
+}
+
+int Partida2Jogadores (tPartida *partida) {
+
 }

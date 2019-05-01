@@ -36,6 +36,7 @@ void DestroiPartida (tPartida *partida) {
         lixo = atual;
         partida->nJogadores --;
     }
+    DestroiMonte (partida->monte);
 }
 
 void MoveCabeca (tPartida *partida, int pos) {
@@ -55,7 +56,7 @@ tJogador *JogadorInicial(tPartida *partida)
     return partida->inicial;
 }
 
-tMonte Monte(tPartida *partida)
+tMonte *Monte(tPartida *partida)
 {
     return partida->monte;
 }

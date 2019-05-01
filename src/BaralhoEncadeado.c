@@ -129,9 +129,10 @@ tCarta Corta(tMonte *monte, int pos)
         if (atual != NULL)
         {
             monte->ultimo->prox = monte->primeiro->prox;
-            monte->primeiro->prox = atual;
-            ant->prox = NULL;
-            corte = Carta (atual);
+            monte->primeiro->prox = atual->prox;
+            monte->ultimo = atual;
+            atual->prox = NULL;
+            corte = Carta (monte->ultimo);
         }
         return (corte);
     }

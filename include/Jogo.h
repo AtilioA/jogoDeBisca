@@ -22,16 +22,15 @@
 
 void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho);
 
-// Exibe o menu principal do jogo
-void exibeMenu(/* carta *baralho */);
+// Exibe informações sobre o estado do jogo
+void exibeInfo (tPartida *partida);
 
 // Imprime informações de ajuda para o jogador
 void exibeAjuda();
 
 // Imprime opções extras (para quando o modo de desenvolvedor estiver ativo)
-void exibeMenuDev();
+void exibeMenuDev (tPartida *partida);
 
-// Exibe informações sobre o estado do jogo
-void exibeInfo();
+void exibeMenu ( );
 
 #endif
