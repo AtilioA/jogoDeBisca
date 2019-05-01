@@ -13,22 +13,31 @@ typedef struct
 
 #include "BaralhoEncadeado.h"
 
-void CriaMao(tMao *mao);
-
-void LiberaMao(tMao *mao);
-
+/* Funções para acessar estrutura opaca */
+// Retorna o tamanho da mão
+int TamanhoMao(tMao mao);
+// Retorna a carta de uma dada posição na mão
 tCarta PegaCarta(int p, tMao mao);
 
+// Cria uma mão vazia
+void CriaMao(tMao *mao);
+
+// Libera o vetor dinâmico de cartas e zera a quantidade de cartas da mão
+void LiberaMao(tMao *mao);
+
+// Verifica se uma carta está na mão
 int EstaNaMao(char valor, char naipe, tMao mao);
 
+// Insere uma carta na mão
 void ColocaNaMao(tCarta carta, tMao *mao);
 
+// Retira uma carta na mão
 void RetiraDaMao(tCarta carta, tMao *mao);
 
-int TamanhoMao(tMao mao);
-
+// Imprime as cartas da mão
 void ImprimeMao(tMao mao);
 
+// Ordena as cartas da mão
 void OrdenaMao(tMao *mao);
 
 #endif

@@ -19,21 +19,23 @@ typedef struct
     char naipe;
 } tCarta;
 
+/* Funções para acessar estrutura opaca */
+// Retorna o valor de uma carta
+char Valor(tCarta carta);
+// Retorna o naipe de uma carta
+char Naipe(tCarta carta);
+
 // Verifica se uma carta é válida
 int CartaValida(tCarta carta);
 
 // Cria uma carta e retorna-a
 tCarta PreencheCarta(char valor, char naipe);
 
+// Cria uma carta vazia e retorna-a
 tCarta CartaVazia();
 
-// Com caracteres dos naipe
+// Imprime uma carta
 void ImprimeCarta(tCarta carta);
 
-// Retorna o valor de uma carta
-char Valor(tCarta carta);
-
-// Retorna o naipe de uma carta
-char Naipe(tCarta carta);
 
 #endif

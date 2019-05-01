@@ -36,17 +36,24 @@ typedef struct
     tJogador *inicial;
 } tPartida;
 
-void CriaJogador (tJogador *anterior);
-
-void CriaPartida (tPartida *partida, int nJogadores);
-
 /* Funções para acessar estrutura opaca */
+// Retorna a quantidade de jogadores de uma partida
 int QuantidadeJogadores (tPartida *partida);
+// Retorna o jogador inicial atual de uma partida
 tJogador *JogadorInicial(tPartida *partida);
+// Retorna o monte de uma  partida
 tMonte Monte(tPartida *partida);
+// Retorna o corte de uma partida
 tCarta Corte(tPartida *partida);
+// Retorna a pontuação de um jogador
 tMonte Pontuacao(tJogador *jogador);
 tMao Mao(tJogador *jogador);
+
+// Inicializa uma variável do tipo tJogador
+void CriaJogador (tJogador *anterior);
+
+// Inicializa uma variável do tipo tPartida
+void CriaPartida (tPartida *partida, int nJogadores);
 
 // Exibe o menu principal do jogo
 void exibeMenu(/* carta *baralho */);

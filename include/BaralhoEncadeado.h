@@ -28,6 +28,12 @@ typedef struct
 } tMonte;
 
 
+/* Funções para acessar estrutura opaca */
+// Retorna a quantidade de cartas do monte
+int QuantidadeMonte(tMonte *monte);
+// Retorna a carta de uma célula
+tCarta Carta(tCelula *celula);
+
 // Faz a lista (monte) ficar vazia
 void FMVazio(tMonte *monte);
 
@@ -39,9 +45,6 @@ int EstaVazio(tMonte *monte);
 
 // Cria uma célula vazia e retorna-a
 tCelula CriaCelulaVazia();
-
-// Retorna a quantidade de elementos dentro do monte
-int QuantidadeMonte(tMonte *monte);
 
 // Verifica se uma carta existe no monte
 int ExisteCarta(tCarta x, tMonte *monte);
