@@ -83,12 +83,12 @@ void Insere(tCarta x, tMonte *monte)
     }
 }
 
-void Retira(char valor, char naipe, tMonte *monte, tCarta *cartaRetirada)
+void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada)
 {
     tCelula *atual = monte->primeiro;
     tCelula *anterior = NULL;
 
-    while (atual != NULL && (Valor(Carta(atual)) != valor || Naipe(Carta(atual)) != naipe))
+    while (atual != NULL && (Valor(Carta(atual)) != Valor(x) || Naipe(Carta(atual)) != Naipe(x)))
     {
         anterior = atual;
         atual = atual->prox;
@@ -108,11 +108,11 @@ void Retira(char valor, char naipe, tMonte *monte, tCarta *cartaRetirada)
     }
 }
 
-void Corta(char valor, char naipe, tMonte *monte, tCarta *cartaCorte)
+void Corta(tCarta carta, tMonte *monte, tCarta *cartaCorte)
 {
-    if (valor != 'A' && valor != '7')
+    if (Valor(carta) != 'A' && Valor(carta) != '7')
     {
-        Retira(valor, naipe, monte, cartaCorte);
+        Retira(carta, monte, cartaCorte);
     }
     else
     {
@@ -258,7 +258,7 @@ int IndiceCarta(char valor, char naipe, tMonte *monte)
     tCelula *atual = monte->primeiro->prox;
     int indice = 1; // 1 como sendo o primeiro elemento
 
-    while (atual != NULL || Valor(Carta(atual)) != valor && Naipe(Carta(atual)) != naipe)
+    while (atual != NULL || (Valor(Carta(atual)) != valor && Naipe(Carta(atual)) != naipe))
     {
         indice++;
         atual = atual->prox;
@@ -306,7 +306,7 @@ void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)
 {
     tCarta *retirada = NULL;
 
-    Retira(Valor(*carta), Naipe(*carta), monte, retirada);
+    Retira(*carta, monte, retirada);
     ColocaNaMao(*retirada, mao);
 }
 

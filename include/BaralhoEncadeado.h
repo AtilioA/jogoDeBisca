@@ -50,10 +50,10 @@ int ExisteCarta(tCarta x, tMonte *monte);
 void Insere(tCarta x, tMonte *monte);
 
 // Retira uma carta do monte e retorna o elemento por referência
-void Retira(char valor, char naipe, tMonte *monte, tCarta *cartaRetirada);
+void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada);
 
 // "Corta" uma carta (caso específico da função retira)
-void Corta(char valor, char naipe, tMonte *monte, tCarta *cartaCorte);
+void Corta(tCarta carta, tMonte *monte, tCarta *cartaCorte);
 
 // Retorna o naipe de uma carta
 int Recupera(char valor, char naipe, tMonte *monte);
