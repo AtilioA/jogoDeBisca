@@ -5,55 +5,36 @@
 #include "../include/Maos.h"
 #include "../include/BaralhoEncadeado.h"
 
-void CriaJogador(tJogador *jogador)
-{
-    CriaMao(&jogador->mao);
-    FMVazio(&jogador->pontos);
-    jogador->prox = NULL;
-}
+void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
+    int p;
+    tCarta trunfo;
 
-void CriaPartida(tPartida *partida, int nJogadores)
-{
-    tJogador *atual = partida->inicial;
-    partida->nJogadores = 0;
+    printf("Iniciando a partida...\n");
 
-    while ((QuantidadeJogadores(partida)) < nJogadores)
-    {
-        CriaJogador(atual);
-        atual = atual->prox;
-        partida->nJogadores++;
-    }
-    atual->prox = partida->inicial;
-}
-
-int QuantidadeJogadores(tPartida *partida)
-{
-    return partida->nJogadores;
-}
-
-tJogador *JogadorInicial(tPartida *partida)
-{
-    return partida->inicial;
-}
-
-tMonte Monte(tPartida *partida)
-{
-    return partida->monte;
-}
-
-tCarta Corte(tPartida *partida)
-{
-    return partida->corte;
-}
-
-tMonte Pontuacao(tJogador *jogador)
-{
-    return jogador->pontos;
-}
-
-tMao Mao(tJogador *jogador)
-{
-    return jogador->mao;
+    PreparaPartida (partida, nJogadores);
+    printf ("Embaralhando o baralho...\n");
+    Embaralha (baralho);
+    sleep (2);
+    printf ("Pronto! Agora sorteando quem sera o primeiro a jogar...\n");
+    struct timeval t;
+    gettimeofday(&t, NULL);
+    srand((unsigned int)t.tv_usec);
+    p = (rand ( ) % nJogadores) + 1;
+    MoveCabeca (partida, p);
+    sleep (2);
+    printf ("Sera o jogador %d!\n", p);
+    printf ("\n");
+    printf ("Jogador %d, passe os comandos ao jogador a sua ESQUERDA para que ele possa cortar.\n", p);
+    p = p - 1;
+    if (p == 0) p = nJogadores;
+    sleep (3);
+    printf ("Jogador %d, escolha uma posicao de 1 a 40 para cortar o baralho.\n", p);
+    scanf ("%d", &p);
+    p = (p % 40) + 1;
+    trunfo = Corta (baralho, p);
+    partida->corte = trunfo;
+    printf ("O trunfo escolhido foi ");
+    ImprimeCarta (trunfo);
 }
 
 void exibeInfo(tMonte *monte, tJogador *jogadores, int nJogadores)
@@ -121,7 +102,6 @@ void exibeMenu(tMonte *monte)
             modoDev = 0;
             printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
             scanf("%i", &nJogadores);
-            Joga(monte, modoDev, nJogadores);
             break;
 
         case '2':
@@ -135,7 +115,6 @@ void exibeMenu(tMonte *monte)
             modoDev = 1;
             printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
             scanf("%i", &nJogadores);
-            Joga(monte, modoDev, nJogadores);
             break;
 
         // Quando o jogo estiver ativo
@@ -163,41 +142,5 @@ void exibeMenu(tMonte *monte)
                 scanf(" %c", &op);
             }
         }
-    }
-}
-
-void Joga2(tMonte *monte, int modoDev)
-{
-    tPartida partida;
-    Embaralha(monte);
-    CriaPartida(&partida, 2);
-
-    /* Primeiro jogador corta, etc
-    */
-}
-void Joga4(tMonte *monte, int modoDev)
-{
-    tPartida partida;
-    Embaralha(monte);
-    CriaPartida(&partida, 4);
-
-    /* Primeiro jogador corta, etc
-    */
-}
-
-void Joga(tMonte *monte, int modoDev, int nJogadores)
-{
-    while (nJogadores != 2 && nJogadores != 4)
-    {
-        printf("Opcao invalida.\nDigite 2 para jogar com 2 jogadores ou\n 4 para jogar com 4 jogadores: ");
-        scanf("%i", &nJogadores);
-    }
-    if (nJogadores == 2)
-    {
-        Joga2(monte, modoDev);
-    }
-    else if (nJogadores == 4)
-    {
-        Joga4(monte, modoDev);
     }
 }

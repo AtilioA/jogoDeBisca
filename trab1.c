@@ -3,13 +3,19 @@
 #include "include/Maos.h"
 #include "include/Cartas.h"
 #include "include/BaralhoEncadeado.h"
+#include "include/PartidaCircular.h"
 #include "include/Jogo.h"
 #include <time.h>
 
 int main()
 {
+    tMonte baralho;
     tPartida partida;
-    CriaPartida (&partida, 2);
+    CriaBaralho (&baralho);
+    CriaPartida (4, &partida, &baralho);
+
+    DestroiPartida (&partida);
+    DestroiMonte(&baralho);
     // TESTE DE IA
     //int posAleatoria;
     //tCarta carta;
@@ -17,6 +23,8 @@ int main()
     //tMonte monte, mesa;
 
     //FMVazio(&monte);
+
+    //DestroiMonte(&monte);
     //CriaBaralho(&monte);
     //Embaralha(&monte);
     //ImprimeMonte(&monte);

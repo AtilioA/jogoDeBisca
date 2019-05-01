@@ -12,6 +12,7 @@ void FMVazio(tMonte *monte)
 
 void CriaBaralho(tMonte *monte)
 {
+    FMVazio (monte);
     tCarta atual;
 
     for (int i = 0; i < nVALORES * nNAIPES; i++)
