@@ -3,23 +3,25 @@
 #include "include/Maos.h"
 #include "include/Cartas.h"
 #include "include/BaralhoEncadeado.h"
+#include "include/Jogo.h"
 #include <time.h>
 
 int main()
 {
-
+    tPartida partida;
+    CriaPartida (&partida, 2);
     // TESTE DE IA
-    int posAleatoria;
-    tCarta carta;
-    tMao mao;
-    tMonte monte, mesa;
+    //int posAleatoria;
+    //tCarta carta;
+    //tMao mao;
+    //tMonte monte, mesa;
 
-    FMVazio(&monte);
-    CriaBaralho(&monte);
+    //FMVazio(&monte);
+    //CriaBaralho(&monte);
     //Embaralha(&monte);
-    ImprimeMonte(&monte);
-    ImprimeCarta(Corta(&monte, 10));
-    ImprimeMonte(&monte);
+    //ImprimeMonte(&monte);
+    //ImprimeCarta(Corta(&monte, 10));
+    //ImprimeMonte(&monte);
 /*
     for (size_t i = 0; i < 100; i++) {
         CriaMao(&mao);
@@ -73,7 +75,7 @@ int main()
         DestroiMonte(&mesa);
     }
 */
-    DestroiMonte(&monte);
+    //DestroiMonte(&monte);
 
     return 0;
 }

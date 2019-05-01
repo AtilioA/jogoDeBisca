@@ -20,11 +20,27 @@
 #include "BaralhoEncadeado.h"
 
 // Estrutura de dados que abstrai um jogador, que possui "mão" e pontuação
+typedef struct tJogador tJogador;
+struct tJogador
+{
+    tMao mao;
+    tMonte pontos;
+    tJogador *prox;
+};
+
 typedef struct
 {
-    // tCarta mao[3];
-    int pontuacao;
-} tJogador;
+    int nJogadores;
+    tCarta corte;
+    tMonte monte;
+    tJogador *inicial;
+} tPartida;
+
+void CriaJogador (tJogador *anterior);
+
+void CriaPartida (tPartida *partida, int nJogadores);
+
+int QuantidadeJogadores (tPartida *partida);
 
 // Exibe o menu principal do jogo
 void exibeMenu(/* carta *baralho */);

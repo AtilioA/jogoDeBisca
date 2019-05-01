@@ -3,6 +3,28 @@
 #include <string.h>
 #include "../include/Jogo.h"
 #include "../include/BaralhoEncadeado.h"
+
+void CriaJogador (tJogador *jogador) {
+    CriaMao (&jogador->mao);
+    FMVazio (&jogador->pontos);
+    jogador->prox = NULL;
+}
+
+void CriaPartida (tPartida *partida, int nJogadores) {
+    tJogador *atual = partida->inicial;
+    partida->nJogadores = 0;
+    while ((QuantidadeJogadores (partida)) < nJogadores) {
+        CriaJogador (atual);
+        atual = atual->prox;
+        partida->nJogadores ++;
+    }
+    atual->prox = partida->inicial;
+}
+
+int QuantidadeJogadores (tPartida *partida) {
+    return (partida->nJogadores);
+}
+
 /*
  As opções
 - Mostrar cartas do monte (na ordem que ela estiver)
