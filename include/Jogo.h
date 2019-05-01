@@ -40,7 +40,13 @@ void CriaJogador (tJogador *anterior);
 
 void CriaPartida (tPartida *partida, int nJogadores);
 
+/* Funções para acessar estrutura opaca */
 int QuantidadeJogadores (tPartida *partida);
+tJogador *JogadorInicial(tPartida *partida);
+tMonte Monte(tPartida *partida);
+tCarta Corte(tPartida *partida);
+tMonte Pontuacao(tJogador *jogador);
+tMao Mao(tJogador *jogador);
 
 // Exibe o menu principal do jogo
 void exibeMenu(/* carta *baralho */);
@@ -52,7 +58,8 @@ void exibeAjuda();
 void exibeMenuDev();
 
 // Exibe informações sobre o estado do jogo
-void exibeInfo(tJogador *jogadores, int nJogadores);
+void exibeInfo(tMonte *monte, tJogador *jogadores, int nJogadores);
 
+void Joga(tMonte *monte, int modoDev, int nJogadores);
 
 #endif

@@ -2,57 +2,87 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/Jogo.h"
+#include "../include/Maos.h"
 #include "../include/BaralhoEncadeado.h"
 
-void CriaJogador (tJogador *jogador) {
-    CriaMao (&jogador->mao);
-    FMVazio (&jogador->pontos);
+void CriaJogador(tJogador *jogador)
+{
+    CriaMao(&jogador->mao);
+    FMVazio(&jogador->pontos);
     jogador->prox = NULL;
 }
 
-void CriaPartida (tPartida *partida, int nJogadores) {
+void CriaPartida(tPartida *partida, int nJogadores)
+{
     tJogador *atual = partida->inicial;
     partida->nJogadores = 0;
-    while ((QuantidadeJogadores (partida)) < nJogadores) {
-        CriaJogador (atual);
+
+    while ((QuantidadeJogadores(partida)) < nJogadores)
+    {
+        CriaJogador(atual);
         atual = atual->prox;
-        partida->nJogadores ++;
+        partida->nJogadores++;
     }
     atual->prox = partida->inicial;
 }
 
-int QuantidadeJogadores (tPartida *partida) {
-    return (partida->nJogadores);
+int QuantidadeJogadores(tPartida *partida)
+{
+    return partida->nJogadores;
 }
 
-/*
- As opções
-- Mostrar cartas do monte (na ordem que ela estiver)
-- Embaralhar
-- Cortar
-estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
+tJogador *JogadorInicial(tPartida *partida)
+{
+    return partida->inicial;
+}
 
-// void exibeInfo(tJogador *jogadores, int nJogadores)
-// {
-//     int i = 0;
-//     tJogador J1 = jogadores[0]; // Jogador 1 ("eu")
+tMonte Monte(tPartida *partida)
+{
+    return partida->monte;
+}
 
-//     printf("Sua mao:\n");
-//     // imprimeMao(J1);
+tCarta Corte(tPartida *partida)
+{
+    return partida->corte;
+}
 
-//     printf("Cartas restantes no monte: ");
-//     Mostra cartas restantes no monte
+tMonte Pontuacao(tJogador *jogador)
+{
+    return jogador->pontos;
+}
 
-//     printf("Pontuação dos jogadores: ");
-//     for (i = 0; i < nJogadores; i++)
-//     {
-//         printf("Pontuacao do %i jogador: %i.\n", i + 1, jogadores[i].pontuacao);
-//     }
+tMao Mao(tJogador *jogador)
+{
+    return jogador->mao;
+}
 
-//     printf("\n");
-// }
+void exibeInfo(tMonte *monte, tJogador *jogadores, int nJogadores)
+{
+    int i = 0;
+    tJogador J1 = jogadores[0]; // Jogador 1 ("eu")
 
-// Opções extras para modo desenvolvedor (para printar mais facilmente)
+    printf("Sua mao:\n");
+    ImprimeMao(Mao(&J1));
+
+    printf("Cartas restantes no monte: ");
+    ImprimeMonte(monte);
+
+    printf("Pontuação dos jogadores: ");
+    for (i = 0; i < nJogadores; i++)
+    {
+        // printf("Pontuacao do %i jogador: %i.\n", i + 1, Pontuacao(&jogadores[i]));
+    }
+
+    printf("\n");
+}
+
+
+/* As opções
+ * - Mostrar cartas do monte (na ordem que ela estiver)
+ * - Embaralhar
+ * - Cortar
+ * estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
+ */
 void exibeMenuDev()
 {
     printf("[10] - Mostrar cartas do monte\n");
@@ -70,7 +100,7 @@ void exibeAjuda()
 
 void exibeMenu(tMonte *monte)
 {
-    //int modoDev = 0;
+    int modoDev = 0, nJogadores = 0;
     char op = '1';
 
     while (op != '2')
@@ -88,8 +118,10 @@ void exibeMenu(tMonte *monte)
         switch (op)
         {
         case '1':
-            //modoDev = 0;
-            // Função que começa o jogo
+            modoDev = 0;
+            printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
+            scanf("%i", &nJogadores);
+            Joga(monte, modoDev, nJogadores);
             break;
 
         case '2':
@@ -100,29 +132,29 @@ void exibeMenu(tMonte *monte)
             break;
 
         case '4':
-            //modoDev = 1;
-            // Função que começa o jogo
+            modoDev = 1;
+            printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
+            scanf("%i", &nJogadores);
+            Joga(monte, modoDev, nJogadores);
             break;
 
         // Quando o jogo estiver ativo
         case '7':
-            //modoDev = 1;
-            // imprimeLista(monte);
-
+            if (modoDev == 1) // algo assim
+            {
+                ImprimeMonte(monte);
+            }
             break;
 
         case '8':
-            //modoDev = 1;
-            // embaralhaLista(monte);
+            if (modoDev == 1)
+            {
+                Embaralha(monte);
+            }
             break;
 
         case '9':
-            //modoDev = 1;
-            char valorCortado, naipeCortado;
-            tCarta cartaCortada;
-            printf("Informe a carta a ser cortada [Valor/Naipe]:\n");
-            scanf(" %c %c", &valorCortado, &naipeCortado);
-            Corta(valorCortado, naipeCortado, monte, &cartaCortada);
+            // Vergonha alheia de cortar no meio do jogo
             break;
 
             while (op < '1' || op > '9')
@@ -133,4 +165,39 @@ void exibeMenu(tMonte *monte)
         }
     }
 }
-*/
+
+void Joga2(tMonte *monte, int modoDev)
+{
+    tPartida partida;
+    Embaralha(monte);
+    CriaPartida(&partida, 2);
+
+    /* Primeiro jogador corta, etc
+    */
+}
+void Joga4(tMonte *monte, int modoDev)
+{
+    tPartida partida;
+    Embaralha(monte);
+    CriaPartida(&partida, 4);
+
+    /* Primeiro jogador corta, etc
+    */
+}
+
+void Joga(tMonte *monte, int modoDev, int nJogadores)
+{
+    while (nJogadores != 2 && nJogadores != 4)
+    {
+        printf("Opcao invalida.\nDigite 2 para jogar com 2 jogadores ou\n 4 para jogar com 4 jogadores: ");
+        scanf("%i", &nJogadores);
+    }
+    if (nJogadores == 2)
+    {
+        Joga2(monte, modoDev);
+    }
+    else if (nJogadores == 4)
+    {
+        Joga4(monte, modoDev);
+    }
+}
