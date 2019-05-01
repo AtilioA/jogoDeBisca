@@ -36,6 +36,11 @@ tCelula CriaCelulaVazia()
     return celulaVazia;
 }
 
+tCarta Carta(tCelula *celula)
+{
+    return celula->carta;
+}
+
 int QuantidadeMonte(tMonte *monte)
 {
     return (monte->tamanho);
@@ -45,7 +50,7 @@ int ExisteCarta(tCarta x, tMonte *monte)
 {
     tCelula *atual = monte->primeiro->prox;
 
-    while (atual != NULL && (Valor(atual->carta) != Valor(x) || Naipe(atual->carta) != Naipe(x)))
+    while (atual != NULL && (Valor(Carta(atual)) != Valor(x) || Naipe(Carta(atual)) != Naipe(x)))
     {
         atual = atual->prox;
     }
@@ -83,7 +88,7 @@ void Retira(char valor, char naipe, tMonte *monte, tCarta *cartaRetirada)
     tCelula *atual = monte->primeiro;
     tCelula *anterior = NULL;
 
-    while (atual != NULL && (atual->carta.valor != valor || atual->carta.naipe != naipe))
+    while (atual != NULL && (Valor(Carta(atual)) != valor || Naipe(Carta(atual)) != naipe))
     {
         anterior = atual;
         atual = atual->prox;
@@ -97,7 +102,7 @@ void Retira(char valor, char naipe, tMonte *monte, tCarta *cartaRetirada)
     else
     {
         anterior->prox = atual->prox;
-        *cartaRetirada = atual->carta;
+        *cartaRetirada = Carta(atual);
         free(atual);
         monte->tamanho--;
     }
@@ -123,7 +128,7 @@ int Recupera(char valor, char naipe, tMonte *monte)
 
     for (atual = monte->primeiro; atual != NULL; atual = atual->prox)
     {
-        if ((Valor(atual->carta) == valor) && (Naipe(atual->carta) == naipe))
+        if ((Valor(Carta(atual)) == valor) && (Naipe(Carta(atual)) == naipe))
             return (1);
     }
     return (0);
@@ -193,23 +198,23 @@ void MoveCelula(tMonte *monte, tCelula *celula, int pos)
 // Para cada célula da monte, gerar uma posição aleatória dentro da monte e mover a célula pra esta posição
 void Embaralha(tMonte *monte)
 {
-    struct timeval t;
     int posAleatoria = 0, tamMonte = QuantidadeMonte(monte);
-    tCelula *anterior = NULL;
-    tCelula *atual = monte->primeiro->prox;
-
-    gettimeofday(&t, NULL);
-    srand((unsigned int)t.tv_usec); // Inicializa o gerador de números aleatórios
 
     if (tamMonte != 0)
     {
+        struct timeval t;
+        tCelula *anterior = NULL;
+        tCelula *atual = monte->primeiro->prox;
+
+        gettimeofday(&t, NULL);
+        srand((unsigned int)t.tv_usec); // Inicializa o gerador de números aleatórios
         while (atual != NULL)
         {
             anterior = atual;
             atual = atual->prox;
 
             posAleatoria = (rand() % tamMonte);
-            if (posAleatoria < 1) // ??? Precisa disso mas não sei por quê
+            if (posAleatoria < 1)
             {
                 posAleatoria = 1;
             }
@@ -229,7 +234,7 @@ void ImprimeMonte(tMonte *monte)
 
         printf("Quantidade de itens: %i\n", QuantidadeMonte(monte));
         for (atual = monte->primeiro->prox; atual != NULL; atual = atual->prox)
-            ImprimeCarta(atual->carta);
+            ImprimeCarta(Carta(atual));
     }
 }
 
@@ -242,7 +247,7 @@ void DestroiMonte(tMonte *monte)
     {
         anterior = atual;
         atual = atual->prox;
-        free (anterior);
+        free(anterior);
     }
 
     monte->tamanho = 0;
@@ -253,7 +258,7 @@ int IndiceCarta(char valor, char naipe, tMonte *monte)
     tCelula *atual = monte->primeiro->prox;
     int indice = 1; // 1 como sendo o primeiro elemento
 
-    while (atual != NULL || (atual->carta.valor != valor && atual->carta.naipe != naipe))
+    while (atual != NULL || Valor(Carta(atual)) != valor && Naipe(Carta(atual)) != naipe)
     {
         indice++;
         atual = atual->prox;
@@ -276,7 +281,7 @@ tCarta CartaNoIndice(int pos, tMonte *monte)
         int i = 1;
         tCelula *atual = monte->primeiro->prox; // cabeça da lista
 
-        while(atual != NULL && i < pos)
+        while (atual != NULL && i < pos)
         {
             i++;
             atual = atual->prox;
@@ -284,7 +289,7 @@ tCarta CartaNoIndice(int pos, tMonte *monte)
 
         if (atual != NULL)
         {
-            return atual->carta;
+            return Carta(atual);
         }
     }
 
@@ -309,18 +314,18 @@ int PontuacaoCarta(tCarta x)
 {
     switch (Valor(x))
     {
-        case 'A':
-            return 11;
-        case '7':
-            return 10;
-        case 'K':
-            return 4;
-        case 'Q':
-            return 3;
-        case 'J':
-            return 2;
-        default:
-            return 0;
+    case 'A':
+        return 11;
+    case '7':
+        return 10;
+    case 'K':
+        return 4;
+    case 'Q':
+        return 3;
+    case 'J':
+        return 2;
+    default:
+        return 0;
     }
 }
 
@@ -329,9 +334,9 @@ int ContaPontos(tMonte *monte)
     tCelula *atual = monte->primeiro;
     int pontos = 0;
 
-    while(atual != NULL)
+    while (atual != NULL)
     {
-        pontos += PontuacaoCarta(atual->carta);
+        pontos += PontuacaoCarta(Carta(atual));
         atual = atual->prox;
     }
 
