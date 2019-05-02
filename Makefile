@@ -42,12 +42,15 @@ voado: main run
 
 # Roda o programa com valgrind e flags úteis
 val:
-	valgrind --leak-check=full -v ./$(EXE)
-        #  --show-leak-kinds=all \
-         --track-origins=yes \
-         --verbose \
-         --log-file = valgrind-out.txt \
-         ./executable exampleParam1
+	valgrind --leak-check=full -v --show-leak-kinds=all --track-origins=yes --verbose ./$(EXE)
+
+# Roda o programa com valgrind sem flags
+valzin:
+	valgrind ./$(EXE)
+
+# Roda o programa com valgrind e salva resultados num .txt
+valtxt:
+	valgrind --leak-check=full -v --show-leak-kinds=all --track-origins=yes --verbose --log-file="valgrind-out.txt" ./$(EXE)
 
 # Limpa objetos e o executável do programa
 clean:

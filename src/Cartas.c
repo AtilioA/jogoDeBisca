@@ -38,13 +38,13 @@ void ImprimeCarta(tCarta carta)
     printf("%c\n", carta.naipe);
 
     // if (carta.naipe == NAIPES[0])
-    //     printf("\u2665");
+    //     printf("\u2665\n");
     // else if (carta.naipe == NAIPES[1])
-    //     printf("\u2666");
+    //     printf("\u2666\n");
     // else if (carta.naipe == NAIPES[2])
-    //     printf("\u2663");
+    //     printf("\u2663\n");
     // else if (carta.naipe == NAIPES[3])
-    //     printf("\u2660");
+    //     printf("\u2660\n");
 }
 
 char Valor(tCarta carta)

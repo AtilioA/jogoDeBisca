@@ -354,4 +354,7 @@ $RECYCLE.BIN/
 # !.vscode/launch.json
 # !.vscode/extensions.json
 
+# Arquivos do projetox
 bisca
+*.nfs*
+valgrind-out.txt
