@@ -35,4 +35,5 @@ void exibeMenuDev (tPartida *partida);
 
 void exibeMenu ( );
 
+void Partida2Jogadores (tPartida *partida);
 #endif

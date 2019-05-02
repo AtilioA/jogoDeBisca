@@ -1,12 +1,16 @@
 #ifndef __PARTIDACIRCULAR_H
 #define __PARTIDACIRCULAR_H
 
+#define HUMANO 0
+#define IA 1
+
 #include "BaralhoEncadeado.h"
 
 // Estrutura de dados que abstrai um jogador, que possui "mão" e pontuação
 typedef struct tJogador tJogador;
 struct tJogador
 {
+    int robo;
     tMao mao;
     tMonte pontos;
     tJogador *prox;
