@@ -12,6 +12,7 @@ struct tJogador
     tJogador *prox;
 };
 
+// Estrutura de dados que abstrai uma partida, que possui monte, número de jogadores, corte e jogador inicial da rodada
 typedef struct
 {
     int nJogadores;
@@ -39,7 +40,7 @@ tMonte *Monte(tPartida *partida);
 tCarta Corte(tPartida *partida);
 // Retorna a pontuação de um jogador
 tMonte Pontuacao(tJogador *jogador);
-
+// Retorna a mão de um jogador
 tMao Mao(tJogador *jogador);
 
 #endif

@@ -22,6 +22,8 @@
 
 void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho);
 
+void DistribuiCartas (tPartida *partida);
+
 // Exibe informações sobre o estado do jogo
 void exibeInfo (tPartida *partida);
 

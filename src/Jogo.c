@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "../include/Jogo.h"
 #include "../include/Maos.h"
 #include "../include/BaralhoEncadeado.h"
@@ -13,21 +14,21 @@ void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     PreparaPartida (partida, nJogadores);
     partida->monte = baralho;
     printf ("Embaralhando o baralho...\n");
-    Embaralha (Monte (partida));
-    sleep (2);
+    Embaralha(Monte(partida));
+    sleep (1);
     printf ("Pronto! Agora sorteando quem sera o primeiro a jogar...\n");
     struct timeval t;
     gettimeofday(&t, NULL);
     srand((unsigned int)t.tv_usec);
     p = (rand ( ) % nJogadores) + 1;
     MoveCabeca (partida, p);
-    sleep (2);
+    sleep (1);
     printf ("Sera o jogador %d!\n", p);
     printf ("\n");
     printf ("Jogador %d, passe os comandos ao jogador a sua ESQUERDA para que ele possa cortar.\n", p);
     p = p - 1;
     if (p == 0) p = nJogadores;
-    sleep (3);
+    sleep (1);
     printf ("Jogador %d, escolha uma posicao de 1 a 40 para cortar o baralho.\n", p);
     scanf ("%d", &p);
     p = (p % 40) + 1;
@@ -35,11 +36,23 @@ void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     partida->corte = trunfo;
     printf ("O trunfo escolhido foi ");
     ImprimeCarta (trunfo);
-    printf ("Agora sera entregue as cartas...\n");
+    printf ("Agora serao entregues as cartas...\n");
 }
 
-void DistribuiCartas (tPartida *partida) {
+// Não está funcionando
+void DistribuiCartas (tPartida *partida)
+{
+    int i = 0, j = 0;
+    tJogador *atual = partida->inicial;
 
+    for (i = 1; i < QuantidadeJogadores(partida); i++)
+    {
+        for (j = 0; j < nMAO; j++)
+        { // Não estou conseguindo usar as funções para acesso da struct
+            MonteParaMao(&(Monte(partida)->primeiro)->carta, Monte(partida), &atual->mao); // Segmentation fault aqui
+        }
+        atual = atual->prox;
+    }
 }
 
 //Informacoes do jogo
@@ -145,6 +158,8 @@ void exibeMenu ( )
     }
 }
 
-int Partida2Jogadores (tPartida *partida) {
+int Partida2Jogadores (tPartida *partida)
+{
 
+    return 0;
 }

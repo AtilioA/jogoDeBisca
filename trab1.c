@@ -14,7 +14,7 @@ int main()
     CriaBaralho (&baralho);
     CriaPartida (4, &partida, &baralho);
     //exibeMenuDev (&partida);
-    DestroiPartida (&partida);
+    // DestroiPartida (&partida); // Segmentation fault
     // TESTE DE IA
     //int posAleatoria;
     //tCarta carta;
@@ -82,7 +82,7 @@ int main()
         DestroiMonte(&mesa);
     }
 */
-    //DestroiMonte(&monte);
+    DestroiMonte(&baralho);
 
     return 0;
 }
