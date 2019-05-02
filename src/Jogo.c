@@ -158,8 +158,44 @@ void exibeMenu ( )
     }
 }
 
-int Partida2Jogadores (tPartida *partida)
-{
+//ultimo do pontos aponta pra Mesa
+//mesa esvazia
 
-    return 0;
+void Partida2Jogadores (tPartida *partida)
+{
+    int jogadas, rodadas, vez;
+    tJogador *atual;
+
+    vez = partida->inicial.robo;
+    rodadas = 0;
+
+    while (rodadas <= 20) {
+        jogadas = 0;
+        atual = partida->inicial;
+
+        while (jogadas < 2) {
+            switch (vez) {
+                case HUMANO:
+                    //JogaCartaHumano
+                    jogadas ++;
+                    vez = IA;
+                break;
+
+                case IA:
+                    if (jogadas == 1)
+                        escolhida = PC2Jogadores2 (mao, monte, corte, seteSaiu);
+
+                    else
+                        escolhida = PC2Jogadores1 (mao, monte, corte, seteSaiu);
+
+                    jogadas ++;
+                    vez = HUMANO;
+                break;
+            }
+            atual = atual->prox;
+        }
+        //QUEM QUEMGANHOU
+        //PARTIDA->INICIAL = QUEM GANHOU
+        rodadas ++;
+    }
 }

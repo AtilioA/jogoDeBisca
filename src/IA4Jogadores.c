@@ -79,9 +79,9 @@ tCarta PC4Jogadores3 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
                     }
                 }
             }
-            jogada = PegaCarta (1, *mao);
-            MaoParaMonte (jogada, monte, mao);
-            return (jogada);
+            //jogada = PegaCarta (1, *mao);
+            //MaoParaMonte (jogada, monte, mao);
+            //return (jogada);
         }
         else
             return (PC2Jogadores2 (mao, monte, corte, seteSaiu));

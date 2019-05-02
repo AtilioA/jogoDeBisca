@@ -75,7 +75,7 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
         }
         for (int i = 1; i <= TamanhoMao (*mao); i ++) {
             jogada = PegaCarta (i, *mao);
-            if ((Valor (jogada) <= '3') && (Valor (jogada) < Valor (mesa))) {
+            if ((Valor (jogada)) < (Valor (mesa))) {
                 MaoParaMonte (jogada, monte, mao);
                 return (jogada);
             }
