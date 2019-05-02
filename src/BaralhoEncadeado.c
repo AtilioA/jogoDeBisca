@@ -322,10 +322,10 @@ void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao)
 
 void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)
 {
-    tCarta *retirada = NULL;
+    tCarta retirada;
 
-    Retira(*carta, monte, retirada);
-    ColocaNaMao(*retirada, mao);
+    Retira(*carta, monte, &retirada);
+    ColocaNaMao(retirada, mao);
 }
 
 int PontuacaoCarta(tCarta x)
