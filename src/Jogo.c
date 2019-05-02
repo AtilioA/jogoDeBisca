@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "../include/Jogo.h"
 #include "../include/Maos.h"
+#include "../include/PartidaCircular.h"
 #include "../include/BaralhoEncadeado.h"
 
 void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
@@ -37,9 +38,11 @@ void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     printf ("O trunfo escolhido foi ");
     ImprimeCarta (trunfo);
     printf ("Agora serao entregues as cartas...\n");
+    DistribuiCartas(partida);
+    printf("Mao do jogador inicial:\n");
+    ImprimeMao(partida->inicial->mao);
 }
 
-// Não está funcionando
 void DistribuiCartas (tPartida *partida)
 {
     int i = 0, j = 0;
@@ -49,7 +52,7 @@ void DistribuiCartas (tPartida *partida)
     {
         for (j = 0; j < nMAO; j++)
         { // Não estou conseguindo usar as funções para acesso da struct
-            MonteParaMao(&(Monte(partida)->primeiro)->carta, Monte(partida), &atual->mao); // Segmentation fault aqui
+            MonteParaMao(&(Monte(partida)->primeiro->prox)->carta, Monte(partida), &atual->mao);
         }
         atual = atual->prox;
     }
@@ -161,41 +164,41 @@ void exibeMenu ( )
 //ultimo do pontos aponta pra Mesa
 //mesa esvazia
 
-void Partida2Jogadores (tPartida *partida)
-{
-    int jogadas, rodadas, vez;
-    tJogador *atual;
+// void Partida2Jogadores (tPartida *partida)
+// {
+//     int jogadas, rodadas, vez;
+//     tJogador *atual;
 
-    vez = partida->inicial.robo;
-    rodadas = 0;
+//     vez = partida->inicial.robo;
+//     rodadas = 0;
 
-    while (rodadas <= 20) {
-        jogadas = 0;
-        atual = partida->inicial;
+//     while (rodadas <= 20) {
+//         jogadas = 0;
+//         atual = partida->inicial;
 
-        while (jogadas < 2) {
-            switch (vez) {
-                case HUMANO:
-                    //JogaCartaHumano
-                    jogadas ++;
-                    vez = IA;
-                break;
+//         while (jogadas < 2) {
+//             switch (vez) {
+//                 case HUMANO:
+//                     //JogaCartaHumano
+//                     jogadas ++;
+//                     vez = IA;
+//                 break;
 
-                case IA:
-                    if (jogadas == 1)
-                        escolhida = PC2Jogadores2 (mao, monte, corte, seteSaiu);
+//                 case IA:
+//                     if (jogadas == 1)
+//                         escolhida = PC2Jogadores2 (mao, monte, corte, seteSaiu);
 
-                    else
-                        escolhida = PC2Jogadores1 (mao, monte, corte, seteSaiu);
+//                     else
+//                         escolhida = PC2Jogadores1 (mao, monte, corte, seteSaiu);
 
-                    jogadas ++;
-                    vez = HUMANO;
-                break;
-            }
-            atual = atual->prox;
-        }
-        //QUEM QUEMGANHOU
-        //PARTIDA->INICIAL = QUEM GANHOU
-        rodadas ++;
-    }
-}
+//                     jogadas ++;
+//                     vez = HUMANO;
+//                 break;
+//             }
+//             atual = atual->prox;
+//         }
+//         //QUEM QUEMGANHOU
+//         //PARTIDA->INICIAL = QUEM GANHOU
+//         rodadas ++;
+//     }
+// }
