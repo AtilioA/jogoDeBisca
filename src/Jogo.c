@@ -19,7 +19,7 @@ void CriaPartida(int nJogadores, tPartida *partida, tMonte *baralho)
     partida->monte = baralho;
     // FMVazio(partida->mesa); // ??? Parou de funcionar
     printf("Embaralhando o baralho...\n");
-    // Embaralha(Baralho(partida));
+    Embaralha(Baralho(partida));
     // sleep (1);
 
     printf("Pronto! Agora sorteando quem sera o primeiro a jogar...\n");

@@ -12,7 +12,7 @@ void FMVazio(tMonte *monte)
 
 void CriaBaralho(tMonte *monte)
 {
-    FMVazio (monte);
+    FMVazio(monte);
     tCarta atual;
 
     for (int i = 0; i < nVALORES * nNAIPES; i++)
@@ -113,7 +113,7 @@ tCarta Corta(tMonte *monte, int pos)
 {
     tCarta corte;
 
-    if ((pos >= 1) && (pos <= QuantidadeMonte (monte)))
+    if ((pos >= 1) && (pos <= QuantidadeMonte(monte)))
     {
         int i = 1;
         tCelula *atual, *ant;
@@ -121,7 +121,7 @@ tCarta Corta(tMonte *monte, int pos)
 
         while (atual != NULL && i < pos)
         {
-            i ++;
+            i++;
             ant = atual;
             atual = atual->prox;
         }
@@ -132,12 +132,12 @@ tCarta Corta(tMonte *monte, int pos)
             monte->primeiro->prox = atual->prox;
             monte->ultimo = atual;
             atual->prox = NULL;
-            corte = Carta (monte->ultimo);
+            corte = Carta(monte->ultimo);
         }
         return (corte);
     }
     printf("ERRO! Nao foi possivel cortar.\n");
-    return (CartaVazia ());
+    return (CartaVazia());
 }
 
 int Recupera(char valor, char naipe, tMonte *monte)
@@ -178,9 +178,9 @@ void MoveCelula(tMonte *monte, tCelula *celula, int pos)
 
         if (pos == 1)
         {
-            tCelula *aux = (tCelula *)malloc(sizeof(tCelula));
+            tCelula *aux;
             aux = monte->primeiro->prox;
-            aux->prox = monte->primeiro->prox->prox;
+            // aux->prox = monte->primeiro->prox->prox;
             celula->prox = aux;
             monte->primeiro->prox = celula;
         }
@@ -205,6 +205,39 @@ void MoveCelula(tMonte *monte, tCelula *celula, int pos)
                 anterior->prox = celula;
                 celula->prox = atual;
             }
+        }
+    }
+    else
+    {
+        printf("A posicao fica fora da monte.\n");
+    }
+}
+
+void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
+{
+    int i = 1;
+
+    if (pos < QuantidadeMonte(monte))
+    {
+        tCarta primeiraCarta = Carta(celula);
+        tCarta segundaCarta = CartaNoIndice(pos, monte);
+        celula->carta = segundaCarta;
+
+        // Agora basta substituir a carta da célula no índice pela carta da célula de entrada
+        tCelula *atual = monte->primeiro; // Seg fault com ->prox
+        while (atual != NULL && i < pos)
+        {
+            i++;
+            atual = atual->prox;
+            // printf("Buscando celula original...\n");
+        }
+        if (atual == NULL)
+        {
+            printf("Nao foi possivel chegar na posicao!\n");
+        }
+        else
+        {
+            atual->carta = primeiraCarta;
         }
     }
     else
@@ -238,7 +271,7 @@ void Embaralha(tMonte *monte)
             }
 
             // printf("%i, %i\n\n", tamMonte, posAleatoria);
-            MoveCelula(monte, anterior, posAleatoria);
+            TrocaCarta(monte, anterior, posAleatoria);
         }
     }
 }
