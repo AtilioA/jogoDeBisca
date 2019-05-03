@@ -72,7 +72,7 @@ void ImprimePontuacao(tPartida *partida)
     printf("Pontuação da partida:\n");
     for (i = 1, atual = partida->inicial; i < QuantidadeJogadores(partida); i++, atual = atual->prox)
     { // Falta mostrar no printf qual jogador é o humano
-        printf("Jogador %i: %i pontos\n", i, *Pontuacao(atual));
+        printf("Jogador %i: %i pontos\n", i, ContaPontos (Pontuacao (atual)));
     }
 }
 

@@ -111,13 +111,12 @@ tCarta Corta(tMonte *monte, int pos)
     if ((pos >= 1) && (pos <= QuantidadeMonte(monte)))
     {
         int i = 1;
-        tCelula *atual, *ant;
-        ant = atual = monte->primeiro->prox;
+        tCelula *atual;
+        atual = monte->primeiro->prox;
 
         while (atual != NULL && i < pos)
         {
             i++;
-            ant = atual;
             atual = atual->prox;
         }
 
@@ -219,7 +218,7 @@ void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
         celula->carta = segundaCarta;
 
         // Agora basta substituir a carta da célula no índice pela carta da célula de entrada
-        tCelula *atual = monte->primeiro; // Seg fault com ->prox
+        tCelula *atual = monte->primeiro->prox;
         while (atual != NULL && i < pos)
         {
             i++;

@@ -62,7 +62,7 @@ tCarta Corta(tMonte *monte, int pos);
 int Recupera(char valor, char naipe, tMonte *monte);
 
 // Move uma célula do monte para outra posição
-void MoveCelula(tMonte *monte, tCelula *celula, int pos);
+void TrocaCarta(tMonte *monte, tCelula *celula, int pos);
 
 // Embaralha as posições das células em umo monte
 void Embaralha(tMonte *monte);

@@ -10,9 +10,15 @@
 int main()
 {
     tMonte baralho;
-    tPartida partida;
+    //tPartida partida;
     CriaBaralho (&baralho);
-    CriaPartida (4, &partida, &baralho);
+    //Embaralha (&baralho);
+    TrocaCarta(&baralho, baralho.primeiro->prox, 40);
+    ImprimeMonte(&baralho);
+    ImprimeCarta(Corta (&baralho, 7));
+    DestroiMonte(&baralho);
+
+    //CriaPartida (4, &partida, &baralho);
     //exibeMenuDev (&partida);
     // DestroiPartida (&partida); // Segmentation fault
     // TESTE DE IA
@@ -82,7 +88,6 @@ int main()
         DestroiMonte(&mesa);
     }
 */
-    DestroiMonte(&baralho);
 
     return 0;
 }

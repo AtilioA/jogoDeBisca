@@ -164,7 +164,7 @@ void MenuPartida(tPartida *partida)
 
 void exibeMenuInicial(tPartida *partida)
 {
-    int modoDev;
+    //int modoDev;
     int nJogadores;
     int op = 1;
 

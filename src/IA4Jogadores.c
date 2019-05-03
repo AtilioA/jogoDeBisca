@@ -83,7 +83,7 @@ tCarta PC4Jogadores3 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
             }
         }
         else
-            return (PC2Jogadores2 (mao, monte, corte, *seteSaiu));
+            return (PC2Jogadores2 (mao, monte, corte, seteSaiu));
     }
     else {
         for (int i = TamanhoMao (*mao); i >= 1; i --) {
@@ -128,7 +128,7 @@ tCarta PC4Jogadores4 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
             }
         }
         else
-            return (PC2Jogadores2 (mao, monte, corte, *seteSaiu));
+            return (PC2Jogadores2 (mao, monte, corte, seteSaiu));
     }
     else {
         for (int i = TamanhoMao (*mao); i >= 1; i --) {
