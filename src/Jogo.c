@@ -16,93 +16,60 @@ void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     printf("Iniciando a partida de %d jogadores...\n", nJogadores);
     PreparaPartida (partida, nJogadores);
     partida->monte = baralho;
+    // FMVazio(partida->mesa); // ??? Parou de funcionar
     printf ("Embaralhando o baralho...\n");
     Embaralha(Baralho(partida));
-    sleep (1);
+    // sleep (1);
+
     printf ("Pronto! Agora sorteando quem sera o primeiro a jogar...\n");
     struct timeval t;
     gettimeofday(&t, NULL);
     srand((unsigned int)t.tv_usec);
     p = (rand ( ) % nJogadores) + 1;
     MoveCabeca (partida, p);
-    sleep (1);
-    printf ("Sera o jogador %d!\n", p);
-    printf ("\n");
+    // sleep (1);
+    printf ("Sera o jogador %d!\n\n", p);
+
     printf ("Jogador %d, passe os comandos ao jogador a sua ESQUERDA para que ele possa cortar.\n", p);
     p = p - 1;
     if (p == 0) p = nJogadores;
-    sleep (1);
+    // sleep (1);
     printf ("Jogador %d, escolha uma posicao de 1 a 40 para cortar o baralho.\n", p);
     scanf ("%d", &p);
-    p = (p % 40) + 1;
-    trunfo = Corta (Mesa (partida), p);
+    // p = (p % 40) + 1;
+    trunfo = Corta (Baralho (partida), p);
     partida->corte = trunfo;
     printf ("O trunfo escolhido foi ");
     ImprimeCarta (trunfo);
+
     printf ("Agora serao entregues as cartas...\n");
+    ImprimeMonte(Baralho(partida));
     DistribuiCartas(partida);
-    printf("Mao do jogador inicial:\n");
-    ImprimeMao(partida->inicial->mao);
+    printf("Mao do jogador:\n");
+    ImprimeMao(*Mao(partida->inicial));
+    // JogaCartaHumano(partida, partida->inicial);
+    // printf("Mesa:\n");
+    // ImprimeMonte(Mesa(partida));
+    // printf("Mao do jogador:\n");
+    // ImprimeMao(partida->inicial->mao);
 }
 
 void DistribuiCartas (tPartida *partida)
 {
     int i = 0, j = 0;
-    tJogador *atual = partida->inicial;
+    tJogador *jogadorAtual = partida->inicial;
+    tCarta cartaAtual;
+    tMao *maoJogador;
 
     for (i = 1; i < QuantidadeJogadores(partida); i++)
     {
         for (j = 0; j < nMAO; j++)
-        { // Não estou conseguindo usar as funções para acesso da struct
-            //MonteParaMao(&(Monte(partida)->primeiro->prox)->carta, Monte(partida), &atual->mao);
+        {
+            cartaAtual = (CartaNoIndice(1, partida->monte));
+            maoJogador = Mao(jogadorAtual);
+            MonteParaMao(&cartaAtual, Baralho(partida), maoJogador);
         }
-        atual = atual->prox;
-    }
-}
-
-//Informacoes do jogo
-void exibeInfo (tPartida *partida)
-{
-//Corte
-//ultima carta Jogada
-//quem inicia
-}
-
-
-/* As opções
- * - Mostrar cartas do monte (na ordem que ela estiver)
- * - Embaralhar
- * - Cortar
- * estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
- */
-void exibeMenuDev (tPartida *partida)
-{
-    int op, p;
-
-    printf ("[10] - Mostrar cartas do monte\n");
-    printf ("[11] - Embaralhar\n");
-    printf ("[12] - Cortar\n");
-
-    scanf ("%d", &op);
-    switch (op) {
-        case 10:
-            ImprimeMonte (Mesa (partida));
-        break;
-
-        case 11:
-            Embaralha (Mesa (partida));
-            ImprimeMonte (Mesa (partida));
-        break;
-
-        case 12:
-            printf ("Escolha a posicao de 1 a 40 para cortar\n");
-            scanf ("%d", &p);
-            ImprimeCarta (Corta (Mesa (partida), p));
-        break;
-
-        default:
-            printf ("Im sorry my dear.\n");
-        break;
+        jogadorAtual = jogadorAtual->prox;
     }
 }
 
@@ -114,9 +81,87 @@ void exibeAjuda()
     printf("Sobre a bisca: http://tiny.cc/bisca\n\n\n");
 }
 
-void exibeMenu ( )
+/* Adicionar:
+ * Informacoes do jogo
+ * Corte
+ * Última carta jogada
+ * Quem inicia
+ *
+ * As opções
+ * - Mostrar cartas do monte (na ordem que ela estiver)
+ * - Embaralhar
+ * - Cortar
+ * estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
+ */
+void MenuPartida(tPartida *partida)
 {
-    //int modoDev;
+    int op = 0, p = 0;
+
+    PrintaPontuacao(partida);
+    printf("Cartas restantes no baralho/monte: %i\n", QuantidadeMonte(Baralho(partida)));
+    printf("\nQuantidade de cartas na mao: %i\n", TamanhoMao(*Mao(JogadorInicial(partida)))); // não sei qual é o jogador inicial
+
+    printf("[1] - Jogar carta\n");
+    printf("[2] - Sair\n");
+    printf("[3] - Ajuda\n");
+    printf("[4] - Pontuação dos jogadores\n");
+
+    if (ModoDev(partida))
+    {
+        printf ("[10] - Mostrar cartas do monte\n");
+        printf ("[11] - Embaralhar\n");
+        printf ("[12] - Cortar\n");
+    }
+
+    scanf ("%d", &op);
+
+    switch (op) {
+        case 1:
+            JogaCartaHumano(partida, partida->inicial);
+            break;
+
+        case 2:
+            return;
+
+        case 3:
+            exibeAjuda();
+            break;
+
+        case 10:
+            if (ModoDev(partida))
+            {
+                ImprimeMonte (Mesa (partida));
+            }
+        break;
+
+        case 11:
+            if (ModoDev(partida))
+            {
+                printf("Embaralhando...\n");
+                Embaralha (Mesa (partida));
+                ImprimeMonte (Mesa (partida));
+            }
+        break;
+
+        case 12:
+            if (ModoDev(partida))
+            {
+                printf ("Escolha a posicao de 1 a 40 para cortar\n");
+                scanf ("%d", &p);
+                printf("Corte:\n");
+                ImprimeCarta (Corta (Mesa (partida), p));
+            }
+        break;
+
+        default:
+            printf ("thank u, next.\n");
+        break;
+    }
+}
+
+void exibeMenuInicial (tPartida *partida)
+{
+    int modoDev;
     int nJogadores;
     int op = 1;
 
@@ -135,7 +180,7 @@ void exibeMenu ( )
         switch (op)
         {
             case 1:
-                //modoDev = 0;
+                partida->modoDev = 0;
                 printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
                 scanf("%d", &nJogadores);
                 //chama o jogo de jogadores
@@ -149,13 +194,13 @@ void exibeMenu ( )
                 break;
 
             case 4:
-                //modoDev = 1;
+                partida->modoDev = 1;
                 printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
                 scanf("%d", &nJogadores);
                 //chama o jogo de jogadores
             break;
 
-            while (op < 1 || op > 4)
+            while (op < 1 || op > 15)
             {
                 printf("Opcao invalida. Tente novamente: ");
                 scanf(" %d", &op);
@@ -164,9 +209,8 @@ void exibeMenu ( )
     }
 }
 
-//ultimo do pontos aponta pra Mesa
-//mesa esvazia
-
+// Último do pontos aponta pra Mesa
+// Esvazia mesa
 void Partida (tPartida *partida)
 {
      int jogadas, rodadas, vez, seteSaiu, vencedor;
@@ -175,7 +219,7 @@ void Partida (tPartida *partida)
 
      corte = Corte (partida);
      seteSaiu = 0;
-     vez = Robo (JogadorInicial(partida));
+     vez = PC (JogadorInicial(partida));
      rodadas = 0;
 
      while (rodadas <= (40 / QuantidadeJogadores (partida))) {
@@ -185,12 +229,12 @@ void Partida (tPartida *partida)
          while (jogadas < QuantidadeJogadores (partida)) {
              switch (vez) {
                  case HUMANO:
-                     //JogaCartaHumano
-                     jogadas ++;
-                     vez = Robo (atual->prox);
+                    MenuPartida(partida);
+                    jogadas ++;
+                    vez = PC (atual->prox);
                  break;
 
-                 case IA:
+                 case IA: // Falta determinar a dificuldade pela entrada do usuário
                     if (jogadas == 0) {
                         if (QuantidadeJogadores (partida) == 2)
                             escolhida = PC2Jogadores1 (Mao (atual), Mesa (partida), corte, &seteSaiu);
@@ -210,7 +254,7 @@ void Partida (tPartida *partida)
                         escolhida = PC4Jogadores4 (Mao (atual), Mesa (partida), corte, &seteSaiu);
                     }
                     jogadas ++;
-                    vez = Robo (atual->prox);
+                    vez = PC (atual->prox);
                  break;
              }
              ImprimeCarta (escolhida);

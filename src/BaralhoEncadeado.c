@@ -250,7 +250,7 @@ void ImprimeMonte(tMonte *monte)
     {
         tCelula *atual = NULL;
 
-        printf("Quantidade de itens: %i\n", QuantidadeMonte(monte));
+        printf("Quantidade de itens: %i\n", QuantidadeMonte(monte)); // Ocultar isso depois
         for (atual = monte->primeiro->prox; atual != NULL; atual = atual->prox)
             ImprimeCarta(Carta(atual));
     }
