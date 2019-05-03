@@ -8,10 +8,12 @@ int CartaValida(tCarta carta)
         for (int i = 0; i < nVALORES; i++)
         {
             if (carta.valor == VALORES[i])
-                return (1);
+            {
+                return 1;
+            }
         }
     }
-    return (0);
+    return 0;
 }
 
 tCarta PreencheCarta(char valor, char naipe)
@@ -32,7 +34,9 @@ tCarta CartaVazia()
 void ImprimeCarta(tCarta carta)
 {
     if (!(CartaValida(carta)))
+    {
         return;
+    }
 
     printf("%c ", carta.valor);
     printf("%c\n", carta.naipe);
@@ -50,13 +54,17 @@ void ImprimeCarta(tCarta carta)
 char Valor(tCarta carta)
 {
     if (!(CartaValida(carta)))
+    {
         return (' ');
+    }
     return (carta.valor);
 }
 
 char Naipe(tCarta carta)
 {
     if (!(CartaValida(carta)))
+    {
         return (' ');
+    }
     return (carta.naipe);
 }

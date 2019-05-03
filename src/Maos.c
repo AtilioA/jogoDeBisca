@@ -24,11 +24,15 @@ tCarta PegaCarta(int p, tMao mao)
     tCarta escolhida;
 
     if ((p > TamanhoMao(mao)) || (p <= 0))
+    {
         escolhida.valor = escolhida.naipe = ' ';
+    }
     else
+    {
         escolhida = mao.carta[p - 1];
+    }
 
-    return (escolhida);
+    return escolhida;
 }
 
 int EstaNaMao(char valor, char naipe, tMao mao)
@@ -37,7 +41,9 @@ int EstaNaMao(char valor, char naipe, tMao mao)
     {
         if (valor == Valor(PegaCarta(i + 1, mao)) &&
             (naipe == Naipe(PegaCarta(i + 1, mao))))
-            return (1);
+        {
+            return 1;
+        }
     }
     return (0);
 }
@@ -45,7 +51,9 @@ int EstaNaMao(char valor, char naipe, tMao mao)
 void ColocaNaMao(tCarta carta, tMao *mao)
 {
     if ((TamanhoMao(*mao) >= nMAO) || (!(CartaValida(carta))) || (EstaNaMao(Valor(carta), Naipe(carta), *mao)))
+    {
         return;
+    }
 
     mao->carta[mao->n].valor = carta.valor;
     mao->carta[mao->n].naipe = carta.naipe;
@@ -55,7 +63,9 @@ void ColocaNaMao(tCarta carta, tMao *mao)
 void RetiraDaMao(tCarta carta, tMao *mao)
 {
     if (!(EstaNaMao(Valor(carta), Naipe(carta), *mao)))
+    {
         return;
+    }
 
     for (int i = 0; i < (TamanhoMao(*mao)); i++)
     {
@@ -64,7 +74,9 @@ void RetiraDaMao(tCarta carta, tMao *mao)
         {
             mao->n--;
             for (int j = i; j < (TamanhoMao(*mao)); j++)
+            {
                 mao->carta[j] = mao->carta[j + 1];
+            }
         }
     }
 }
@@ -82,7 +94,9 @@ void RemoveDaMao(tCarta carta, tMao *mao, tCarta *cartaRetirada)
             *cartaRetirada = mao->carta[i];
             mao->n--;
             for (int j = i; j < (TamanhoMao(*mao)); j++)
+            {
                 mao->carta[j] = mao->carta[j + 1];
+            }
         }
     }
 }
@@ -95,7 +109,9 @@ int TamanhoMao(tMao mao)
 void ImprimeMao(tMao mao)
 {
     for (int i = 0; i < (TamanhoMao(mao)); i++)
+    {
         ImprimeCarta(mao.carta[i]);
+    }
 }
 
 void OrdenaMao(tMao *mao)
@@ -110,9 +126,13 @@ void OrdenaMao(tMao *mao)
             for (int k = 0; k < nVALORES; k++)
             {
                 if (mao->carta[i].valor == VALORES[k])
+                {
                     valori = k;
+                }
                 if (mao->carta[j].valor == VALORES[k])
+                {
                     valorj = k;
+                }
             }
             if (valori < valorj)
             {

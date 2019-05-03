@@ -1,47 +1,53 @@
 #include "../include/PartidaCircular.h"
 
-
-tJogador *InsereJogador (tJogador *jogador) {
+tJogador *InsereJogador(tJogador *jogador)
+{
     tJogador *novo;
-    novo = (tJogador *) malloc (sizeof (tJogador));
-    CriaMao (&novo->mao);
-    FMVazio (&novo->pontos);
+    novo = (tJogador *)malloc(sizeof(tJogador));
+    CriaMao(&novo->mao);
+    FMVazio(&novo->pontos);
 
     novo->prox = jogador;
     return (novo);
 }
 
-void PreparaPartida (tPartida *partida, int nJogadores) {
+void PreparaPartida(tPartida *partida, int nJogadores)
+{
     partida->nJogadores = 0;
-    partida->inicial = (tJogador *) malloc (sizeof (tJogador));
-    CriaMao (&partida->inicial->mao);
-    FMVazio (&partida->inicial->pontos);
-    partida->nJogadores ++;
+    partida->inicial = (tJogador *)malloc(sizeof(tJogador));
+    CriaMao(&partida->inicial->mao);
+    FMVazio(&partida->inicial->pontos);
+    partida->nJogadores++;
     tJogador *inicio = partida->inicial;
-    while (QuantidadeJogadores (partida) <= nJogadores) {
-        inicio = InsereJogador (inicio);
-        partida->nJogadores ++;
+    while (QuantidadeJogadores(partida) <= nJogadores)
+    {
+        inicio = InsereJogador(inicio);
+        partida->nJogadores++;
     }
     partida->inicial->prox = inicio;
 }
 
-void DestroiPartida (tPartida *partida) {
+void DestroiPartida(tPartida *partida)
+{
     tJogador *atual, *lixo;
     lixo = partida->inicial;
-    while ((QuantidadeJogadores (partida)) > 0) {
+    while ((QuantidadeJogadores(partida)) > 0)
+    {
         atual = lixo->prox;
         LiberaMao(&lixo->mao);
         DestroiMonte(&lixo->pontos);
-        free (lixo);
+        free(lixo);
         lixo = atual;
-        partida->nJogadores --;
+        partida->nJogadores--;
     }
-    DestroiMonte (partida->monte);
+    DestroiMonte(partida->monte);
 }
 
-void MoveCabeca (tPartida *partida, int pos) {
+void MoveCabeca(tPartida *partida, int pos)
+{
     tJogador *atual = partida->inicial;
-    for (int i = 1; i <= pos; i ++) {
+    for (int i = 1; i <= pos; i++)
+    {
         atual = atual->prox;
     }
     partida->inicial = atual;
@@ -58,7 +64,7 @@ void JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jogad
     MaoParaMonte(cartaSelecionada, Mesa(partida), maoJogador);
 }
 
-void PrintaPontuacao(tPartida *partida)
+void ImprimePontuacao(tPartida *partida)
 {
     int i = 0;
     tJogador *atual = partida->inicial;
@@ -70,7 +76,8 @@ void PrintaPontuacao(tPartida *partida)
     }
 }
 
-int QuantidadeJogadores (tPartida *partida) {
+int QuantidadeJogadores(tPartida *partida)
+{
     return (partida->nJogadores);
 }
 
@@ -119,11 +126,12 @@ int IndiceJogador(tJogador *jogador)
     return jogador->indice;
 }
 
-int Vencedor (tPartida *partida)
+int Vencedor(tPartida *partida)
 {
-    for (int i = 1; i <= QuantidadeJogadores (partida); i ++) {
-        if (CartasIguais (MaiorMesa (Mesa (partida), Corte (partida)), CartaNoIndice (1, Mesa (partida))))
-            MoveCabeca (partida, i-1);
+    for (int i = 1; i <= QuantidadeJogadores(partida); i++)
+    {
+        if (CartasIguais(MaiorMesa(Mesa(partida), Corte(partida)), CartaNoIndice(1, Mesa(partida))))
+            MoveCabeca(partida, i - 1);
     }
-    return (IndiceJogador (JogadorInicial(partida)));
+    return (IndiceJogador(JogadorInicial(partida)));
 }

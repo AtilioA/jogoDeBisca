@@ -37,9 +37,15 @@ void DestroiPartida (tPartida *partida);
 
 void MoveCabeca (tPartida *partida, int pos);
 
-void PrintaPontuacao(tPartida *partida);
+// Imprime as pontuações de todos os jogadores da partida
+void ImprimePontuacao(tPartida *partida);
 
+// Pede para o jogador qual carta quer jogar na mesa e realiza o procedimento
 void JogaCartaHumano(tPartida *partida, tJogador *humano); // não sei qual jogador é o humano
+
+int IndiceJogador(tJogador *jogador);
+
+int Vencedor (tPartida *partida);
 
 /* Funções para acessar estrutura opaca */
 // Retorna a quantidade de jogadores de uma partida
@@ -54,15 +60,11 @@ tCarta Corte(tPartida *partida);
 tMonte *Pontuacao(tJogador *jogador);
 // Retorna a mão de um jogador
 tMao *Mao(tJogador *jogador);
-
+// Retorna a mesa de uma partida
 tMonte *Mesa(tPartida *partida);
-
+// Retorna se a partida está em modo de desenvolvedor
 int *ModoDev(tPartida *partida);
-
+// Retorna se o jogador é um humano ou computador
 int PC(tJogador *jogador);
-
-int IndiceJogador(tJogador *jogador);
-
-int Vencedor (tPartida *partida);
 
 #endif
