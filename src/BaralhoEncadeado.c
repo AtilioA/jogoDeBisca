@@ -86,27 +86,22 @@ void Insere(tCarta x, tMonte *monte)
 
 void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada)
 {
-    tCelula *atual = monte->primeiro;
-    tCelula *anterior = NULL;
+    tCelula *atual, *anterior;
 
-    while (atual != NULL && (Valor(Carta(atual)) != Valor(x) || Naipe(Carta(atual)) != Naipe(x)))
+    anterior = monte->primeiro;
+    for (atual = monte->primeiro->prox; atual != NULL; atual = atual->prox)
     {
+        if ((Valor(Carta(atual)) == Valor(x)) && (Naipe(Carta(atual)) == Naipe(x)))
+        {
+            *cartaRetirada = Carta(atual);
+            anterior->prox = atual->prox;
+            free(atual);
+            monte->tamanho--;
+            return;
+        }
         anterior = atual;
-        atual = atual->prox;
     }
-
-    if (atual == NULL)
-    {
-        printf("Nao existe a carta especificada!\n");
-        *cartaRetirada = CartaVazia();
-    }
-    else
-    {
-        anterior->prox = atual->prox;
-        *cartaRetirada = Carta(atual);
-        free(atual);
-        monte->tamanho--;
-    }
+    *cartaRetirada = CartaVazia();
 }
 
 tCarta Corta(tMonte *monte, int pos)
