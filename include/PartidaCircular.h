@@ -11,7 +11,7 @@
 typedef struct tJogador tJogador;
 struct tJogador
 {
-    int robo;
+    int PC;
     int indice;
     tMao mao;
     tMonte pontos;
@@ -22,6 +22,7 @@ struct tJogador
 typedef struct
 {
     int nJogadores;
+    int modoDev;
     tCarta corte;
     tMonte *monte;
     tMonte *mesa;
@@ -36,12 +37,16 @@ void DestroiPartida (tPartida *partida);
 
 void MoveCabeca (tPartida *partida, int pos);
 
+void PrintaPontuacao(tPartida *partida);
+
+void JogaCartaHumano(tPartida *partida, tJogador *humano); // não sei qual jogador é o humano
+
 /* Funções para acessar estrutura opaca */
 // Retorna a quantidade de jogadores de uma partida
 int QuantidadeJogadores (tPartida *partida);
 // Retorna o jogador inicial atual de uma partida
 tJogador *JogadorInicial(tPartida *partida);
-// Retorna o baralho de uma  partida
+// Retorna o baralho de uma partida
 tMonte *Baralho(tPartida *partida);
 // Retorna o corte de uma partida
 tCarta Corte(tPartida *partida);
@@ -52,7 +57,9 @@ tMao *Mao(tJogador *jogador);
 
 tMonte *Mesa(tPartida *partida);
 
-int Robo(tJogador *jogador);
+int *ModoDev(tPartida *partida);
+
+int PC(tJogador *jogador);
 
 int IndiceJogador(tJogador *jogador);
 

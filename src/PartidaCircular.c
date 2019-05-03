@@ -47,6 +47,29 @@ void MoveCabeca (tPartida *partida, int pos) {
     partida->inicial = atual;
 }
 
+void JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jogador é o humano
+{
+    int p = 0;
+    printf("Informe a posicao da carta que quer jogar: ");
+    scanf("%i", &p);
+
+    tMao *maoJogador = Mao(humano);
+    tCarta cartaSelecionada = PegaCarta(p, *maoJogador);
+    MaoParaMonte(cartaSelecionada, Mesa(partida), maoJogador);
+}
+
+void PrintaPontuacao(tPartida *partida)
+{
+    int i = 0;
+    tJogador *atual = partida->inicial;
+
+    printf("Pontuação da partida:\n");
+    for (i = 1, atual = partida->inicial; i < QuantidadeJogadores(partida); i++, atual = atual->prox)
+    { // Falta mostrar no printf qual jogador é o humano
+        printf("Jogador %i: %i pontos\n", i, *Pontuacao(atual));
+    }
+}
+
 int QuantidadeJogadores (tPartida *partida) {
     return (partida->nJogadores);
 }
@@ -81,9 +104,14 @@ tMonte *Mesa(tPartida *partida)
     return partida->mesa;
 }
 
-int Robo(tJogador *jogador)
+int PC(tJogador *jogador)
 {
-    return jogador->robo;
+    return jogador->PC;
+}
+
+int *ModoDev(tPartida *partida)
+{
+    return &partida->modoDev;
 }
 
 int IndiceJogador(tJogador *jogador)
