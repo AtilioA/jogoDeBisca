@@ -10,14 +10,11 @@
 int main()
 {
     tMonte baralho;
-    //tPartida partida;
+    tPartida *partida;
     CriaBaralho (&baralho);
-    //Embaralha (&baralho);
-    TrocaCarta(&baralho, baralho.primeiro->prox, 40);
-    ImprimeMonte(&baralho);
-    ImprimeCarta(Corta (&baralho, 7));
-    DestroiMonte(&baralho);
-
+    partida = CriaPartida(4, &baralho);
+    Partida (partida);
+    DestroiPartida (partida);
     //CriaPartida (4, &partida, &baralho);
     //exibeMenuDev (&partida);
     // DestroiPartida (&partida); // Segmentation fault

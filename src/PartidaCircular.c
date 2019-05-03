@@ -11,18 +11,25 @@ tJogador *InsereJogador(tJogador *jogador)
     return (novo);
 }
 
-void PreparaPartida(tPartida *partida, int nJogadores)
+void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
 {
+    posHumano = (posHumano % nJogadores) + 1;
     partida->nJogadores = 0;
     partida->inicial = (tJogador *)malloc(sizeof(tJogador));
     CriaMao(&partida->inicial->mao);
     FMVazio(&partida->inicial->pontos);
     partida->nJogadores++;
+    partida->inicial->indice = QuantidadeJogadores(partida);
     tJogador *inicio = partida->inicial;
-    while (QuantidadeJogadores(partida) <= nJogadores)
+    while (QuantidadeJogadores(partida) < nJogadores)
     {
         inicio = InsereJogador(inicio);
         partida->nJogadores++;
+        inicio->indice = QuantidadeJogadores(partida);
+        if (IndiceJogador (inicio) == posHumano)
+            inicio->PC = HUMANO;
+        else
+            inicio->PC = IA;
     }
     partida->inicial->prox = inicio;
 }
@@ -41,6 +48,7 @@ void DestroiPartida(tPartida *partida)
         partida->nJogadores--;
     }
     DestroiMonte(partida->monte);
+    free(partida);
 }
 
 void MoveCabeca(tPartida *partida, int pos)
@@ -53,15 +61,19 @@ void MoveCabeca(tPartida *partida, int pos)
     partida->inicial = atual;
 }
 
-void JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jogador é o humano
+tCarta JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jogador é o humano
 {
-    int p = 0;
+    int p;
+    tCarta selecionada;
+
+    ImprimeMao (*Mao(humano));
     printf("Informe a posicao da carta que quer jogar: ");
     scanf("%i", &p);
 
-    tMao *maoJogador = Mao(humano);
-    tCarta cartaSelecionada = PegaCarta(p, *maoJogador);
-    MaoParaMonte(cartaSelecionada, Mesa(partida), maoJogador);
+    selecionada = PegaCarta(p, *Mao(humano));
+    MaoParaMonte(selecionada, Mesa(partida), Mao(humano));
+
+    return(selecionada);
 }
 
 void ImprimePontuacao(tPartida *partida)

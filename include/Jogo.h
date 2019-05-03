@@ -20,9 +20,9 @@
 #include "BaralhoEncadeado.h"
 #include "PartidaCircular.h"
 
-void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho);
+tPartida *CriaPartida(int nJogadores, tMonte *baralho);
 
-void DistribuiCartas (tPartida *partida);
+void DistribuiCartas (tPartida *partida, int n);
 
 // Exibe informações sobre o estado do jogo
 void exibeInfo (tPartida *partida);
@@ -35,5 +35,5 @@ void exibeMenuDev (tPartida *partida);
 
 void exibeMenu ( );
 
-void Partida2Jogadores (tPartida *partida);
+void Partida(tPartida *partida);
 #endif

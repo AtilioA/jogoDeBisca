@@ -31,7 +31,7 @@ typedef struct
 
 tJogador *InsereJogador (tJogador *jogador);
 
-void PreparaPartida (tPartida *partida, int nJogadores);
+void PreparaPartida (tPartida *partida, int nJogadores, int posHumano);
 
 void DestroiPartida (tPartida *partida);
 
@@ -41,7 +41,7 @@ void MoveCabeca (tPartida *partida, int pos);
 void ImprimePontuacao(tPartida *partida);
 
 // Pede para o jogador qual carta quer jogar na mesa e realiza o procedimento
-void JogaCartaHumano(tPartida *partida, tJogador *humano); // não sei qual jogador é o humano
+tCarta JogaCartaHumano(tPartida *partida, tJogador *humano);
 
 int IndiceJogador(tJogador *jogador);
 
