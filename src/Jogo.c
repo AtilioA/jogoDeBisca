@@ -6,6 +6,8 @@
 #include "../include/Maos.h"
 #include "../include/PartidaCircular.h"
 #include "../include/BaralhoEncadeado.h"
+#include "../include/IA2Jogadores.h"
+#include "../include/IA4Jogadores.h"
 
 void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     int p;
@@ -15,7 +17,7 @@ void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     PreparaPartida (partida, nJogadores);
     partida->monte = baralho;
     printf ("Embaralhando o baralho...\n");
-    Embaralha(Monte(partida));
+    Embaralha(Baralho(partida));
     sleep (1);
     printf ("Pronto! Agora sorteando quem sera o primeiro a jogar...\n");
     struct timeval t;
@@ -33,7 +35,7 @@ void CriaPartida (int nJogadores, tPartida *partida, tMonte *baralho) {
     printf ("Jogador %d, escolha uma posicao de 1 a 40 para cortar o baralho.\n", p);
     scanf ("%d", &p);
     p = (p % 40) + 1;
-    trunfo = Corta (Monte (partida), p);
+    trunfo = Corta (Mesa (partida), p);
     partida->corte = trunfo;
     printf ("O trunfo escolhido foi ");
     ImprimeCarta (trunfo);
@@ -52,7 +54,7 @@ void DistribuiCartas (tPartida *partida)
     {
         for (j = 0; j < nMAO; j++)
         { // Não estou conseguindo usar as funções para acesso da struct
-            MonteParaMao(&(Monte(partida)->primeiro->prox)->carta, Monte(partida), &atual->mao);
+            //MonteParaMao(&(Monte(partida)->primeiro->prox)->carta, Monte(partida), &atual->mao);
         }
         atual = atual->prox;
     }
@@ -84,18 +86,18 @@ void exibeMenuDev (tPartida *partida)
     scanf ("%d", &op);
     switch (op) {
         case 10:
-            ImprimeMonte (Monte (partida));
+            ImprimeMonte (Mesa (partida));
         break;
 
         case 11:
-            Embaralha (Monte (partida));
-            ImprimeMonte (Monte (partida));
+            Embaralha (Mesa (partida));
+            ImprimeMonte (Mesa (partida));
         break;
 
         case 12:
             printf ("Escolha a posicao de 1 a 40 para cortar\n");
             scanf ("%d", &p);
-            ImprimeCarta (Corta (Monte (partida), p));
+            ImprimeCarta (Corta (Mesa (partida), p));
         break;
 
         default:
@@ -114,7 +116,8 @@ void exibeAjuda()
 
 void exibeMenu ( )
 {
-    int modoDev, nJogadores;
+    //int modoDev;
+    int nJogadores;
     int op = 1;
 
     while (op != 2)
@@ -132,7 +135,7 @@ void exibeMenu ( )
         switch (op)
         {
             case 1:
-                modoDev = 0;
+                //modoDev = 0;
                 printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
                 scanf("%d", &nJogadores);
                 //chama o jogo de jogadores
@@ -146,7 +149,7 @@ void exibeMenu ( )
                 break;
 
             case 4:
-                modoDev = 1;
+                //modoDev = 1;
                 printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
                 scanf("%d", &nJogadores);
                 //chama o jogo de jogadores
@@ -164,41 +167,57 @@ void exibeMenu ( )
 //ultimo do pontos aponta pra Mesa
 //mesa esvazia
 
-// void Partida2Jogadores (tPartida *partida)
-// {
-//     int jogadas, rodadas, vez;
-//     tJogador *atual;
+void Partida (tPartida *partida)
+{
+     int jogadas, rodadas, vez, seteSaiu, vencedor;
+     tCarta corte, escolhida;
+     tJogador *atual;
 
-//     vez = partida->inicial.robo;
-//     rodadas = 0;
+     corte = Corte (partida);
+     seteSaiu = 0;
+     vez = Robo (JogadorInicial(partida));
+     rodadas = 0;
 
-//     while (rodadas <= 20) {
-//         jogadas = 0;
-//         atual = partida->inicial;
+     while (rodadas <= (40 / QuantidadeJogadores (partida))) {
+         jogadas = 0;
+         atual = partida->inicial;
 
-//         while (jogadas < 2) {
-//             switch (vez) {
-//                 case HUMANO:
-//                     //JogaCartaHumano
-//                     jogadas ++;
-//                     vez = IA;
-//                 break;
+         while (jogadas < QuantidadeJogadores (partida)) {
+             switch (vez) {
+                 case HUMANO:
+                     //JogaCartaHumano
+                     jogadas ++;
+                     vez = Robo (atual->prox);
+                 break;
 
-//                 case IA:
-//                     if (jogadas == 1)
-//                         escolhida = PC2Jogadores2 (mao, monte, corte, seteSaiu);
-
-//                     else
-//                         escolhida = PC2Jogadores1 (mao, monte, corte, seteSaiu);
-
-//                     jogadas ++;
-//                     vez = HUMANO;
-//                 break;
-//             }
-//             atual = atual->prox;
-//         }
-//         //QUEM QUEMGANHOU
-//         //PARTIDA->INICIAL = QUEM GANHOU
-//         rodadas ++;
-//     }
-// }
+                 case IA:
+                    if (jogadas == 0) {
+                        if (QuantidadeJogadores (partida) == 2)
+                            escolhida = PC2Jogadores1 (Mao (atual), Mesa (partida), corte, &seteSaiu);
+                        else
+                            escolhida = PC4Jogadores1 (Mao (atual), Mesa (partida), corte, &seteSaiu);
+                    }
+                    else if (jogadas == 1) {
+                        if (QuantidadeJogadores (partida) == 2)
+                            escolhida = PC2Jogadores2 (Mao (atual), Mesa (partida), corte, &seteSaiu);
+                        else
+                            escolhida = PC4Jogadores2 (Mao (atual), Mesa (partida), corte, &seteSaiu);
+                    }
+                    else if (jogadas == 2) {
+                        escolhida = PC4Jogadores3 (Mao (atual), Mesa (partida), corte, &seteSaiu);
+                    }
+                    else if (jogadas == 3) {
+                        escolhida = PC4Jogadores4 (Mao (atual), Mesa (partida), corte, &seteSaiu);
+                    }
+                    jogadas ++;
+                    vez = Robo (atual->prox);
+                 break;
+             }
+             ImprimeCarta (escolhida);
+             atual = atual->prox;
+         }
+         vencedor = Vencedor (partida);
+         printf ("%d venceu essa rodada\n", vencedor);
+         rodadas ++;
+    }
+}

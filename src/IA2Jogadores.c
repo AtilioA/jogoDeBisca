@@ -12,7 +12,7 @@ int ETrunfo (tCarta carta, tCarta corte) {
     return (Naipe (carta) == Naipe (corte));
 }
 
-tCarta PC2Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
+tCarta PC2Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
     OrdenaMao (mao);
     tCarta jogada;
 
@@ -52,13 +52,15 @@ tCarta PC2Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
         }
     }
     jogada = PegaCarta (1, *mao);
-    while ((Valor (jogada) == 'A') && (ETrunfo (jogada, corte)) && (!(seteSaiu)) && (TamanhoMao (*mao) > 1))
+    while ((Valor (jogada) == 'A') && (ETrunfo (jogada, corte)) && (!(*seteSaiu)) && (TamanhoMao (*mao) > 1))
         jogada = PegaCarta (1 , *mao);
     MaoParaMonte (jogada, monte, mao);
+    if ((ETrunfo (jogada, corte)) && (Valor (jogada) == '7'))
+        *seteSaiu = 1;
     return (jogada);
 }
 
-tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
+tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
     OrdenaMao (mao);
     //OrdenaMesa
     tCarta jogada, mesa;
@@ -105,13 +107,15 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
                     jogada = PegaCarta (i, *mao);
                     if (ETrunfo (jogada, corte)) {
                         if (Valor (jogada) == 'A') {
-                            if (seteSaiu) {
+                            if (*seteSaiu) {
                                 MaoParaMonte (jogada, monte, mao);
                                 return (jogada);
                             }
                         }
                         else {
                             MaoParaMonte (jogada, monte, mao);
+                            if (Valor (jogada) == '7')
+                                *seteSaiu = 1;
                             return (jogada);
                         }
                     }
@@ -184,7 +188,7 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
         jogada = PegaCarta (i, *mao);
         if (ETrunfo (jogada, corte)) {
             if (Valor (jogada) == 'A') {
-                if (seteSaiu) {
+                if (*seteSaiu) {
                     MaoParaMonte (jogada, monte, mao);
                     return (jogada);
                 }
@@ -194,15 +198,15 @@ tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
                 return (jogada);
             }
         }
-        MaoParaMonte (jogada, monte, mao);
-        return (jogada);
     }
     jogada = PegaCarta (1, *mao);
     MaoParaMonte (jogada, monte, mao);
+    if ((ETrunfo (jogada, corte)) && (Valor (jogada) == '7'))
+        *seteSaiu = 1;
     return (jogada);
 }
 
-tCarta PC2JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu) {
+tCarta PC2JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
     int posAleatoria;
     tCarta jogada;
 
@@ -211,13 +215,15 @@ tCarta PC2JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int seteSa
     srand ((unsigned int) t.tv_usec);
     posAleatoria = (rand ( ) % mao->n) + 1;
     jogada = PegaCarta (posAleatoria, *mao);
-    while (ETrunfo (jogada, corte) && (Valor (jogada) == 'A') && (! (seteSaiu))) {
+    while (ETrunfo (jogada, corte) && (Valor (jogada) == 'A') && (! (*seteSaiu))) {
         gettimeofday (&t, NULL);
         srand ((unsigned int) t.tv_usec);
         posAleatoria = (rand ( ) % mao->n) + 1;
         jogada = PegaCarta (posAleatoria, *mao);
     }
     MaoParaMonte (jogada, monte, mao);
+    if ((ETrunfo (jogada, corte)) && (Valor (jogada) == '7'))
+        *seteSaiu = 1;
 
     return (jogada);
 }

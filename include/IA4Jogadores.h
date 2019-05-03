@@ -11,14 +11,14 @@ int CartasIguais (tCarta carta1, tCarta carta2);
 
 tCarta MaiorMesa (tMonte *mesa, tCarta corte);
 
-tCarta PC4Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
+tCarta PC4Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 
-tCarta PC4Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
+tCarta PC4Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 
-tCarta PC4Jogadores3 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
+tCarta PC4Jogadores3 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 
-tCarta PC4Jogadores4 (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
+tCarta PC4Jogadores4 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 
-tCarta PC4JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int seteSaiu);
+tCarta PC4JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 
 #endif

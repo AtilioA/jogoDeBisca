@@ -41,7 +41,7 @@ void DestroiPartida (tPartida *partida) {
 
 void MoveCabeca (tPartida *partida, int pos) {
     tJogador *atual = partida->inicial;
-    for (int i = 1; i < pos; i ++) {
+    for (int i = 1; i <= pos; i ++) {
         atual = atual->prox;
     }
     partida->inicial = atual;
@@ -56,7 +56,7 @@ tJogador *JogadorInicial(tPartida *partida)
     return partida->inicial;
 }
 
-tMonte *Monte(tPartida *partida)
+tMonte *Baralho(tPartida *partida)
 {
     return partida->monte;
 }
@@ -66,12 +66,36 @@ tCarta Corte(tPartida *partida)
     return partida->corte;
 }
 
-tMonte Pontuacao(tJogador *jogador)
+tMonte *Pontuacao(tJogador *jogador)
 {
-    return jogador->pontos;
+    return &jogador->pontos;
 }
 
-tMao Mao(tJogador *jogador)
+tMao *Mao(tJogador *jogador)
 {
-    return jogador->mao;
+    return &jogador->mao;
+}
+
+tMonte *Mesa(tPartida *partida)
+{
+    return partida->mesa;
+}
+
+int Robo(tJogador *jogador)
+{
+    return jogador->robo;
+}
+
+int IndiceJogador(tJogador *jogador)
+{
+    return jogador->indice;
+}
+
+int Vencedor (tPartida *partida)
+{
+    for (int i = 1; i <= QuantidadeJogadores (partida); i ++) {
+        if (CartasIguais (MaiorMesa (Mesa (partida), Corte (partida)), CartaNoIndice (1, Mesa (partida))))
+            MoveCabeca (partida, i-1);
+    }
+    return (IndiceJogador (JogadorInicial(partida)));
 }
