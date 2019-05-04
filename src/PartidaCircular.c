@@ -12,7 +12,7 @@ void MandaPontosJogador(tJogador *vencedor, tMonte *mesa)
     }
 }
 
-tJogador *InsereJogador(tJogador *jogador)
+tJogador *CriaJogador(tJogador *jogador)
 {
     tJogador *novo;
     novo = (tJogador *)malloc(sizeof(tJogador));
@@ -20,7 +20,7 @@ tJogador *InsereJogador(tJogador *jogador)
     FMVazio(&novo->pontos);
 
     novo->prox = jogador;
-    return (novo);
+    return novo;
 }
 
 void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
@@ -38,7 +38,7 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
     tJogador *inicio = partida->inicial;
     while (QuantidadeJogadores(partida) < nJogadores)
     {
-        inicio = InsereJogador(inicio);
+        inicio = CriaJogador(inicio);
         partida->nJogadores++;
         inicio->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
         if (IndiceJogador (inicio) == posHumano)

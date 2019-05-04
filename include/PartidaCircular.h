@@ -29,10 +29,11 @@ typedef struct
     tJogador *inicial;
 } tPartida;
 
-// Manda as cartas mesa para o jogador que ganhou a rodada (contando como pontuação deste)
+// Manda as cartas da mesa para o jogador que ganhou a rodada (contando como pontuação deste)
 void MandaPontosJogador(tJogador *vencedor, tMonte *mesa);
 
-tJogador *InsereJogador (tJogador *jogador);
+// Inicializa uma variável tJogador e retorna-a
+tJogador *CriaJogador (tJogador *jogador);
 
 void PreparaPartida (tPartida *partida, int nJogadores, int posHumano);
 
