@@ -1,5 +1,17 @@
 #include "../include/PartidaCircular.h"
 
+void MandaPontosJogador(tJogador *vencedor, tMonte *mesa)
+{
+    int i = 0;
+    tCarta retirada;
+
+    for (i = QuantidadeJogadores(mesa); i > 0; i--)
+    {
+        Pop(mesa, &retirada);
+        Insere(retirada, &vencedor->pontos);
+    }
+}
+
 tJogador *InsereJogador(tJogador *jogador)
 {
     tJogador *novo;
@@ -26,7 +38,7 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
         inicio = InsereJogador(inicio);
         partida->nJogadores++;
         inicio->indice = QuantidadeJogadores(partida);
-        if (IndiceJogador (inicio) == posHumano)
+        if (IndiceJogador(inicio) == posHumano)
             inicio->PC = HUMANO;
         else
             inicio->PC = IA;
@@ -66,14 +78,14 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jog
     int p;
     tCarta selecionada;
 
-    ImprimeMao (*Mao(humano));
+    ImprimeMao(*Mao(humano));
     printf("Informe a posicao da carta que quer jogar: ");
     scanf("%i", &p);
 
     selecionada = PegaCarta(p, *Mao(humano));
     MaoParaMonte(selecionada, Mesa(partida), Mao(humano));
 
-    return(selecionada);
+    return selecionada;
 }
 
 void ImprimePontuacao(tPartida *partida)
@@ -84,7 +96,7 @@ void ImprimePontuacao(tPartida *partida)
     printf("Pontuação da partida:\n");
     for (i = 1, atual = partida->inicial; i < QuantidadeJogadores(partida); i++, atual = atual->prox)
     { // Falta mostrar no printf qual jogador é o humano
-        printf("Jogador %i: %i pontos\n", i, ContaPontos (Pontuacao (atual)));
+        printf("Jogador %i: %i pontos\n", i, ContaPontos(Pontuacao(atual)));
     }
 }
 
