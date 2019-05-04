@@ -54,7 +54,8 @@ valtxt:
 
 # Limpa objetos e o executável do programa (para Windows)
 cleanW:
-# A fazer
+	del /F/Q/S "$(OBJ)\*.o"
+	del /F/Q/S $(EXE).exe
 
 # Limpa objetos e o executável do programa (para Linux)
 clean:

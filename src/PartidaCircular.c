@@ -62,7 +62,8 @@ void DestroiPartida(tPartida *partida)
         lixo = atual;
         partida->nJogadores--;
     }
-    //DestroiMonte(partida->monte);
+    // DestroiMonte(partida->monte);
+    DestroiMonte(Mesa(partida)); // TESTE
     free(partida);
 }
 
@@ -100,12 +101,12 @@ void ImprimePontuacao(tPartida *partida)
     int i = 0;
     tJogador *atual = partida->inicial;
 
-    printf("Pontuação da partida:\n");
+    printf("Pontuacao da partida:\n");
     for (i = 1, atual = partida->inicial; i <= QuantidadeJogadores(partida); i++, atual = atual->prox)
     {
         if (!atual->PC)
         {
-            printf("Jogador %i (VOCE): %i pontos\n", IndiceJogador(atual), ContaPontos(Pontuacao(atual))); 
+            printf("Jogador %i (VOCE): %i pontos\n", IndiceJogador(atual), ContaPontos(Pontuacao(atual)));
         }
         else
         {
@@ -156,7 +157,7 @@ int PC(tJogador *jogador)
 
 int *ModoDev(tPartida *partida)
 {
-    return &partida->modoDev;
+    return partida->modoDev;
 }
 
 int IndiceJogador(tJogador *jogador)

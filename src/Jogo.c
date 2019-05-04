@@ -21,7 +21,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     printf("-----------------------------------\n");
     //FMVazio(&mesa);
     //partida->mesa = &mesa;
-    printf("Humano, escolha qual jogador você deseja ser [1 a %i]: ", nJogadores);
+    printf("Humano, escolha qual jogador voce deseja ser [1 a %i]: ", nJogadores);
     scanf("%d", &h);
     PreparaPartida(partida, nJogadores, h);
     printf("Pronto! Agora, sorteando quem comecara...\n");
@@ -102,7 +102,6 @@ void exibeAjuda()
 
 /* Adicionar:
  * Informacoes do jogo
- * Última carta jogada
  *
  * As opções
  * - Mostrar cartas do monte (na ordem que ela estiver)
@@ -116,20 +115,20 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
     int op = 0, p = 0;
 
     // No jogo de bisca, a pontuação só é revelada ao final do jogo
+    ImprimePontuacao(partida);
     if (ModoDev(partida))
     {
-        ImprimePontuacao(partida);
         printf("Rodadas restantes: %i\n", QuantidadeMonte(baralho) / 2 + TamanhoMao(*Mao(humano)));
     }
     printf("Cartas restantes no baralho: %i\n", QuantidadeMonte(baralho));
     printf("\nQuantidade de cartas na mao: %i\n", TamanhoMao(*Mao(humano)));
 
-    while (op != 2)
+    while (op != 1 && op != 2)
     {
         printf("[1] - Jogar carta\n");
         printf("[2] - Sair\n");
         printf("[3] - Ajuda\n");
-        printf("[4] - Pontuação dos jogadores\n");
+        printf("[4] - Pontuacao dos jogadores\n");
 
         if (ModoDev(partida))
         {
@@ -148,7 +147,6 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
             break;
 
         case 2:
-            DestroiMonte(Mesa(partida));
             DestroiPartida(partida);
             DestroiMonte(baralho);
             exit(0);
@@ -275,7 +273,7 @@ void ExibeMenuInicial(tPartida *partida)
 
             CriaBaralho(&baralho);
             partida = CriaPartida(nJogadores, &baralho);
-            partida->modoDev = 0;
+            partida->modoDev = 1;
             Partida(partida, &baralho);
 
             FinalizaPartida(partida);
@@ -378,8 +376,8 @@ void Partida(tPartida *partida, tMonte *baralho)
 
         vencedor = Vencedor(partida);
         MandaPontosJogador(vencedor, Mesa(partida));
-        printf("%d venceu essa rodada!\n", IndiceJogador(vencedor));
-        
+        printf("O jogador %d venceu essa rodada!\n", IndiceJogador(vencedor));
+
         sleep(1);
         DistribuiCartas(partida, 1, baralho);
         rodadas++;
