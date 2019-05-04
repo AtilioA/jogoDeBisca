@@ -82,7 +82,7 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jog
     int p = 0;
     tCarta selecionada;
 
-    printf("Cartas da sua mao:\n");
+    printf("\nCartas da sua mao:\n");
     ImprimeMao(*Mao(humano));
     while (p < 1 || p > 3)
     {
@@ -91,6 +91,7 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jog
     }
 
     selecionada = PegaCarta(p, *Mao(humano));
+    ImprimeCarta(selecionada);
     MaoParaMonte(selecionada, Mesa(partida), Mao(humano));
 
     return selecionada;
@@ -101,7 +102,8 @@ void ImprimePontuacao(tPartida *partida)
     int i = 0;
     tJogador *atual = partida->inicial;
 
-    printf("Pontuacao da partida:\n");
+    printf("----------------------------\n");
+    printf("    PONTUACAO DA PARTIDA\n");
     for (i = 1, atual = partida->inicial; i <= QuantidadeJogadores(partida); i++, atual = atual->prox)
     {
         if (!atual->PC)
@@ -113,6 +115,7 @@ void ImprimePontuacao(tPartida *partida)
             printf("Jogador %i: %i pontos\n", IndiceJogador(atual), ContaPontos (Pontuacao(atual)));
         }
     }
+    printf("----------------------------\n");
 }
 
 int QuantidadeJogadores(tPartida *partida)

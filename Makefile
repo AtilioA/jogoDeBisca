@@ -38,7 +38,7 @@ run:
 	./$(EXE)
 
 # Compila e roda o programa
-voado: main run
+voado: clean main run
 
 # Roda o programa com valgrind e flags úteis
 val:
