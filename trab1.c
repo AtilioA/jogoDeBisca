@@ -15,76 +15,40 @@ int main()
     partida = CriaPartida(4, &baralho);
     Partida (partida);
     DestroiPartida (partida);
-    //CriaPartida (4, &partida, &baralho);
-    //exibeMenuDev (&partida);
-    // DestroiPartida (&partida); // Segmentation fault
-    // TESTE DE IA
-    //int posAleatoria;
-    //tCarta carta;
-    //tMao mao;
-    //tMonte monte, mesa;
 
-    //FMVazio(&monte);
-
-    //DestroiMonte(&monte);
-    //CriaBaralho(&monte);
-    //Embaralha(&monte);
-    //ImprimeMonte(&monte);
-    //ImprimeCarta(Corta(&monte, 10));
-    //ImprimeMonte(&monte);
-/*
-    for (size_t i = 0; i < 100; i++) {
-        CriaMao(&mao);
-        posAleatoria = (rand () % 40) + 1;
-        carta = CartaNoIndice (posAleatoria, &monte);
-        ColocaNaMao(carta, &mao);
-        posAleatoria = (rand () % 40) + 1;
-        carta = CartaNoIndice (posAleatoria, &monte);
-        ColocaNaMao(carta, &mao);
-        posAleatoria = (rand () % 40) + 1;
-        carta = CartaNoIndice (posAleatoria, &monte);
-        ColocaNaMao(carta, &mao);
-
-        posAleatoria = (rand () % 40) + 1;
-        carta = CartaNoIndice (posAleatoria, &monte);
-        //printf("Mao:\n");
-        //ImprimeMao(mao);
-        FMVazio(&mesa);
-        //printf("Jogada1:\n");
-        ImprimeCarta (PC4Jogadores1 (&mao, &mesa, carta, 1));
-        posAleatoria = (rand () % 40) + 1;
-        carta = CartaNoIndice (posAleatoria, &monte);
-        ColocaNaMao(carta, &mao);
-        //printf("Nova mao:\n");
-        //ImprimeMao(mao);
-        //printf("Jogada2:\n");
-        ImprimeCarta (PC4Jogadores2 (&mao, &mesa, carta, 1));
-        posAleatoria = (rand () % 40) + 1;
-        carta = CartaNoIndice (posAleatoria, &monte);
-        ColocaNaMao(carta, &mao);
-        //printf("Nova mao:\n");
-        //ImprimeMao(mao);
-        //printf("Jogada2:\n");
-        ImprimeCarta (PC4Jogadores3 (&mao, &mesa, carta, 1));
-        posAleatoria = (rand () % 40) + 1;
-        carta = CartaNoIndice (posAleatoria, &monte);
-        ColocaNaMao(carta, &mao);
-        //printf("Nova mao:\n");
-        //ImprimeMao(mao);
-        //printf("Jogada2:\n");
-        ImprimeCarta (PC4Jogadores4 (&mao, &mesa, carta, 1));
-        posAleatoria = (rand () % 40) + 1;
-        carta = CartaNoIndice (posAleatoria, &monte);
-        printf("Trunfo: ");
-        ImprimeCarta (carta);
-        printf("Maior mesa: ");
-        ImprimeCarta(MaiorMesa (&mesa, carta));
-        printf("\n");
-        printf("\n");
-        LiberaMao(&mao);
-        DestroiMonte(&mesa);
-    }
-*/
+    /* Teste MandaPontosJogador (apagar no próximo commit)
+    tMonte mesa;
+    tJogador vencedor;
+    FMVazio(&vencedor.pontos);
+    FMVazio(&mesa);
+    ImprimeMonte(&vencedor.pontos);
+    ImprimeMonte(&mesa);
+    // InsereJogador(&vencedor);
+    tCarta carta = PreencheCarta('7', 'C');
+    tCarta carta2 = PreencheCarta('7', 'O');
+    tCarta carta3 = PreencheCarta('A', 'O');
+    tCarta carta4 = PreencheCarta('K', 'E');
+    tCarta carta5 = PreencheCarta('J', 'P');
+    Insere(carta, &mesa);
+    Insere(carta2, &mesa);
+    Insere(carta3, &mesa);
+    Insere(carta4, &mesa);
+    Insere(carta5, &mesa);
+    printf("Cartas na mesa:\n");
+    ImprimeMonte(&mesa);
+    printf("Mandando pontos para jogador vencedor...\n");
+    MandaPontosJogador(&vencedor, &mesa);
+    printf("Mesa:\n");
+    ImprimeMonte(&mesa);
+    printf("Monte de pontos do jogador:\n");
+    ImprimeMonte(&vencedor.pontos);
+    int pontos = ContaPontos(&vencedor.pontos);
+    printf("Pontos do jogador: %i\n", pontos);
+    DestroiMonte(&mesa);
+    DestroiMonte(&vencedor.pontos);
+    */
+   
+    /* Se precisar do que estava aqui é só pegar no GitHub */
 
     return 0;
 }

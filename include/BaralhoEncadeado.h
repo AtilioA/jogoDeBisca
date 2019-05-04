@@ -55,16 +55,16 @@ void Insere(tCarta x, tMonte *monte);
 // Retira uma carta do monte e retorna o elemento por referência
 void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada);
 
-// "Corta" uma carta (caso específico da função retira)
+// Retira a primeira carta do monte e retorna o elemento por referência
+void Pop(tMonte *monte, tCarta *cartaRetirada);
+
+// "Corta" uma carta
 tCarta Corta(tMonte *monte, int pos);
 
-// Retorna o naipe de uma carta
-int Recupera(char valor, char naipe, tMonte *monte);
-
-// Move uma célula do monte para outra posição
+// Troca a célula de uma carta do monte com outra célula
 void TrocaCarta(tMonte *monte, tCelula *celula, int pos);
 
-// Embaralha as posições das células em umo monte
+// Embaralha as cartas das células em um monte
 void Embaralha(tMonte *monte);
 
 // Imprime as cartas do monte
@@ -75,9 +75,6 @@ void DestroiMonte(tMonte *monte);
 
 // Retorna uma carta do monte dado um índice
 tCarta CartaNoIndice(int pos, tMonte *monte);
-
-// Retorna o índice de uma dada carta do monte
-int IndiceCarta(char valor, char naipe, tMonte *monte);
 
 // Manda uma carta do monte para a mão
 void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao);

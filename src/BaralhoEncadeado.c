@@ -84,6 +84,18 @@ void Insere(tCarta x, tMonte *monte)
     }
 }
 
+void Pop(tMonte *monte, tCarta *cartaRetirada)
+{
+    if (monte->primeiro->prox != NULL)
+    {
+        *cartaRetirada = Carta(monte->primeiro->prox);
+        tCelula *aux = monte->primeiro;
+        monte->primeiro = monte->primeiro->prox;  
+        free(aux);
+        monte->tamanho--;
+    }
+}
+
 void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada)
 {
     tCelula *atual, *anterior;
@@ -132,79 +144,6 @@ tCarta Corta(tMonte *monte, int pos)
     }
     printf("ERRO! Nao foi possivel cortar.\n");
     return (CartaVazia());
-}
-
-int Recupera(char valor, char naipe, tMonte *monte)
-{
-    tCelula *atual;
-
-    for (atual = monte->primeiro; atual != NULL; atual = atual->prox)
-    {
-        if ((Valor(Carta(atual)) == valor) && (Naipe(Carta(atual)) == naipe))
-            return (1);
-    }
-    return (0);
-}
-
-void MoveCelula(tMonte *monte, tCelula *celula, int pos)
-{
-    int i = 1;
-
-    if (pos < QuantidadeMonte(monte))
-    {
-        tCelula *atual = monte->primeiro;
-        tCelula *anterior = NULL;
-        while (atual != NULL && atual != celula)
-        {
-            anterior = atual;
-            atual = atual->prox;
-            // printf("Buscando celula original...\n");
-        }
-
-        if (atual == NULL)
-        {
-            printf("Nao foi possivel chegar na celula original!\n");
-        }
-        else
-        {
-            anterior->prox = celula->prox;
-        }
-
-        if (pos == 1)
-        {
-            tCelula *aux;
-            aux = monte->primeiro->prox;
-            // aux->prox = monte->primeiro->prox->prox;
-            celula->prox = aux;
-            monte->primeiro->prox = celula;
-        }
-        else
-        {
-            atual = monte->primeiro->prox;
-            anterior = NULL;
-            while (atual != NULL && i < pos)
-            {
-                i++;
-                anterior = atual;
-                atual = atual->prox;
-                // printf("Buscando posicao destino...\n");
-            }
-
-            if (atual == NULL)
-            {
-                printf("Nao foi possivel chegar na posicao!\n");
-            }
-            else
-            {
-                anterior->prox = celula;
-                celula->prox = atual;
-            }
-        }
-    }
-    else
-    {
-        printf("A posicao fica fora da monte.\n");
-    }
 }
 
 void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
@@ -296,27 +235,6 @@ void DestroiMonte(tMonte *monte)
     }
 
     monte->tamanho = 0;
-}
-
-int IndiceCarta(char valor, char naipe, tMonte *monte)
-{
-    tCelula *atual = monte->primeiro->prox;
-    int indice = 1; // 1 como sendo o primeiro elemento
-
-    while (atual != NULL || (Valor(Carta(atual)) != valor && Naipe(Carta(atual)) != naipe))
-    {
-        indice++;
-        atual = atual->prox;
-    }
-
-    if (atual == NULL)
-    {
-        return -1;
-    }
-    else
-    {
-        return indice;
-    }
 }
 
 tCarta CartaNoIndice(int pos, tMonte *monte)
