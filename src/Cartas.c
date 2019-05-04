@@ -39,8 +39,8 @@ void ImprimeCarta(tCarta carta)
     }
 
     printf("%c ", carta.valor);
-    // printf("%c\n", carta.naipe);
 
+    #ifdef __unix__
     if (carta.naipe == NAIPES[0])
         printf("\u2665\n");
     else if (carta.naipe == NAIPES[1])
@@ -49,6 +49,11 @@ void ImprimeCarta(tCarta carta)
         printf("\u2663\n");
     else if (carta.naipe == NAIPES[3])
         printf("\u2660\n");
+
+    #elif defined(WIN32) || defined(WIN64)
+    printf("%c\n", carta.naipe);
+    #endif
+
 }
 
 char Valor(tCarta carta)
