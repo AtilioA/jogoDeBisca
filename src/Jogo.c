@@ -15,6 +15,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     tCarta trunfo;
     tPartida *partida;
     partida = (tPartida *) malloc (sizeof (tPartida));
+    clrscr();
     printf("Iniciando a partida de %d jogadores...\n", nJogadores);
     printf("Humano, escolha seu indice [1 a 4]: ");
     scanf("%d", &q);
@@ -272,4 +273,9 @@ void Partida(tPartida *partida)
         DistribuiCartas(partida, 1);
         rodadas++;
     }
+}
+
+void clrscr()
+{
+    system("@cls||clear");
 }
