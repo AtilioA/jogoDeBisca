@@ -15,16 +15,17 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     tCarta trunfo;
     //tMonte mesa;
     tPartida *partida;
-    partida = (tPartida *) malloc (sizeof (tPartida));
-    clrscr ();
-    printf("Iniciando a partida de %d jogadores...\n", nJogadores);
+    partida = (tPartida *)malloc(sizeof(tPartida));
+    clrscr();
+    printf("Iniciando partida de %d jogadores...\n", nJogadores);
+    printf("-----------------------------------\n");
     //FMVazio(&mesa);
     //partida->mesa = &mesa;
-    printf("Humano, escolha seu indice [1 a 4]: ");
+    printf("Humano, escolha qual jogador você deseja ser [1 a %i]: ", nJogadores);
     scanf("%d", &h);
     PreparaPartida(partida, nJogadores, h);
-    printf("Pronto! Agora sorteando quem comecara embaralhando...\n");
-    // sleep (1);
+    printf("Pronto! Agora, sorteando quem comecara...\n");
+    sleep(1);
     struct timeval t;
     gettimeofday(&t, NULL);
     srand((unsigned int)t.tv_usec);
@@ -32,16 +33,21 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     printf("Sera o jogador %d!\n\n", p);
     printf("Embaralhando...\n");
     Embaralha(baralho);
-    // sleep (1);
+    sleep(1);
     q = p - 1;
-    if (q == 0) q = nJogadores;
-    printf ("Jogador %d, passe os comandos ao jogador %d, a sua ESQUERDA, para que ele possa cortar.\n", p, q);
-    // sleep (1);
-    if (q == h) {
-        printf("Jogador %d, escolha uma posicao de 1 a 40 para cortar o baralho.\n", q);
+    if (q == 0)
+    {
+        q = nJogadores;
+    }
+    printf("Jogador %d, passe os comandos ao jogador %d, a sua ESQUERDA, para que ele possa cortar.\n", p, q);
+    sleep(1);
+    if (q == h)
+    {
+        printf("Jogador %d, escolha uma posicao de 1 a %i para cortar o baralho.\n", q, QuantidadeMonte(baralho));
         scanf("%d", &q);
     }
-    else {
+    else
+    {
         printf("O computador %d cortara aleatoriamente.\n", q);
         gettimeofday(&t, NULL);
         srand((unsigned int)t.tv_usec);
@@ -49,21 +55,26 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     }
     trunfo = Corta(baralho, q);
     partida->corte = trunfo;
-    printf("O trunfo escolhido foi ");
+    // printf("O trunfo escolhido foi:");
+    printf("\nCARTA ESCOLHIDA COMO TRUNFO:\n");
     ImprimeCarta(trunfo);
-    printf("Agora serao entregues as cartas...\n");
+    printf("\nAgora, serao entregues as cartas aos jogadores...\n");
     DistribuiCartas(partida, nMAO, baralho);
     p = p + 1;
-    if (p > nJogadores) p = 1;
-    printf("Jogador %d, voce inicia jogando!\n", p);
-    MoveCabeca (partida, p);
-    printf("Good luck and dont fuck it up\n\n");
+    if (p > nJogadores)
+    {
+        p = 1;
+    }
+
+    printf("Jogador %d, voce sera o primeiro a jogar!\n", p);
+    MoveCabeca(partida, p);
+    printf("Good luck and don't fuck it up\n\n");
+    sleep(5);
 
     return (partida);
 }
 
-
-void DistribuiCartas (tPartida *partida, int n, tMonte *baralho)
+void DistribuiCartas(tPartida *partida, int n, tMonte *baralho)
 {
     tJogador *jogadorAtual = partida->inicial;
     tCarta cartaAtual;
@@ -84,16 +95,14 @@ void DistribuiCartas (tPartida *partida, int n, tMonte *baralho)
 void exibeAjuda()
 {
     printf("\n\n--------- AJUDA ---------\n");
-    printf("Digite um valor e pressione Enter para escolher uma opcao\n");
+    printf("Digite um valor e pressione Enter para escolher a opcao\n");
     printf("Voce podera jogar contra um computador ou em duplas (jogador + computador vs. 2 computadores)\n");
     printf("Sobre a bisca: http://tiny.cc/bisca\n\n\n");
 }
 
 /* Adicionar:
  * Informacoes do jogo
- * Corte
  * Última carta jogada
- * Quem inicia
  *
  * As opções
  * - Mostrar cartas do monte (na ordem que ela estiver)
@@ -101,78 +110,121 @@ void exibeAjuda()
  * - Cortar
  * estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
  */
-void MenuPartida(tPartida *partida, tMonte *baralho)
+
+tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
 {
     int op = 0, p = 0;
 
-    ImprimePontuacao(partida);
-    printf("Cartas restantes no baralho/monte: %i\n", QuantidadeMonte(baralho));
-    printf("\nQuantidade de cartas na mao: %i\n", TamanhoMao(*Mao(JogadorInicial(partida)))); // não sei qual é o jogador inicial
-
-    printf("[1] - Jogar carta\n");
-    printf("[2] - Sair\n");
-    printf("[3] - Ajuda\n");
-    printf("[4] - Pontuação dos jogadores\n");
-
+    // No jogo de bisca, a pontuação só é revelada ao final do jogo
     if (ModoDev(partida))
     {
-        printf("[10] - Mostrar cartas do monte\n");
-        printf("[11] - Embaralhar\n");
-        printf("[12] - Cortar\n");
+        ImprimePontuacao(partida);
+        printf("Rodadas restantes: %i\n", QuantidadeMonte(baralho) / 2 + TamanhoMao(*Mao(humano)));
     }
+    printf("Cartas restantes no baralho: %i\n", QuantidadeMonte(baralho));
+    printf("\nQuantidade de cartas na mao: %i\n", TamanhoMao(*Mao(humano)));
 
-    scanf("%d", &op);
-
-    switch (op)
+    while (op != 2)
     {
-    case 1:
-        JogaCartaHumano(partida, partida->inicial);
-        break;
+        printf("[1] - Jogar carta\n");
+        printf("[2] - Sair\n");
+        printf("[3] - Ajuda\n");
+        printf("[4] - Pontuação dos jogadores\n");
 
-    case 2:
-        return;
-
-    case 3:
-        exibeAjuda();
-        break;
-
-    case 10:
         if (ModoDev(partida))
         {
-            ImprimeMonte(Mesa(partida));
+            printf("[10] - Mostrar cartas do monte\n");
+            printf("[11] - Mostrar cartas de todos os jogadores\n");
+            printf("[12] - Embaralhar\n");
+            printf("[13] - Cortar\n");
         }
-        break;
 
-    case 11:
-        if (ModoDev(partida))
+        printf("Sua escolha: ");
+        scanf("%d", &op);
+        switch (op)
         {
-            printf("Embaralhando...\n");
-            Embaralha(Mesa(partida));
-            ImprimeMonte(Mesa(partida));
-        }
-        break;
+        case 1:
+            JogaCartaHumano(partida, humano);
+            break;
 
-    case 12:
-        if (ModoDev(partida))
-        {
-            printf("Escolha a posicao de 1 a 40 para cortar\n");
-            scanf("%d", &p);
-            printf("Corte:\n");
-            ImprimeCarta(Corta(Mesa(partida), p));
-        }
-        break;
+        case 2:
+            DestroiMonte(Mesa(partida));
+            DestroiPartida(partida);
+            DestroiMonte(baralho);
+            exit(0);
 
-    default:
-        printf("thank u, next.\n");
-        break;
+        case 3:
+            clrscr();
+            exibeAjuda();
+            break;
+
+        case 4:
+            clrscr();
+            ImprimePontuacao(partida);
+            printf("\n");
+            break;
+
+        case 10:
+            if (ModoDev(partida))
+            {
+                printf("Cartas restantes no jogo (%i):\n", QuantidadeMonte(baralho));
+                ImprimeMonte(baralho);
+            }
+            break;
+
+        case 11:
+            if (ModoDev(partida))
+            {
+                printf("Sua mao:\n");
+                ImprimeMao(*Mao(humano));
+
+                tJogador *atual = humano->prox;
+                printf("Mao dos outros jogadores:\n");
+                for (int i = 1; i < QuantidadeJogadores(partida); i++)
+                {
+                    ImprimeMao(*Mao(atual));
+                    printf("\n");
+                    atual = atual->prox;
+                }
+                break;
+            }
+            break;
+
+        case 12:
+            if (ModoDev(partida))
+            {
+                printf("\nEmbaralhando...\n");
+                Embaralha(baralho);
+                printf("Embaralhado:\n");
+                ImprimeMonte(baralho);
+            }
+            break;
+
+        case 13:
+            if (ModoDev(partida))
+            {
+                printf("Escolha uma posicao de 1 a %i para cortar: ", QuantidadeMonte(baralho));
+                scanf("%d", &p);
+                printf("Corte:\n");
+                tCarta trunfo = Corta(baralho, p);
+                ImprimeCarta(trunfo);
+                partida->corte = trunfo;
+            }
+            break;
+
+        default:
+            printf("\nthank u, next.\n");
+            break;
+        }
     }
 }
 
-void exibeMenuInicial(tPartida *partida)
+void ExibeMenuInicial(tPartida *partida)
 {
     //int modoDev;
-    int nJogadores;
-    int op = 1;
+    tMonte baralho;
+    int nJogadores = -1;
+    int op = 0;
 
     while (op != 2)
     {
@@ -189,24 +241,45 @@ void exibeMenuInicial(tPartida *partida)
         switch (op)
         {
         case 1:
+            nJogadores = -1;
+            while (nJogadores != 2 && nJogadores != 4)
+            {
+                printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores:\n");
+                scanf("%i", &nJogadores);
+            }
+
+            CriaBaralho(&baralho);
+            partida = CriaPartida(nJogadores, &baralho);
             partida->modoDev = 0;
-            printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
-            scanf("%d", &nJogadores);
-            //chama o jogo de jogadores
+            Partida(partida, &baralho);
+
+            FinalizaPartida(partida);
+            DestroiPartida(partida);
             break;
 
         case 2:
             return;
 
         case 3:
+            clrscr();
             exibeAjuda();
             break;
 
         case 4:
-            partida->modoDev = 1;
-            printf("Digite 2 para jogar em 2 jogadores ou\n4 para jogar em 4 jogadores: ");
-            scanf("%d", &nJogadores);
-            //chama o jogo de jogadores
+            nJogadores = -1;
+            while (nJogadores != 2 && nJogadores != 4)
+            {
+                printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores:\n");
+                scanf("%i", &nJogadores);
+            }
+
+            CriaBaralho(&baralho);
+            partida = CriaPartida(nJogadores, &baralho);
+            partida->modoDev = 0;
+            Partida(partida, &baralho);
+
+            FinalizaPartida(partida);
+            DestroiPartida(partida);
             break;
 
             while (op < 1 || op > 15)
@@ -218,8 +291,6 @@ void exibeMenuInicial(tPartida *partida)
     }
 }
 
-// Último do pontos aponta pra Mesa
-// Esvazia mesa
 void Partida(tPartida *partida, tMonte *baralho)
 {
     int jogadas, rodadas, vez, seteSaiu;
@@ -231,7 +302,7 @@ void Partida(tPartida *partida, tMonte *baralho)
     seteSaiu = 0;
     rodadas = 0;
 
-    while (rodadas <= (40 / QuantidadeJogadores(partida)))
+    while (rodadas < (40 / QuantidadeJogadores(partida)))
     {
         jogadas = 0;
         atual = JogadorInicial(partida);
@@ -240,21 +311,38 @@ void Partida(tPartida *partida, tMonte *baralho)
         FMVazio(&mesa);
         partida->mesa = &mesa;
 
+        clrscr();
         while (jogadas < QuantidadeJogadores(partida))
         {
             printf("Jogador %d, sua vez.\n", IndiceJogador(atual));
-            printf("Mesa:\n");
-            ImprimeMonte(Mesa(partida));
+            sleep(1);
+
+            printf("-----------------------------------\n");
+            printf("Corte:\n");
+            ImprimeCarta(Corte(partida));
+            printf("\nMesa:\n");
+            if (QuantidadeMonte(Mesa(partida)) > 0)
+            {
+                ImprimeMonte(Mesa(partida));
+            }
+            else
+            {
+                printf("A mesa ainda esta vazia.\n");
+            }
+            printf("-----------------------------------\n");
             printf("\n");
+
             switch (vez)
             {
             case HUMANO:
-                escolhida = JogaCartaHumano(partida, atual);
+                escolhida = MenuPartida(partida, baralho, atual);
                 jogadas++;
                 vez = PC(atual->prox);
                 break;
 
             case IA:
+                sleep(1);
+                printf("Jogador %i:\n", IndiceJogador(atual));
                 if (jogadas == 0)
                 {
                     if (QuantidadeJogadores(partida) == 2)
@@ -282,13 +370,18 @@ void Partida(tPartida *partida, tMonte *baralho)
                 break;
             }
             ImprimeCarta(escolhida);
+            printf("\n");
             atual = atual->prox;
         }
-        clrscr ( );
+        sleep(5);
+        clrscr();
+
         vencedor = Vencedor(partida);
-        MandaPontosJogador (vencedor, Mesa (partida));
-        printf("%d venceu essa rodada\n", IndiceJogador(vencedor));
-        DistribuiCartas (partida, 1, baralho);
+        MandaPontosJogador(vencedor, Mesa(partida));
+        printf("%d venceu essa rodada!\n", IndiceJogador(vencedor));
+        
+        sleep(1);
+        DistribuiCartas(partida, 1, baralho);
         rodadas++;
         DestroiMonte(Mesa(partida));
     }
@@ -296,49 +389,100 @@ void Partida(tPartida *partida, tMonte *baralho)
     DestroiMonte(baralho);
 }
 
-void FinalizaPartida (tPartida *partida)
+void FinalizaPartida(tPartida *partida)
 {
-    int ponto1 = 0, ponto2 = 0,
-        campeao = 0, h;
-    tJogador *atual;
-
+    int ponto1 = 0, ponto2 = 0, campeao = 0, PJ1 = 0, PJ2 = 0, h;
+    tJogador *atual = partida->inicial;
     h = HUMANO;
-    atual = partida->inicial;
-    for (int i = 1; i <= QuantidadeJogadores (partida); i ++) {
-        if (! (i % 2))
-            ponto1 = ContaPontos (Pontuacao (atual)) + ponto1;
-        else
-            ponto2 = ContaPontos (Pontuacao (atual)) + ponto2;
 
-        if (IndiceJogador (atual) == 1)
-            partida->inicial = atual;
+    /* Não está anunciando o vencedor corretamente */
 
-        if (PC(atual) == HUMANO)
-            h = i;
-
+    if (QuantidadeJogadores(partida) == 2)
+    {
+        PJ1 = ContaPontos(Pontuacao(atual));
         atual = atual->prox;
+        PJ2 = ContaPontos(Pontuacao(atual));
+        if (PJ1 > PJ2)
+        {
+            h = 1;
+            campeao = 1;
+        }
+        else
+        {
+            h = 1;
+            campeao = 2;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < QuantidadeJogadores(partida); i++)
+        {
+            if (i % 2 == 0)
+            {
+                ponto1 = ContaPontos(Pontuacao(atual)) + ponto1;
+            }
+            else
+            {
+                ponto2 = ContaPontos(Pontuacao(atual)) + ponto2;
+            }
+
+            if (IndiceJogador(atual) == 1)
+            {
+                partida->inicial = atual;
+            }
+
+            if (PC(atual) == HUMANO)
+            {
+                h = i;
+            }
+
+            atual = atual->prox;
+        }
+
+        printf("ponto1: %i\nponto2: %i", ponto1, ponto2);
+        if (ponto1 > ponto2)
+        {
+            campeao = 2; // jogadores 1 e 3
+        }
+        else if (ponto2 > ponto1)
+        {
+            campeao = 1; // jogadores 2 e 4
+        }
     }
 
-    clrscr ( );
-    printf ("Pontuacao de cada jogador:\n");
+    clrscr();
+    printf("Pontuacao de cada jogador:\n");
     ImprimePontuacao(partida);
 
-    if (ponto1 > ponto2)
-        campeao = 1; //jogador 1 e 3
-    else if (ponto2 > ponto1)
-        campeao = 2; //jogador 2 e 4
+    switch (QuantidadeJogadores(partida))
+    {
+    case 2:
+        printf("\nO campeao foi o jogador %d!\n", campeao);
+        if (campeao != h)
+        {
+            printf("PARABENS, HUMAN0! Voce PERDEU pro laptop da Xuxa\n");
+            printf("Sashay away\n");
+        }
+        else
+        {
+            printf("PARABENS, HUMAN0! Voce GANHOU do carro autonomo da UFES\n");
+            printf("Shantay you stay\n");
+        }
 
-    switch (QuantidadeJogadores (partida)) {
-        case 2:
-            printf ("O campeao foi o jogador %d!\n", campeao);
-            if (campeao != h)
-                printf("PARABENS HUMAN0! voce perdeu pro laptop da xuxa\n");
         break;
 
-        case 4:
-            printf ("A dupla campea foram os jogadores %d e %d!\n", campeao, campeao + 2);
-            if ((campeao != h) && ((campeao + 2) != h))
-                printf("PARABENS HUMAN0! voce perdeu pro laptop da xuxa\n");
+    case 4:
+        printf("A dupla campea foram os jogadores %d e %d!\n", campeao, campeao + 2);
+        if ((campeao != h) && ((campeao + 2) != h))
+        {
+            printf("PARABENS, HUMAN0! Voce perdeu para os laptops da Xuxa\n");
+            printf("Sashay away\n");
+        }
+        else
+        {
+            printf("PARABENS, HUMAN0! Voce GANHOU da frota de carros autonomos da UFES\n");
+            printf("Shantay you stay\n");
+        }
         break;
     }
 }
