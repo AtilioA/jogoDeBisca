@@ -44,8 +44,8 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     DistribuiCartas(partida, nMAO);
     p = p + 1;
     if (p > nJogadores) p = 1;
-    MoveCabeca (partida, p);
     printf("Jogador %d, voce inicia jogando!\n", p);
+    MoveCabeca (partida, p);
     printf("Good luck and dont fuck it up\n");
 
     return (partida);

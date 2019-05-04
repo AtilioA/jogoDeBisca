@@ -9,12 +9,20 @@
 
 int main()
 {
+    tJogador *atual;
     tMonte baralho;
     tPartida *partida;
     CriaBaralho (&baralho);
     partida = CriaPartida(4, &baralho);
-    Partida (partida);
+    atual = partida->inicial;
+    while (1) {
+        printf("%d\n", IndiceJogador(atual));
+        atual = atual->prox;
+        sleep (1);
+    }
+    //Partida (partida);
     DestroiPartida (partida);
+
     //CriaPartida (4, &partida, &baralho);
     //exibeMenuDev (&partida);
     // DestroiPartida (&partida); // Segmentation fault
