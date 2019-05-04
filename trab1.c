@@ -9,18 +9,11 @@
 
 int main()
 {
-    tJogador *atual;
     tMonte baralho;
     tPartida *partida;
     CriaBaralho (&baralho);
     partida = CriaPartida(4, &baralho);
-    atual = partida->inicial;
-    while (1) {
-        printf("%d\n", IndiceJogador(atual));
-        atual = atual->prox;
-        sleep (1);
-    }
-    //Partida (partida);
+    Partida (partida);
     DestroiPartida (partida);
 
     /* Se precisar do que estava aqui é só pegar no GitHub */

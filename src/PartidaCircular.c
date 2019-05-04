@@ -5,7 +5,7 @@ void MandaPontosJogador(tJogador *vencedor, tMonte *mesa)
     int i = 0;
     tCarta retirada;
 
-    for (i = QuantidadeJogadores(mesa); i > 0; i--)
+    for (i = QuantidadeMonte(mesa); i > 0; i--)
     {
         Retira(CartaNoIndice(1, mesa), mesa, &retirada);
         Insere(retirada, &vencedor->pontos);
@@ -32,6 +32,10 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
     FMVazio(&partida->inicial->pontos);
     partida->nJogadores++;
     partida->inicial->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
+    if (IndiceJogador (partida->inicial) == posHumano)
+        partida->inicial->PC = HUMANO;
+    else
+        partida->inicial->PC = IA;
     tJogador *inicio = partida->inicial;
     while (QuantidadeJogadores(partida) < nJogadores)
     {

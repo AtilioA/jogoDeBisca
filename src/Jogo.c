@@ -11,15 +11,15 @@
 
 tPartida *CriaPartida(int nJogadores, tMonte *baralho)
 {
-    int p, q;
+    int p, q, h;
     tCarta trunfo;
     tPartida *partida;
     partida = (tPartida *) malloc (sizeof (tPartida));
-    clrscr();
+    clrscr ();
     printf("Iniciando a partida de %d jogadores...\n", nJogadores);
     printf("Humano, escolha seu indice [1 a 4]: ");
-    scanf("%d", &q);
-    PreparaPartida(partida, nJogadores, q);
+    scanf("%d", &h);
+    PreparaPartida(partida, nJogadores, h);
     partida->monte = baralho;
     printf("Pronto! Agora sorteando quem comecara embaralhando...\n");
     // sleep (1);
@@ -35,8 +35,16 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     if (q == 0) q = nJogadores;
     printf ("Jogador %d, passe os comandos ao jogador %d, a sua ESQUERDA, para que ele possa cortar.\n", p, q);
     // sleep (1);
-    printf("Jogador %d, escolha uma posicao de 1 a 40 para cortar o baralho.\n", q);
-    scanf("%d", &q);
+    if (q == h) {
+        printf("Jogador %d, escolha uma posicao de 1 a 40 para cortar o baralho.\n", q);
+        scanf("%d", &q);
+    }
+    else {
+        printf("O computador %d cortara aleatoriamente.\n", q);
+        gettimeofday(&t, NULL);
+        srand((unsigned int)t.tv_usec);
+        q = (rand() % 40) + 1;
+    }
     trunfo = Corta(Baralho(partida), q);
     partida->corte = trunfo;
     printf("O trunfo escolhido foi ");
@@ -47,7 +55,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     if (p > nJogadores) p = 1;
     printf("Jogador %d, voce inicia jogando!\n", p);
     MoveCabeca (partida, p);
-    printf("Good luck and dont fuck it up\n");
+    printf("Good luck and dont fuck it up\n\n");
 
     return (partida);
 }

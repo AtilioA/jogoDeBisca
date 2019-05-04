@@ -286,7 +286,7 @@ int PontuacaoCarta(tCarta x)
 
 int ContaPontos(tMonte *monte)
 {
-    tCelula *atual = monte->primeiro;
+    tCelula *atual = monte->primeiro->prox;
     int pontos = 0;
 
     while (atual != NULL)
