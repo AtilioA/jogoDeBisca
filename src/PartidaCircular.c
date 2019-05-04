@@ -31,14 +31,14 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
     CriaMao(&partida->inicial->mao);
     FMVazio(&partida->inicial->pontos);
     partida->nJogadores++;
-    partida->inicial->indice = QuantidadeJogadores(partida);
+    partida->inicial->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
     tJogador *inicio = partida->inicial;
     while (QuantidadeJogadores(partida) < nJogadores)
     {
         inicio = InsereJogador(inicio);
         partida->nJogadores++;
-        inicio->indice = QuantidadeJogadores(partida);
-        if (IndiceJogador(inicio) == posHumano)
+        inicio->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
+        if (IndiceJogador (inicio) == posHumano)
             inicio->PC = HUMANO;
         else
             inicio->PC = IA;

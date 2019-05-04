@@ -140,6 +140,10 @@ tCarta Corta(tMonte *monte, int pos)
             atual->prox = NULL;
             corte = Carta(monte->ultimo);
         }
+        if ((Valor(corte) == 'A') || (Valor(corte) == '7')) {
+            pos = ((pos + 1) % QuantidadeMonte(monte)) + 1;
+            corte = Corta(monte, pos);
+        }
         return (corte);
     }
     printf("ERRO! Nao foi possivel cortar.\n");

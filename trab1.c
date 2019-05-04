@@ -9,11 +9,18 @@
 
 int main()
 {
+    tJogador *atual;
     tMonte baralho;
     tPartida *partida;
     CriaBaralho (&baralho);
     partida = CriaPartida(4, &baralho);
-    Partida (partida);
+    atual = partida->inicial;
+    while (1) {
+        printf("%d\n", IndiceJogador(atual));
+        atual = atual->prox;
+        sleep (1);
+    }
+    //Partida (partida);
     DestroiPartida (partida);
 
     /* Teste MandaPontosJogador (apagar no próximo commit)
@@ -47,7 +54,7 @@ int main()
     DestroiMonte(&mesa);
     DestroiMonte(&vencedor.pontos);
     */
-   
+
     /* Se precisar do que estava aqui é só pegar no GitHub */
 
     return 0;
