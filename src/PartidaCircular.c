@@ -7,7 +7,7 @@ void MandaPontosJogador(tJogador *vencedor, tMonte *mesa)
 
     for (i = QuantidadeJogadores(mesa); i > 0; i--)
     {
-        Pop(mesa, &retirada);
+        Retira(CartaNoIndice(1, mesa), mesa, &retirada);
         Insere(retirada, &vencedor->pontos);
     }
 }

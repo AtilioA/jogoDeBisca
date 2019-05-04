@@ -84,18 +84,6 @@ void Insere(tCarta x, tMonte *monte)
     }
 }
 
-void Pop(tMonte *monte, tCarta *cartaRetirada)
-{
-    if (monte->primeiro->prox != NULL)
-    {
-        *cartaRetirada = Carta(monte->primeiro->prox);
-        tCelula *aux = monte->primeiro;
-        monte->primeiro = monte->primeiro->prox;  
-        free(aux);
-        monte->tamanho--;
-    }
-}
-
 void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada)
 {
     tCelula *atual, *anterior;

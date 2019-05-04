@@ -55,9 +55,6 @@ void Insere(tCarta x, tMonte *monte);
 // Retira uma carta do monte e retorna o elemento por referência
 void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada);
 
-// Retira a primeira carta do monte e retorna o elemento por referência
-void Pop(tMonte *monte, tCarta *cartaRetirada);
-
 // "Corta" uma carta
 tCarta Corta(tMonte *monte, int pos);
 
