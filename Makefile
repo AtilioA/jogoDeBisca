@@ -1,7 +1,7 @@
 OBJ      := obj
 SRC      := src
 INC      := include
-CFLAGS   := -lm -g -Wall -O3
+CFLAGS   := -lm -g -w -O3
 EXE 	 := bisca
 
 
@@ -52,7 +52,11 @@ valzin:
 valtxt:
 	valgrind --leak-check=full -v --show-leak-kinds=all --track-origins=yes --verbose --log-file="valgrind-out.txt" ./$(EXE)
 
-# Limpa objetos e o executável do programa
+# Limpa objetos e o executável do programa (para Windows)
+cleanW:
+# A fazer
+
+# Limpa objetos e o executável do programa (para Linux)
 clean:
 	-rm $(OBJ)/*.o
 	-rm $(EXE)

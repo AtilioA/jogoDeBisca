@@ -9,14 +9,9 @@
 
 int main()
 {
-
-    tMonte baralho;
     tPartida *partida;
-    CriaBaralho (&baralho);
-    partida = CriaPartida(4, &baralho);
-    Partida (partida, &baralho);
-    FinalizaPartida (partida);
-    DestroiPartida (partida);
+    ExibeMenuInicial(partida); // rsrsrsrrsrssr
+
     /* Se precisar do que estava aqui é só pegar no GitHub */
 
     return 0;

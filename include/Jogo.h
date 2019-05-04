@@ -22,6 +22,8 @@
 
 tPartida *CriaPartida(int nJogadores, tMonte *baralho);
 
+void ExibeMenuInicial(tPartida *partida);
+
 void DistribuiCartas (tPartida *partida, int n, tMonte *baralho);
 
 // Exibe informações sobre o estado do jogo
@@ -30,7 +32,7 @@ void exibeInfo(tPartida *partida);
 // Imprime informações de ajuda para o jogador
 void exibeAjuda();
 
-void MenuPartida(tPartida *partida, tMonte *baralho);
+tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano);
 
 void Partida(tPartida *partida, tMonte *baralho);
 

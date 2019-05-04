@@ -81,6 +81,7 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jog
     int p;
     tCarta selecionada;
 
+    printf("Cartas da sua mao:\n");
     ImprimeMao(*Mao(humano));
     printf("Informe a posicao da carta que quer jogar: ");
     scanf("%i", &p);
