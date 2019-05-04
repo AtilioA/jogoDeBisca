@@ -24,7 +24,7 @@ typedef struct
     int nJogadores;
     int modoDev;
     tCarta corte;
-    tMonte *monte;
+    //tMonte *monte;
     tMonte *mesa;
     tJogador *inicial;
 } tPartida;
@@ -48,7 +48,7 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano);
 
 int IndiceJogador(tJogador *jogador);
 
-int Vencedor (tPartida *partida);
+tJogador *Vencedor(tPartida *partida);
 
 /* Funções para acessar estrutura opaca */
 // Retorna a quantidade de jogadores de uma partida
@@ -56,7 +56,7 @@ int QuantidadeJogadores (tPartida *partida);
 // Retorna o jogador inicial atual de uma partida
 tJogador *JogadorInicial(tPartida *partida);
 // Retorna o baralho de uma partida
-tMonte *Baralho(tPartida *partida);
+//tMonte *Baralho(tPartida *partida);
 // Retorna o corte de uma partida
 tCarta Corte(tPartida *partida);
 // Retorna a pontuação de um jogador

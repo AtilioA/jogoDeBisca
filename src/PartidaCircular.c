@@ -25,7 +25,6 @@ tJogador *InsereJogador(tJogador *jogador)
 
 void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
 {
-    posHumano = (posHumano % nJogadores) + 1;
     partida->nJogadores = 0;
     partida->inicial = (tJogador *)malloc(sizeof(tJogador));
     CriaMao(&partida->inicial->mao);
@@ -63,7 +62,7 @@ void DestroiPartida(tPartida *partida)
         lixo = atual;
         partida->nJogadores--;
     }
-    DestroiMonte(partida->monte);
+    //DestroiMonte(partida->monte);
     free(partida);
 }
 
@@ -98,9 +97,9 @@ void ImprimePontuacao(tPartida *partida)
     tJogador *atual = partida->inicial;
 
     printf("Pontuação da partida:\n");
-    for (i = 1, atual = partida->inicial; i < QuantidadeJogadores(partida); i++, atual = atual->prox)
+    for (i = 1, atual = partida->inicial; i <= QuantidadeJogadores(partida); i++, atual = atual->prox)
     { // Falta mostrar no printf qual jogador é o humano
-        printf("Jogador %i: %i pontos\n", i, ContaPontos(Pontuacao(atual)));
+        printf("Jogador %i: %i pontos\n", IndiceJogador(atual), ContaPontos (Pontuacao(atual)));
     }
 }
 
@@ -114,10 +113,10 @@ tJogador *JogadorInicial(tPartida *partida)
     return partida->inicial;
 }
 
-tMonte *Baralho(tPartida *partida)
-{
-    return partida->monte;
-}
+//tMonte *Baralho(tPartida *partida)
+//{
+//    return partida->monte;
+//}
 
 tCarta Corte(tPartida *partida)
 {
@@ -154,12 +153,12 @@ int IndiceJogador(tJogador *jogador)
     return jogador->indice;
 }
 
-int Vencedor(tPartida *partida)
+tJogador *Vencedor(tPartida *partida)
 {
     for (int i = 1; i <= QuantidadeJogadores(partida); i++)
     {
         if (CartasIguais(MaiorMesa(Mesa(partida), Corte(partida)), CartaNoIndice(1, Mesa(partida))))
             MoveCabeca(partida, i - 1);
     }
-    return (IndiceJogador(JogadorInicial(partida)));
+    return (JogadorInicial(partida));
 }

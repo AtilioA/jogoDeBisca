@@ -49,22 +49,19 @@ int QuantidadeMonte(tMonte *monte)
 
 int ExisteCarta(tCarta x, tMonte *monte)
 {
-    tCelula *atual = monte->primeiro->prox;
-
-    while (atual != NULL && (Valor(Carta(atual)) != Valor(x) || Naipe(Carta(atual)) != Naipe(x)))
-    {
-        atual = atual->prox;
-    }
-
-    if (atual == NULL)
+    if (EstaVazio(monte))
     {
         return 0;
     }
+    tCelula *atual = monte->primeiro->prox;
 
-    else
+    while (atual != NULL)
     {
-        return 1;
+        if ((Valor(Carta(atual)) == Valor(x)) && (Naipe(Carta(atual)) == Naipe(x)))
+            return 1;
+        atual = atual->prox;
     }
+    return 0;
 }
 
 void Insere(tCarta x, tMonte *monte)
@@ -208,7 +205,7 @@ void ImprimeMonte(tMonte *monte)
     {
         tCelula *atual = NULL;
 
-        printf("Quantidade de itens: %i\n", QuantidadeMonte(monte)); // Ocultar isso depois
+        //printf("Quantidade de itens: %i\n", QuantidadeMonte(monte)); // Ocultar isso depois
         for (atual = monte->primeiro->prox; atual != NULL; atual = atual->prox)
             ImprimeCarta(Carta(atual));
     }

@@ -22,7 +22,7 @@
 
 tPartida *CriaPartida(int nJogadores, tMonte *baralho);
 
-void DistribuiCartas(tPartida *partida, int n);
+void DistribuiCartas (tPartida *partida, int n, tMonte *baralho);
 
 // Exibe informações sobre o estado do jogo
 void exibeInfo(tPartida *partida);
@@ -30,9 +30,11 @@ void exibeInfo(tPartida *partida);
 // Imprime informações de ajuda para o jogador
 void exibeAjuda();
 
-void exibeMenu();
+void MenuPartida(tPartida *partida, tMonte *baralho);
 
-void Partida(tPartida *partida);
+void Partida(tPartida *partida, tMonte *baralho);
+
+void FinalizaPartida (tPartida *partida);
 
 // Limpa o terminal (para Windows E Linux)
 void clrscr();

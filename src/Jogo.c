@@ -13,14 +13,16 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
 {
     int p, q, h;
     tCarta trunfo;
+    //tMonte mesa;
     tPartida *partida;
     partida = (tPartida *) malloc (sizeof (tPartida));
     clrscr ();
     printf("Iniciando a partida de %d jogadores...\n", nJogadores);
+    //FMVazio(&mesa);
+    //partida->mesa = &mesa;
     printf("Humano, escolha seu indice [1 a 4]: ");
     scanf("%d", &h);
     PreparaPartida(partida, nJogadores, h);
-    partida->monte = baralho;
     printf("Pronto! Agora sorteando quem comecara embaralhando...\n");
     // sleep (1);
     struct timeval t;
@@ -29,7 +31,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     p = (rand() % nJogadores) + 1;
     printf("Sera o jogador %d!\n\n", p);
     printf("Embaralhando...\n");
-    Embaralha(Baralho(partida));
+    Embaralha(baralho);
     // sleep (1);
     q = p - 1;
     if (q == 0) q = nJogadores;
@@ -45,12 +47,12 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
         srand((unsigned int)t.tv_usec);
         q = (rand() % 40) + 1;
     }
-    trunfo = Corta(Baralho(partida), q);
+    trunfo = Corta(baralho, q);
     partida->corte = trunfo;
     printf("O trunfo escolhido foi ");
     ImprimeCarta(trunfo);
     printf("Agora serao entregues as cartas...\n");
-    DistribuiCartas(partida, nMAO);
+    DistribuiCartas(partida, nMAO, baralho);
     p = p + 1;
     if (p > nJogadores) p = 1;
     printf("Jogador %d, voce inicia jogando!\n", p);
@@ -61,20 +63,19 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
 }
 
 
-void DistribuiCartas (tPartida *partida, int n)
+void DistribuiCartas (tPartida *partida, int n, tMonte *baralho)
 {
-    int i = 0, j = 0;
     tJogador *jogadorAtual = partida->inicial;
     tCarta cartaAtual;
     tMao *maoJogador;
 
-    for (i = 1; i < QuantidadeJogadores(partida); i++)
+    for (int i = 1; i <= QuantidadeJogadores(partida); i++)
     {
-        for (j = 0; j < n; j++)
+        for (int j = 0; j < n; j++)
         {
-            cartaAtual = (CartaNoIndice(1, partida->monte));
+            cartaAtual = (CartaNoIndice(1, baralho));
             maoJogador = Mao(jogadorAtual);
-            MonteParaMao(&cartaAtual, Baralho(partida), maoJogador);
+            MonteParaMao(&cartaAtual, baralho, maoJogador);
         }
         jogadorAtual = jogadorAtual->prox;
     }
@@ -100,12 +101,12 @@ void exibeAjuda()
  * - Cortar
  * estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
  */
-void MenuPartida(tPartida *partida)
+void MenuPartida(tPartida *partida, tMonte *baralho)
 {
     int op = 0, p = 0;
 
     ImprimePontuacao(partida);
-    printf("Cartas restantes no baralho/monte: %i\n", QuantidadeMonte(Baralho(partida)));
+    printf("Cartas restantes no baralho/monte: %i\n", QuantidadeMonte(baralho));
     printf("\nQuantidade de cartas na mao: %i\n", TamanhoMao(*Mao(JogadorInicial(partida)))); // não sei qual é o jogador inicial
 
     printf("[1] - Jogar carta\n");
@@ -219,11 +220,12 @@ void exibeMenuInicial(tPartida *partida)
 
 // Último do pontos aponta pra Mesa
 // Esvazia mesa
-void Partida(tPartida *partida)
+void Partida(tPartida *partida, tMonte *baralho)
 {
-    int jogadas, rodadas, vez, seteSaiu, vencedor;
+    int jogadas, rodadas, vez, seteSaiu;
     tCarta corte, escolhida;
-    tJogador *atual;
+    tMonte mesa;
+    tJogador *atual, *vencedor;
 
     corte = Corte(partida);
     seteSaiu = 0;
@@ -235,9 +237,15 @@ void Partida(tPartida *partida)
         atual = JogadorInicial(partida);
         vez = PC(atual);
 
+        FMVazio(&mesa);
+        partida->mesa = &mesa;
+
         while (jogadas < QuantidadeJogadores(partida))
         {
             printf("Jogador %d, sua vez.\n", IndiceJogador(atual));
+            printf("Mesa:\n");
+            ImprimeMonte(Mesa(partida));
+            printf("\n");
             switch (vez)
             {
             case HUMANO:
@@ -276,10 +284,62 @@ void Partida(tPartida *partida)
             ImprimeCarta(escolhida);
             atual = atual->prox;
         }
+        clrscr ( );
         vencedor = Vencedor(partida);
-        printf("%d venceu essa rodada\n", vencedor);
-        DistribuiCartas(partida, 1);
+        MandaPontosJogador (vencedor, Mesa (partida));
+        printf("%d venceu essa rodada\n", IndiceJogador(vencedor));
+        DistribuiCartas (partida, 1, baralho);
         rodadas++;
+        DestroiMonte(Mesa(partida));
+    }
+
+    DestroiMonte(baralho);
+}
+
+void FinalizaPartida (tPartida *partida)
+{
+    int ponto1 = 0, ponto2 = 0,
+        campeao = 0, h;
+    tJogador *atual;
+
+    h = HUMANO;
+    atual = partida->inicial;
+    for (int i = 1; i <= QuantidadeJogadores (partida); i ++) {
+        if (! (i % 2))
+            ponto1 = ContaPontos (Pontuacao (atual)) + ponto1;
+        else
+            ponto2 = ContaPontos (Pontuacao (atual)) + ponto2;
+
+        if (IndiceJogador (atual) == 1)
+            partida->inicial = atual;
+
+        if (PC(atual) == HUMANO)
+            h = i;
+
+        atual = atual->prox;
+    }
+
+    clrscr ( );
+    printf ("Pontuacao de cada jogador:\n");
+    ImprimePontuacao(partida);
+
+    if (ponto1 > ponto2)
+        campeao = 1; //jogador 1 e 3
+    else if (ponto2 > ponto1)
+        campeao = 2; //jogador 2 e 4
+
+    switch (QuantidadeJogadores (partida)) {
+        case 2:
+            printf ("O campeao foi o jogador %d!\n", campeao);
+            if (campeao != h)
+                printf("PARABENS HUMAN0! voce perdeu pro laptop da xuxa\n");
+        break;
+
+        case 4:
+            printf ("A dupla campea foram os jogadores %d e %d!\n", campeao, campeao + 2);
+            if ((campeao != h) && ((campeao + 2) != h))
+                printf("PARABENS HUMAN0! voce perdeu pro laptop da xuxa\n");
+        break;
     }
 }
 
