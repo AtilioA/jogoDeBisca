@@ -15,7 +15,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     int primeiroJogador = 0, jogadorEsquerda = 0, posCorte = 0, posHumano = 0;
     tCarta trunfo;
     tPartida *partida = (tPartida *)malloc(sizeof(tPartida));
-    
+
     clrscr();
     printf("Iniciando partida de %i jogadores...\n", nJogadores);
     printf("-----------------------------------\n");
@@ -26,7 +26,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     printf("OK! Agora, sorteando quem comecara...\n");
     sleep(1);
     gettimeofday(&t, NULL);
-    srand((unsigned int)t.tv_usec); // Inicializando srand()
+    srand((unsigned int)t.tv_usec);              // Inicializando srand()
     primeiroJogador = (rand() % nJogadores) + 1; // Determinando primeiro jogador aleatoriamente
     printf("Sera o jogador %i!\n\n", primeiroJogador);
 
@@ -43,7 +43,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     sleep(1);
     if (jogadorEsquerda == posHumano)
     {
-        while(posCorte < 1 || posCorte > QuantidadeMonte(baralho))
+        while (posCorte < 1 || posCorte > QuantidadeMonte(baralho))
         {
             printf("Jogador %i, escolha uma posicao de 1 a %i para cortar do baralho: ", jogadorEsquerda, QuantidadeMonte(baralho));
             scanf("%i", &posCorte);
@@ -59,7 +59,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     printf("\nCARTA ESCOLHIDA COMO TRUNFO:\n");
     ImprimeCarta(trunfo);
     sleep(1);
-    
+
     printf("\nAgora, serao entregues as cartas aos jogadores...\n");
     DistribuiCartas(partida, nMAO, baralho);
 
@@ -109,16 +109,15 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
     int op = 0, p = 0;
 
     // No jogo de bisca, a pontuação só é revelada ao final do jogo
-    ImprimePontuacao(partida);
     if (ModoDev(partida))
     {
+        ImprimePontuacao(partida);
         printf("Rodadas restantes: %i\n", QuantidadeMonte(baralho) / 2 + TamanhoMao(*Mao(humano)));
     }
     printf("Cartas restantes no baralho: %i\n", QuantidadeMonte(baralho));
     // printf("\nQuantidade de cartas na mao: %i\n", TamanhoMao(*Mao(humano)));
 
     /* Tirar o print da JogaCartaHumano e mostrar mão do jogador antes? */
-
 
     while (op != 1 && op != 2)
     {
@@ -224,7 +223,6 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
 
 void ExibeMenuInicial(tPartida *partida)
 {
-    //int modoDev;
     tMonte baralho;
     int nJogadores = -1;
     int op = 0;
@@ -255,9 +253,7 @@ void ExibeMenuInicial(tPartida *partida)
             partida = CriaPartida(nJogadores, &baralho);
             partida->modoDev = 0;
             Partida(partida, &baralho);
-
             FinalizaPartida(partida);
-            DestroiPartida(partida);
             break;
 
         case 2:
@@ -280,22 +276,22 @@ void ExibeMenuInicial(tPartida *partida)
             partida = CriaPartida(nJogadores, &baralho);
             partida->modoDev = 1;
             Partida(partida, &baralho);
-
             FinalizaPartida(partida);
-            DestroiPartida(partida);
             break;
 
-            while (op < 1 || op > 15)
+        default:
+            while (op < 1 || op > 4)
             {
                 printf("Opcao invalida. Tente novamente: ");
                 scanf("%d", &op);
             }
         }
     }
+    DestroiPartida(partida);
 }
 
 void Partida(tPartida *partida, tMonte *baralho)
-{
+{ // Alguns sleep() estão repetindo nos loops e deixando lento demais
     int jogadas, rodadas, vez, seteSaiu;
     tCarta corte, escolhida;
     tMonte mesa;
@@ -325,7 +321,7 @@ void Partida(tPartida *partida, tMonte *baralho)
             {
             case HUMANO:
                 escolhida = MenuPartida(partida, baralho, atual);
-                
+
                 if (jogadas == 0)
                 {
                     sleep(2);
@@ -496,12 +492,11 @@ void FinalizaPartida(tPartida *partida)
 
 void clrscr()
 {
-    #ifdef __unix__
+#ifdef __unix__
     system("clear");
-    #elif defined(WIN32) || defined(WIN64)
+#elif defined(WIN32) || defined(WIN64)
     system("cls");
-    #endif
-
+#endif
 }
 
 void ImprimeMesa(tPartida *partida)

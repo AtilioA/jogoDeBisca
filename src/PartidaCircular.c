@@ -62,7 +62,6 @@ void DestroiPartida(tPartida *partida)
         lixo = atual;
         partida->nJogadores--;
     }
-    // DestroiMonte(partida->monte);
     DestroiMonte(Mesa(partida)); // TESTE
     free(partida);
 }
