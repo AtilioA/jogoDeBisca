@@ -37,15 +37,15 @@ typedef struct
 /* Funções para acessar estrutura opaca */
 // Retorna a quantidade de jogadores de uma partida
 int QuantidadeJogadores(tPartida *partida);
-// Retorna o jogador inicial atual de uma partida
+// Retorna a referência do jogador inicial atual de uma partida
 tJogador *JogadorInicial(tPartida *partida);
 // Retorna o corte de uma partida
 tCarta Corte(tPartida *partida);
-// Retorna a pontuação de um jogador
+// Retorna a referência do monte pontuação de um jogador
 tMonte *Pontuacao(tJogador *jogador);
-// Retorna a mão de um jogador
+// Retorna a referência da mão de um jogador
 tMao *Mao(tJogador *jogador);
-// Retorna a mesa de uma partida
+// Retorna a referência da mesa de uma partida
 tMonte *Mesa(tPartida *partida);
 // Retorna se a partida está em modo de desenvolvedor
 int *ModoDev(tPartida *partida);

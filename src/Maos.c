@@ -1,6 +1,8 @@
 #include "../include/Maos.h"
 #include "../include/Cartas.h"
 #include "../include/BaralhoEncadeado.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 void CriaMao(tMao *mao)
 {

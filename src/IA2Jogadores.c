@@ -1,6 +1,7 @@
 #include "../include/IA2Jogadores.h"
 #include "../include/Cartas.h"
 #include <sys/time.h>
+#include <stdio.h>
 
 tCarta PC2Jogadores1(tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu)
 {
