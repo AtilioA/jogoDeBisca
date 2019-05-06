@@ -1,18 +1,13 @@
-/*
- * Esta biblioteca contém o código que implementa funções mais básicas
+/* Esta biblioteca contém o código que implementa funções mais básicas
  * relevantes ao baralho de uma partida de bisca.
- *
  */
 
 // Guard para evitar dupla inclusão
 #ifndef __BARALHO_ENCADEADO_H
 #define __BARALHO_ENCADEADO_H
 
-// Chame as bibliotecas necessárias para suas structs antes de declará-las
-// Neste caso, a Cartas.h, pois nela está definida a estrutura tCarta
 #include "Cartas.h"
 #include "Maos.h"
-#include <sys/time.h>
 
 // Lista encadeada que abstrai um conjunto de cartas
 typedef struct tCelula

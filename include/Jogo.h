@@ -1,17 +1,8 @@
 /*
  * Esta biblioteca contém o código que permite simular um jogo de bisca.
- * Possui funções que exibem informações sobre o jogo, além de abstrair
- * os conceitos do jogo, como jogador, carta, etc. em estruturas de dados
- * utilizadas pelo algoritmo.
- *
- * Utiliza outras bibliotecas para assim ser possível montar uma partida
- * e também concede estruturas de dados construídas aqui para outras bibliotecas. (?)
- *
- * EM CONSTRUÇÃO
- *
+ * Possui funções que coordenam funções de outras bibliotecas para formar
+ * um jogo de bisca, além de funções que exibem informações sobre o jogo.
  */
-
-/* Módulo com funções para manipulação do jogo (menu, etc) */
 
 // Guard para evitar dupla inclusão
 #ifndef __JOGO_H
@@ -29,7 +20,7 @@ void ExibeMenuInicial(tPartida *partida);
 tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano);
 
 // Distribui cartas do baralho para todos os jogadores da partida, de forma que todos tenham 3 cartas na mão
-void DistribuiCartas (tPartida *partida, int n, tMonte *baralho);
+void DistribuiCartas(tPartida *partida, int n, tMonte *baralho);
 
 // Exibe informações sobre o estado do jogo
 void exibeInfo(tPartida *partida);
@@ -39,7 +30,7 @@ void exibeAjuda();
 
 void Partida(tPartida *partida, tMonte *baralho);
 
-void FinalizaPartida (tPartida *partida);
+void FinalizaPartida(tPartida *partida);
 
 // Limpa a tela do terminal (para Windows E Linux)
 void clrscr();

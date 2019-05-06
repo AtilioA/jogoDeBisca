@@ -31,6 +31,26 @@ tCarta CartaVazia()
     return (PreencheCarta(' ', ' '));
 }
 
+int CartasIguais(tCarta carta1, tCarta carta2)
+{
+    return ((Valor(carta1) == Valor(carta2)) && (Naipe(carta1) == Naipe(carta2)));
+}
+
+int PontoAlto(tCarta carta)
+{
+    return ((Valor(carta) == '7') || (Valor(carta) == 'A'));
+}
+
+int PontoBaixo(tCarta carta)
+{
+    return ((Valor(carta) == 'Q') || (Valor(carta) == 'J') || (Valor(carta) == 'K'));
+}
+
+int ETrunfo(tCarta carta, tCarta corte)
+{
+    return (Naipe(carta) == Naipe(corte));
+}
+
 void ImprimeCarta(tCarta carta)
 {
     if (!(CartaValida(carta)))
@@ -40,7 +60,7 @@ void ImprimeCarta(tCarta carta)
 
     printf("%c ", carta.valor);
 
-    #ifdef __unix__
+#ifdef __unix__
     if (carta.naipe == NAIPES[0])
         printf("\u2665\n");
     else if (carta.naipe == NAIPES[1])
@@ -50,10 +70,9 @@ void ImprimeCarta(tCarta carta)
     else if (carta.naipe == NAIPES[3])
         printf("\u2660\n");
 
-    #elif defined(WIN32) || defined(WIN64)
+#elif defined(WIN32) || defined(WIN64)
     printf("%c\n", carta.naipe);
-    #endif
-
+#endif
 }
 
 char Valor(tCarta carta)

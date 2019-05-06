@@ -5,13 +5,12 @@
 #include "include/BaralhoEncadeado.h"
 #include "include/PartidaCircular.h"
 #include "include/Jogo.h"
-#include <time.h>
 
 int main()
 {
     tPartida *partida;
-    ExibeMenuInicial(partida); // rsrsrsrrsrssr
-
+    ExibeMenuInicial(partida);
+    
     /* Se precisar do que estava aqui é só pegar no GitHub */
 
     return 0;

@@ -1,8 +1,5 @@
 #include "../include/IA4Jogadores.h"
-
-int CartasIguais (tCarta carta1, tCarta carta2) {
-    return ((Valor (carta1) == Valor (carta2)) && (Naipe (carta1) == Naipe (carta2)));
-}
+#include "../include/Cartas.h"
 
 tCarta MaiorMesa (tMonte *mesa, tCarta corte) {
     int valorMaior, valorAux;

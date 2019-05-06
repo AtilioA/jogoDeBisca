@@ -1,10 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include "../include/Jogo.h"
 #include "../include/Maos.h"
-#include "../include/PartidaCircular.h"
+#include "../include/PartidaCircular.h" // Só essa biblioteca é realmente necessária
 #include "../include/BaralhoEncadeado.h"
 #include "../include/IA2Jogadores.h"
 #include "../include/IA4Jogadores.h"

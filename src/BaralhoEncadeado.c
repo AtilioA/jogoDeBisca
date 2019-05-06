@@ -1,6 +1,8 @@
+#include "../include/BaralhoEncadeado.h"
 #include "../include/Cartas.h"
 #include "../include/Maos.h"
-#include "../include/BaralhoEncadeado.h"
+#include <sys/time.h>
+
 
 void FMVazio(tMonte *monte)
 {

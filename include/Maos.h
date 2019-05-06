@@ -1,17 +1,17 @@
+/* Esta biblioteca contém o código que implementa funções mais básicas
+ * relevantes às mãos dos jogadores de uma partida de bisca.
+ */
+
 #ifndef MAOS_H_
 #define MAOS_H_
 
 #include "Cartas.h"
 
-// Chame antes as bibliotecas necessárias para suas structs
-// Neste caso, apenas a Cartas.h, pois nela está definida a estrutura tCarta
 typedef struct
 {
     tCarta *carta;
     int n;
 } tMao;
-
-#include "BaralhoEncadeado.h"
 
 /* Funções para acessar estrutura opaca */
 // Retorna o tamanho da mão

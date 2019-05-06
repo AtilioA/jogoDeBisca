@@ -1,5 +1,5 @@
-#include "../include/Cartas.h"
 #include "../include/Maos.h"
+#include "../include/Cartas.h"
 #include "../include/BaralhoEncadeado.h"
 
 void CriaMao(tMao *mao)
@@ -45,7 +45,7 @@ int EstaNaMao(char valor, char naipe, tMao mao)
             return 1;
         }
     }
-    return (0);
+    return 0;
 }
 
 void ColocaNaMao(tCarta carta, tMao *mao)

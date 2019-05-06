@@ -12,7 +12,7 @@ void MandaPontosJogador(tJogador *vencedor, tMonte *mesa)
     }
 }
 
-tJogador *CriaJogador(tJogador *jogador)
+tJogador *InsereJogador(tJogador *jogador)
 {
     tJogador *novo;
     novo = (tJogador *)malloc(sizeof(tJogador));
@@ -31,52 +31,66 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
     FMVazio(&partida->inicial->pontos);
     partida->nJogadores++;
     partida->inicial->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
-    if (IndiceJogador (partida->inicial) == posHumano)
+
+    if (IndiceJogador(partida->inicial) == posHumano)
+    {
         partida->inicial->PC = HUMANO;
+    }
     else
+    {
         partida->inicial->PC = IA;
+    }
+
     tJogador *inicio = partida->inicial;
     while (QuantidadeJogadores(partida) < nJogadores)
     {
-        inicio = CriaJogador(inicio);
+        inicio = InsereJogador(inicio);
         partida->nJogadores++;
         inicio->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
-        if (IndiceJogador (inicio) == posHumano)
+        if (IndiceJogador(inicio) == posHumano)
+        {
             inicio->PC = HUMANO;
+        }
         else
+        {
             inicio->PC = IA;
+        }
     }
     partida->inicial->prox = inicio;
 }
 
-void DestroiPartida(tPartida *partida)
+void DestroiPartida(tPartida *partida) // TESTE
 {
-    tJogador *atual, *lixo;
-    lixo = partida->inicial;
+    tJogador *atual, *anterior;
+    anterior = partida->inicial;
+
     while ((QuantidadeJogadores(partida)) > 0)
     {
-        atual = lixo->prox;
-        LiberaMao(&lixo->mao);
-        DestroiMonte(&lixo->pontos);
-        free(lixo);
-        lixo = atual;
+        atual = anterior->prox;
+
+        LiberaMao(&anterior->mao);
+        DestroiMonte(&anterior->pontos);
+        free(anterior);
+
+        anterior = atual;
         partida->nJogadores--;
     }
-    DestroiMonte(Mesa(partida)); // TESTE
+
+    DestroiMonte(Mesa(partida));
     free(partida);
 }
 
-void MoveCabeca(tPartida *partida, int pos)
+void MoveCabeca(tPartida *partida, int n)
 {
     tJogador *atual = partida->inicial;
-    for (int i = 1; i <= pos; i++)
+    for (int i = 1; i <= n; i++)
     {
         atual = atual->prox;
     }
     partida->inicial = atual;
 }
 
-tCarta JogaCartaHumano(tPartida *partida, tJogador *humano) // não sei qual jogador é o humano
+tCarta JogaCartaHumano(tPartida *partida, tJogador *humano)
 {
     int p = 0;
     tCarta selecionada;
@@ -111,10 +125,23 @@ void ImprimePontuacao(tPartida *partida)
         }
         else
         {
-            printf("Jogador %i: %i pontos\n", IndiceJogador(atual), ContaPontos (Pontuacao(atual)));
+            printf("Jogador %i: %i pontos\n", IndiceJogador(atual), ContaPontos(Pontuacao(atual)));
         }
     }
     printf("----------------------------\n");
+}
+
+tJogador *Vencedor(tPartida *partida)
+{
+    for (int i = 0; i < QuantidadeJogadores(partida); i++)
+    {
+        if (CartasIguais(MaiorMesa(Mesa(partida), Corte(partida)), CartaNoIndice(1, Mesa(partida))))
+        {
+            MoveCabeca(partida, i);
+        }
+    }
+
+    return JogadorInicial(partida);
 }
 
 int QuantidadeJogadores(tPartida *partida)
@@ -165,14 +192,4 @@ int *ModoDev(tPartida *partida)
 int IndiceJogador(tJogador *jogador)
 {
     return jogador->indice;
-}
-
-tJogador *Vencedor(tPartida *partida)
-{
-    for (int i = 1; i <= QuantidadeJogadores(partida); i++)
-    {
-        if (CartasIguais(MaiorMesa(Mesa(partida), Corte(partida)), CartaNoIndice(1, Mesa(partida))))
-            MoveCabeca(partida, i - 1);
-    }
-    return (JogadorInicial(partida));
 }
