@@ -59,24 +59,20 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
     partida->inicial->prox = inicio;
 }
 
-void DestroiPartida(tPartida *partida) // TESTE
+void DestroiPartida(tPartida *partida)
 {
-    tJogador *atual, *anterior;
-    anterior = partida->inicial;
-
+    tJogador *atual, *lixo;
+    lixo = partida->inicial;
     while ((QuantidadeJogadores(partida)) > 0)
     {
-        atual = anterior->prox;
-
-        LiberaMao(&anterior->mao);
-        DestroiMonte(&anterior->pontos);
-        free(anterior);
-
-        anterior = atual;
+        atual = lixo->prox;
+        LiberaMao(&lixo->mao);
+        DestroiMonte(&lixo->pontos);
+        free(lixo);
+        lixo = atual;
         partida->nJogadores--;
     }
-
-    DestroiMonte(Mesa(partida));
+    DestroiMonte(Mesa(partida)); // TESTE
     free(partida);
 }
 
