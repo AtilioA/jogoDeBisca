@@ -1,5 +1,5 @@
 #include "../include/Jogo.h"
-#include "../include/Maos.h"
+#include "../include/MaosSimples.h"
 #include "../include/PartidaCircular.h"
 #include "../include/BaralhoEncadeado.h"
 #include "../include/IA2Jogadores.h"

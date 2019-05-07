@@ -7,7 +7,7 @@
 #define __BARALHO_ENCADEADO_H
 
 #include "Cartas.h"
-#include "Maos.h"
+#include "MaosSimples.h"
 
 // Lista encadeada que abstrai um conjunto de cartas
 typedef struct tCelula

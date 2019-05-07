@@ -1,6 +1,6 @@
 #include "include/IA2Jogadores.h"
 #include "include/IA4Jogadores.h"
-#include "include/Maos.h"
+#include "include/MaosSimples.h"
 #include "include/Cartas.h"
 #include "include/BaralhoEncadeado.h"
 #include "include/PartidaCircular.h"

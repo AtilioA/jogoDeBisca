@@ -6,14 +6,14 @@ EXE 	 := bisca
 
 
 # Cria objetos de todos os arquivos de código-fonte para então linká-los no executável final
-main: $(OBJ)/Cartas.o $(OBJ)/Maos.o $(OBJ)/BaralhoEncadeado.o $(OBJ)/IA2Jogadores.o $(OBJ)/IA4Jogadores.o $(OBJ)/PartidaCircular.o $(OBJ)/Jogo.o $(OBJ)/trab1.o
+main: $(OBJ)/Cartas.o $(OBJ)/MaosSimples.o $(OBJ)/BaralhoEncadeado.o $(OBJ)/IA2Jogadores.o $(OBJ)/IA4Jogadores.o $(OBJ)/PartidaCircular.o $(OBJ)/Jogo.o $(OBJ)/trab1.o
 	gcc $(OBJ)/*.o -o $(EXE) $(CFLAGS)
 
 $(OBJ)/Cartas.o: $(SRC)/Cartas.c $(INC)/Cartas.h
 	gcc -c $(CFLAGS) "$(SRC)/Cartas.c" -o "$(OBJ)/Cartas.o"
 
-$(OBJ)/Maos.o: $(SRC)/Maos.c $(INC)/Maos.h
-	gcc -c $(CFLAGS) "$(SRC)/Maos.c" -o "$(OBJ)/Maos.o"
+$(OBJ)/MaosSimples.o: $(SRC)/MaosSimples.c $(INC)/MaosSimples.h
+	gcc -c $(CFLAGS) "$(SRC)/MaosSimples.c" -o "$(OBJ)/MaosSimples.o"
 
 $(OBJ)/BaralhoEncadeado.o: $(SRC)/BaralhoEncadeado.c $(INC)/BaralhoEncadeado.h
 	gcc -c $(CFLAGS) "$(SRC)/BaralhoEncadeado.c" -o "$(OBJ)/BaralhoEncadeado.o"
