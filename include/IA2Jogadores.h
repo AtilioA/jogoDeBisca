@@ -4,7 +4,7 @@
 #ifndef IA2JOGADORES_H_
 #define IA2JOGADORES_H_
 
-#include "Maos.h"
+#include "MaosSimples.h"
 #include "BaralhoEncadeado.h"
 
 // Retorna a carta que a IA deve jogar quando ela é a primeira a jogar na rodada

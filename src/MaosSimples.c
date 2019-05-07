@@ -1,4 +1,4 @@
-#include "../include/Maos.h"
+#include "../include/MaosSimples.h"
 #include "../include/Cartas.h"
 #include "../include/BaralhoEncadeado.h"
 #include <stdio.h>

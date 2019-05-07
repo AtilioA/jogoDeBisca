@@ -1,9 +1,10 @@
 #include "../include/Jogo.h"
-#include "../include/Maos.h"
-#include "../include/PartidaCircular.h" // Só essa biblioteca é realmente necessária
+#include "../include/MaosSimples.h"
+#include "../include/PartidaCircular.h"
 #include "../include/BaralhoEncadeado.h"
 #include "../include/IA2Jogadores.h"
 #include "../include/IA4Jogadores.h"
+#include <stdlib.h>
 
 tPartida *CriaPartida(int nJogadores, tMonte *baralho)
 {
@@ -20,7 +21,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     PreparaPartida(partida, nJogadores, posHumano);
 
     printf("OK! Agora, sorteando quem comecara...\n");
-    sleep(1);
+    //sleep(1);
     gettimeofday(&t, NULL);
     srand((unsigned int)t.tv_usec);              // Inicializando srand()
     primeiroJogador = (rand() % nJogadores) + 1; // Determinando primeiro jogador aleatoriamente
@@ -28,7 +29,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
 
     printf("Embaralhando...\n");
     Embaralha(baralho);
-    sleep(1);
+    //sleep(1);
 
     jogadorEsquerda = primeiroJogador - 1;
     if (jogadorEsquerda == 0)
@@ -36,7 +37,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
         jogadorEsquerda = nJogadores; // "Dando a volta" nos jogadores
     }
     printf("Jogador %i, passe os comandos ao jogador %i, a sua ESQUERDA, para que ele possa cortar.\n", primeiroJogador, jogadorEsquerda); // Regra da bisca
-    sleep(1);
+    //sleep(1);
     if (jogadorEsquerda == posHumano)
     {
         while (posCorte < 1 || posCorte > QuantidadeMonte(baralho))
@@ -54,7 +55,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     partida->corte = trunfo;
     printf("\nCARTA ESCOLHIDA COMO TRUNFO:\n");
     ImprimeCarta(trunfo);
-    sleep(1);
+    //sleep(1);
 
     printf("\nAgora, serao entregues as cartas aos jogadores...\n");
     DistribuiCartas(partida, nMAO, baralho);
@@ -62,7 +63,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     printf("Jogador %i, voce sera o primeiro a jogar!\n", primeiroJogador);
     MoveCabeca(partida, primeiroJogador); // O primeiro jogador será o primeiro da lista de jogadores da partida
     printf("Good luck and don't fuck it up!\n");
-    sleep(2);
+    //sleep(2);
 
     return partida;
 }
@@ -204,7 +205,7 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
                 tCarta trunfo = Corta(baralho, p);
                 ImprimeCarta(trunfo);
                 partida->corte = trunfo;
-                sleep(2);
+                //sleep(2);
                 clrscr();
                 ImprimeMesa(partida);
             }
@@ -250,6 +251,7 @@ void ExibeMenuInicial(tPartida *partida)
             partida->modoDev = 0;
             Partida(partida, &baralho);
             FinalizaPartida(partida);
+            DestroiPartida(partida);
             break;
 
         case 2:
@@ -273,6 +275,7 @@ void ExibeMenuInicial(tPartida *partida)
             partida->modoDev = 1;
             Partida(partida, &baralho);
             FinalizaPartida(partida);
+            DestroiPartida(partida);
             break;
 
         default:
@@ -283,11 +286,10 @@ void ExibeMenuInicial(tPartida *partida)
             }
         }
     }
-    DestroiPartida(partida);
 }
 
 void Partida(tPartida *partida, tMonte *baralho)
-{ // Alguns sleep() estão repetindo nos loops e deixando lento demais
+{ // Alguns //sleep() estão repetindo nos loops e deixando lento demais
     int jogadas, rodadas, vez, seteSaiu;
     tCarta corte, escolhida;
     tMonte mesa;
@@ -311,7 +313,7 @@ void Partida(tPartida *partida, tMonte *baralho)
             clrscr();
             ImprimeMesa(partida);
             printf("Jogador %i, sua vez!\n\n", IndiceJogador(atual));
-            sleep(1);
+            //sleep(1);
 
             switch (vez)
             {
@@ -320,7 +322,7 @@ void Partida(tPartida *partida, tMonte *baralho)
 
                 if (jogadas == 0)
                 {
-                    sleep(2);
+                    //sleep(2);
                 }
                 clrscr();
 
@@ -330,7 +332,7 @@ void Partida(tPartida *partida, tMonte *baralho)
 
             case IA:
                 printf("Jogador %i:\n", IndiceJogador(atual));
-                // sleep(1);
+                // //sleep(1);
                 if (jogadas == 0)
                 {
                     if (QuantidadeJogadores(partida) == 2)
@@ -356,7 +358,7 @@ void Partida(tPartida *partida, tMonte *baralho)
                 jogadas++;
                 vez = PC(atual->prox);
                 ImprimeCarta(escolhida);
-                sleep(2);
+                //sleep(2);
                 clrscr();
                 ImprimeMesa(partida);
                 break;
@@ -367,12 +369,12 @@ void Partida(tPartida *partida, tMonte *baralho)
         ImprimeMesa(partida);
 
         printf("Vencedor da rodada...\n");
-        sleep(1);
+        //sleep(1);
         vencedor = Vencedor(partida);
         MandaPontosJogador(vencedor, Mesa(partida));
         printf("O jogador %i venceu essa rodada!\n", IndiceJogador(vencedor));
 
-        sleep(1);
+        //sleep(1);
         if (QuantidadeMonte(baralho) > 0)
         {
             printf("Comprando cartas para os jogadores...\n");
@@ -382,7 +384,7 @@ void Partida(tPartida *partida, tMonte *baralho)
         rodadas++;
         DestroiMonte(Mesa(partida));
 
-        sleep(2);
+        //sleep(2);
     }
 
     DestroiMonte(baralho);
@@ -511,5 +513,5 @@ void ImprimeMesa(tPartida *partida)
     }
     printf("-----------------------------------\n");
     printf("\n");
-    sleep(2);
+    //sleep(2);
 }

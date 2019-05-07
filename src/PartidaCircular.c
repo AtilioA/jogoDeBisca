@@ -75,8 +75,6 @@ void DestroiPartida(tPartida *partida) // TESTE
         anterior = atual;
         partida->nJogadores--;
     }
-
-    DestroiMonte(Mesa(partida));
     free(partida);
 }
 
