@@ -74,9 +74,6 @@ void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao);
 // Manda uma carta da mão para o monte
 void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao);
 
-// Retorna a pontuação de uma carta
-int PontuacaoCarta(tCarta x);
-
 // Retorna o total de pontos das cartas de um monte
 int ContaPontos(tMonte *monte);
 

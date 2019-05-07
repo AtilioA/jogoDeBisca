@@ -266,25 +266,6 @@ void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)
     ColocaNaMao(retirada, mao);
 }
 
-int PontuacaoCarta(tCarta x)
-{
-    switch (Valor(x))
-    {
-    case 'A':
-        return 11;
-    case '7':
-        return 10;
-    case 'K':
-        return 4;
-    case 'Q':
-        return 3;
-    case 'J':
-        return 2;
-    default:
-        return 0;
-    }
-}
-
 int ContaPontos(tMonte *monte)
 {
     tCelula *atual = monte->primeiro->prox;

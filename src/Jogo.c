@@ -63,8 +63,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
 
     printf("Jogador %i, voce sera o primeiro a jogar!\n", primeiroJogador);
     MoveCabeca(partida, primeiroJogador); // O primeiro jogador será o primeiro da lista de jogadores da partida
-    printf("Good luck and don't fuck it up!\n");
-    //sleep(2);
+    //sleep(1);
 
     return partida;
 }
@@ -206,14 +205,14 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
                 tCarta trunfo = Corta(baralho, p);
                 ImprimeCarta(trunfo);
                 partida->corte = trunfo;
-                //sleep(2);
+                //sleep(1);
                 clrscr();
                 ImprimeMesa(partida);
             }
             break;
 
         default:
-            printf("\nthank u, next.\n");
+            printf("\nOpcao invalida. Tente novamente: ");
             break;
         }
     }
@@ -320,7 +319,7 @@ void Partida(tPartida *partida, tMonte *baralho)
 
                 if (jogadas == 0)
                 {
-                    //sleep(2);
+                    //sleep(1);
                 }
                 clrscr();
 
@@ -356,7 +355,7 @@ void Partida(tPartida *partida, tMonte *baralho)
                 jogadas++;
                 vez = PC(atual->prox);
                 ImprimeCarta(escolhida);
-                //sleep(2);
+                //sleep(1);
                 clrscr();
                 ImprimeMesa(partida);
                 break;
@@ -382,7 +381,7 @@ void Partida(tPartida *partida, tMonte *baralho)
         rodadas++;
         DestroiMonte(Mesa(partida));
 
-        //sleep(2);
+        //sleep(1);
     }
 
     DestroiMonte(baralho);
@@ -460,12 +459,10 @@ void FinalizaPartida(tPartida *partida)
         if (campeao != h)
         {
             printf("PARABENS, HUMAN0! Voce PERDEU pro laptop da Xuxa\n");
-            printf("Sashay away\n");
         }
         else
         {
             printf("PARABENS, HUMAN0! Voce GANHOU do carro autonomo da UFES\n");
-            printf("Shantay you stay\n");
         }
 
         break;
@@ -475,12 +472,10 @@ void FinalizaPartida(tPartida *partida)
         if ((campeao != h) && ((campeao + 2) != h))
         {
             printf("PARABENS, HUMAN0! Voce perdeu para os laptops da Xuxa\n");
-            printf("Sashay away\n");
         }
         else
         {
             printf("PARABENS, HUMAN0! Voce GANHOU da frota de carros autonomos da UFES\n");
-            printf("Shantay you stay\n");
         }
         break;
     }
@@ -511,5 +506,5 @@ void ImprimeMesa(tPartida *partida)
     }
     printf("-----------------------------------\n");
     printf("\n");
-    //sleep(2);
+    //sleep(1);
 }

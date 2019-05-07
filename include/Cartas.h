@@ -33,7 +33,7 @@ tCarta PreencheCarta(char valor, char naipe);
 // Cria uma carta vazia e retorna-a
 tCarta CartaVazia();
 
-// Verifica se duas cartas são iguais (essa pode ir para o Cartas.c)
+// Verifica se duas cartas são iguais
 int CartasIguais (tCarta carta1, tCarta carta2);
 
 // Imprime uma carta
@@ -42,12 +42,14 @@ void ImprimeCarta(tCarta carta);
 // Verifica se uma carta é ponto alto (7 ou A)
 int PontoAlto (tCarta carta);
 
-// (essa pode ir para o Cartas.c ou PartidaCircular.c)
 // Verifica se uma carta é ponto baixo (J, Q ou K)
 int PontoBaixo (tCarta carta);
 
-// Verifica se uma carta é trunfo (essa pode ir para o PartidaCircular.c)
+// Verifica se uma carta é trunfo
 int ETrunfo (tCarta carta, tCarta corte);
+
+// Retorna a pontuação de uma carta
+int PontuacaoCarta(tCarta x);
 
 
 
