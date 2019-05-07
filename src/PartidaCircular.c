@@ -1,4 +1,5 @@
 #include "../include/PartidaCircular.h"
+#include <stdlib.h>
 
 void MandaPontosJogador(tJogador *vencedor, tMonte *mesa)
 {
@@ -61,19 +62,22 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
 
 void DestroiPartida(tPartida *partida)
 {
-    tJogador *atual, *lixo;
-    lixo = partida->inicial;
-    while ((QuantidadeJogadores(partida)) > 0)
+    if (partida != NULL)
     {
-        atual = lixo->prox;
-        LiberaMao(&lixo->mao);
-        DestroiMonte(&lixo->pontos);
-        free(lixo);
-        lixo = atual;
-        partida->nJogadores--;
+        tJogador *atual, *lixo;
+        lixo = partida->inicial;
+        while ((QuantidadeJogadores(partida)) > 0)
+        {
+            atual = lixo->prox;
+            LiberaMao(&lixo->mao);
+            DestroiMonte(&lixo->pontos);
+            free(lixo);
+            lixo = atual;
+            partida->nJogadores--;
+        }
+        DestroiMonte(Mesa(partida));
+        free(partida);
     }
-    DestroiMonte(Mesa(partida)); // TESTE
-    free(partida);
 }
 
 void MoveCabeca(tPartida *partida, int n)
@@ -108,23 +112,29 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano)
 
 void ImprimePontuacao(tPartida *partida)
 {
-    int i = 0;
-    tJogador *atual = partida->inicial;
-
-    printf("----------------------------\n");
-    printf("    PONTUACAO DA PARTIDA\n");
-    for (i = 1, atual = partida->inicial; i <= QuantidadeJogadores(partida); i++, atual = atual->prox)
+    if (partida != NULL)
     {
-        if (!atual->PC)
+        int i = 0;
+        tJogador *atual = partida->inicial;
+
+        printf("----------------------------\n");
+        printf("    PONTUACAO DA PARTIDA\n");
+        for (i = 1, atual = partida->inicial; i <= QuantidadeJogadores(partida); i++, atual = atual->prox)
         {
-            printf("Jogador %i (VOCE): %i pontos\n", IndiceJogador(atual), ContaPontos(Pontuacao(atual)));
+            if (atual != NULL)
+            {
+                if (!atual->PC)
+                {
+                    printf("Jogador %i (VOCE): %i pontos\n", IndiceJogador(atual), ContaPontos(Pontuacao(atual)));
+                }
+                else
+                {
+                    printf("Jogador %i: %i pontos\n", IndiceJogador(atual), ContaPontos(Pontuacao(atual)));
+                }
+            }
         }
-        else
-        {
-            printf("Jogador %i: %i pontos\n", IndiceJogador(atual), ContaPontos(Pontuacao(atual)));
-        }
+        printf("----------------------------\n");
     }
-    printf("----------------------------\n");
 }
 
 tJogador *Vencedor(tPartida *partida)
