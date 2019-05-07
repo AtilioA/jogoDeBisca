@@ -76,6 +76,7 @@ void DestroiPartida(tPartida *partida)
             partida->nJogadores--;
         }
     free(partida);
+    }
 }
 
 void MoveCabeca(tPartida *partida, int n)
