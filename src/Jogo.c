@@ -245,12 +245,13 @@ void ExibeMenuInicial(tPartida *partida)
             scanf("%i", &nJogadores);
         }
 
-        CriaBaralho(&baralho);
-        partida = CriaPartida(nJogadores, &baralho);
-        partida->modoDev = 0;
-        Partida(partida, &baralho);
-        FinalizaPartida(partida);
-        break;
+            CriaBaralho(&baralho);
+            partida = CriaPartida(nJogadores, &baralho);
+            partida->modoDev = 0;
+            Partida(partida, &baralho);
+            FinalizaPartida(partida);
+            DestroiPartida(partida);
+            break;
 
     case 2:
         return;
@@ -268,12 +269,13 @@ void ExibeMenuInicial(tPartida *partida)
             scanf("%i", &nJogadores);
         }
 
-        CriaBaralho(&baralho);
-        partida = CriaPartida(nJogadores, &baralho);
-        partida->modoDev = 1;
-        Partida(partida, &baralho);
-        FinalizaPartida(partida);
-        break;
+            CriaBaralho(&baralho);
+            partida = CriaPartida(nJogadores, &baralho);
+            partida->modoDev = 1;
+            Partida(partida, &baralho);
+            FinalizaPartida(partida);
+            DestroiPartida(partida);
+            break;
 
     default:
         while (op < 1 || op > 4)

@@ -75,9 +75,7 @@ void DestroiPartida(tPartida *partida)
             lixo = atual;
             partida->nJogadores--;
         }
-        DestroiMonte(Mesa(partida));
-        free(partida);
-    }
+    free(partida);
 }
 
 void MoveCabeca(tPartida *partida, int n)

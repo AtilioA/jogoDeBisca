@@ -2,7 +2,9 @@
 #include "../include/Cartas.h"
 #include "../include/MaosSimples.h"
 #include <sys/time.h>
+#include <stdlib.h>
 #include <stdio.h>
+
 
 void FMVazio(tMonte *monte)
 {
