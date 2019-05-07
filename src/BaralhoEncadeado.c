@@ -3,10 +3,12 @@
 #include "../include/MaosSimples.h"
 #include <sys/time.h>
 #include <stdlib.h>
+#include <stdio.h>
+
 
 void FMVazio(tMonte *monte)
 {
-    monte->primeiro = (tCelula *)malloc(sizeof(tCelula)); // monte->primeiro será a cabeça do monte
+    monte->primeiro = (tCelula *)malloc(sizeof(tCelula));
     monte->ultimo = monte->primeiro;
     monte->ultimo->prox = NULL;
     monte->tamanho = 0;
@@ -55,12 +57,14 @@ int ExisteCarta(tCarta x, tMonte *monte)
     {
         return 0;
     }
-    tCelula *atual = monte->primeiro->prox;
+    tCelula *atual = monte->primeiro;
 
     while (atual != NULL)
     {
         if ((Valor(Carta(atual)) == Valor(x)) && (Naipe(Carta(atual)) == Naipe(x)))
+        {
             return 1;
+        }
         atual = atual->prox;
     }
     return 0;
@@ -70,10 +74,20 @@ void Insere(tCarta x, tMonte *monte)
 {
     if (!ExisteCarta(x, monte))
     {
-        monte->ultimo->prox = (tCelula *)malloc(sizeof(tCelula));
-        monte->ultimo = monte->ultimo->prox;
-        monte->ultimo->carta = x;
-        monte->ultimo->prox = NULL;
+        if (QuantidadeMonte(monte) == 0)
+        {
+            tCelula *nova = monte->primeiro;
+            nova->carta = x;
+            nova->prox = NULL;
+            monte->ultimo = nova;
+        }
+        else
+        {
+            tCelula *nova = (tCelula *)malloc(sizeof(tCelula));
+            nova->carta = x;
+            nova->prox = monte->primeiro;
+            monte->primeiro = nova;
+        }
 
         monte->tamanho++;
     }
@@ -88,22 +102,33 @@ void Retira(tCarta x, tMonte *monte, tCarta *cartaRetirada)
     tCelula *atual, *anterior;
 
     anterior = monte->primeiro;
-    for (atual = monte->primeiro->prox; atual != NULL; atual = atual->prox)
+    for (atual = monte->primeiro; atual != NULL; atual = atual->prox)
     {
         if ((Valor(Carta(atual)) == Valor(x)) && (Naipe(Carta(atual)) == Naipe(x)))
         {
-            *cartaRetirada = Carta(atual);
-            anterior->prox = atual->prox;
-            free(atual);
-            monte->tamanho--;
-            return;
+            if (atual == monte->primeiro)
+            {
+                *cartaRetirada = Carta(atual);
+                monte->primeiro = monte->primeiro->prox;
+                free(anterior);
+                monte->tamanho--;
+                return;
+            }
+            else
+            {
+                *cartaRetirada = Carta(atual);
+                anterior->prox = atual->prox;
+                free(atual);
+                monte->tamanho--;
+                return;
+            }
         }
         anterior = atual;
     }
     *cartaRetirada = CartaVazia();
 }
 
-tCarta Corta(tMonte *monte, int pos)
+tCarta Corta(tMonte *monte, int pos) // consertar para pos = 1 e pos = 2
 {
     tCarta corte;
 
@@ -111,7 +136,7 @@ tCarta Corta(tMonte *monte, int pos)
     {
         int i = 1;
         tCelula *atual;
-        atual = monte->primeiro->prox;
+        atual = monte->primeiro;
 
         while (atual != NULL && i < pos)
         {
@@ -121,20 +146,21 @@ tCarta Corta(tMonte *monte, int pos)
 
         if (atual != NULL)
         {
-            monte->ultimo->prox = monte->primeiro->prox;
-            monte->primeiro->prox = atual->prox;
+            monte->ultimo->prox = monte->primeiro;
+            monte->primeiro = atual->prox;
             monte->ultimo = atual;
             atual->prox = NULL;
             corte = Carta(monte->ultimo);
         }
-        if ((Valor(corte) == 'A') || (Valor(corte) == '7')) {
+        if ((Valor(corte) == 'A') || (Valor(corte) == '7'))
+        {
             pos = ((pos + 1) % QuantidadeMonte(monte)) + 1;
             corte = Corta(monte, pos);
         }
-        return (corte);
+        return corte;
     }
     printf("ERRO! Nao foi possivel cortar.\n");
-    return (CartaVazia());
+    return CartaVazia();
 }
 
 void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
@@ -148,7 +174,7 @@ void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
         celula->carta = segundaCarta;
 
         // Agora basta substituir a carta da célula no índice pela carta da célula de entrada
-        tCelula *atual = monte->primeiro->prox;
+        tCelula *atual = monte->primeiro;
         while (atual != NULL && i < pos)
         {
             i++;
@@ -179,7 +205,7 @@ void Embaralha(tMonte *monte)
     {
         struct timeval t;
         tCelula *anterior = NULL;
-        tCelula *atual = monte->primeiro->prox;
+        tCelula *atual = monte->primeiro;
 
         gettimeofday(&t, NULL);
         srand((unsigned int)t.tv_usec); // Inicializa o gerador de números aleatórios
@@ -208,7 +234,7 @@ void ImprimeMonte(tMonte *monte)
         tCelula *atual = NULL;
 
         // printf("Quantidade de itens: %i\n", QuantidadeMonte(monte));
-        for (atual = monte->primeiro->prox; atual != NULL; atual = atual->prox)
+        for (atual = monte->primeiro; atual != NULL; atual = atual->prox)
         {
             ImprimeCarta(Carta(atual));
         }
@@ -235,7 +261,7 @@ tCarta CartaNoIndice(int pos, tMonte *monte)
     if (pos >= 1) // 1 como sendo o primeiro elemento
     {
         int i = 1;
-        tCelula *atual = monte->primeiro->prox; // cabeça da lista
+        tCelula *atual = monte->primeiro;
 
         while (atual != NULL && i < pos)
         {
@@ -287,7 +313,7 @@ int PontuacaoCarta(tCarta x)
 
 int ContaPontos(tMonte *monte)
 {
-    tCelula *atual = monte->primeiro->prox;
+    tCelula *atual = monte->primeiro;
     int pontos = 0;
 
     while (atual != NULL)

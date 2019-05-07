@@ -10,6 +10,7 @@ int main()
 {
     tPartida *partida;
     ExibeMenuInicial(partida);
+    DestroiPartida(partida);
 
     /* Se precisar do que estava aqui é só pegar no GitHub */
 

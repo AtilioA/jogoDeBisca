@@ -4,7 +4,8 @@
 #include "../include/BaralhoEncadeado.h"
 #include "../include/IA2Jogadores.h"
 #include "../include/IA4Jogadores.h"
-#include <stdlib.h>
+#include <stdio.h>
+#include <sys/time.h>
 
 tPartida *CriaPartida(int nJogadores, tMonte *baralho)
 {
@@ -224,27 +225,25 @@ void ExibeMenuInicial(tPartida *partida)
     int nJogadores = -1;
     int op = 0;
 
-    while (op != 2)
-    {
-        printf("-------------------------\n");
-        printf("----- JOGO DE BISCA -----\n\n");
-        printf("-------- OPCOES: --------\n");
-        printf("[1] - Jogar\n");
-        printf("[2] - Sair\n");
-        printf("[3] - Ajuda\n");
-        printf("[4] - Jogar em modo desenvolvedor {h a c k e r m a n}\n");
-        printf("Digite sua escolha: ");
-        scanf("%d", &op);
+    printf("-------------------------\n");
+    printf("----- JOGO DE BISCA -----\n\n");
+    printf("-------- OPCOES: --------\n");
+    printf("[1] - Jogar\n");
+    printf("[2] - Sair\n");
+    printf("[3] - Ajuda\n");
+    printf("[4] - Jogar em modo desenvolvedor {h a c k e r m a n}\n");
+    printf("Digite sua escolha: ");
+    scanf("%d", &op);
 
-        switch (op)
+    switch (op)
+    {
+    case 1:
+        nJogadores = -1;
+        while (nJogadores != 2 && nJogadores != 4)
         {
-        case 1:
-            nJogadores = -1;
-            while (nJogadores != 2 && nJogadores != 4)
-            {
-                printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
-                scanf("%i", &nJogadores);
-            }
+            printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
+            scanf("%i", &nJogadores);
+        }
 
             CriaBaralho(&baralho);
             partida = CriaPartida(nJogadores, &baralho);
@@ -254,21 +253,21 @@ void ExibeMenuInicial(tPartida *partida)
             DestroiPartida(partida);
             break;
 
-        case 2:
-            return;
+    case 2:
+        return;
 
-        case 3:
-            clrscr();
-            exibeAjuda();
-            break;
+    case 3:
+        clrscr();
+        exibeAjuda();
+        break;
 
-        case 4:
-            nJogadores = -1;
-            while (nJogadores != 2 && nJogadores != 4)
-            {
-                printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
-                scanf("%i", &nJogadores);
-            }
+    case 4:
+        nJogadores = -1;
+        while (nJogadores != 2 && nJogadores != 4)
+        {
+            printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
+            scanf("%i", &nJogadores);
+        }
 
             CriaBaralho(&baralho);
             partida = CriaPartida(nJogadores, &baralho);
@@ -278,12 +277,11 @@ void ExibeMenuInicial(tPartida *partida)
             DestroiPartida(partida);
             break;
 
-        default:
-            while (op < 1 || op > 4)
-            {
-                printf("Opcao invalida. Tente novamente: ");
-                scanf("%d", &op);
-            }
+    default:
+        while (op < 1 || op > 4)
+        {
+            printf("Opcao invalida. Tente novamente: ");
+            scanf("%d", &op);
         }
     }
 }
