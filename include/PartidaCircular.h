@@ -48,7 +48,7 @@ tMao *Mao(tJogador *jogador);
 // Retorna a referência da mesa de uma partida
 tMonte *Mesa(tPartida *partida);
 // Retorna se a partida está em modo de desenvolvedor
-int *ModoDev(tPartida *partida);
+int ModoDev(tPartida *partida);
 // Retorna se o jogador é um humano ou computador
 int PC(tJogador *jogador);
 

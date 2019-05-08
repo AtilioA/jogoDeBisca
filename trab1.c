@@ -10,7 +10,6 @@ int main()
 {
     tPartida *partida;
     ExibeMenuInicial(partida);
-    DestroiPartida(partida);
 
     return 0;
 }

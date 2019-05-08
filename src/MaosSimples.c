@@ -8,11 +8,6 @@ void CriaMao(tMao *mao)
 {
     mao->carta = (tCarta *)malloc(nMAO * sizeof(tCarta));
     mao->n = 0;
-    if (mao->carta == NULL)
-    {
-        printf("ERRO! memoria insuficiente.\n");
-        return;
-    }
 }
 
 void LiberaMao(tMao *mao)

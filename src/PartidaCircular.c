@@ -62,21 +62,18 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
 
 void DestroiPartida(tPartida *partida)
 {
-    if (partida != NULL)
+    tJogador *atual, *lixo;
+    lixo = partida->inicial;
+    while ((QuantidadeJogadores(partida)) > 0)
     {
-        tJogador *atual, *lixo;
-        lixo = partida->inicial;
-        while ((QuantidadeJogadores(partida)) > 0)
-        {
-            atual = lixo->prox;
-            LiberaMao(&lixo->mao);
-            DestroiMonte(&lixo->pontos);
-            free(lixo);
-            lixo = atual;
-            partida->nJogadores--;
-        }
-    free(partida);
+        atual = lixo->prox;
+        LiberaMao(&lixo->mao);
+        DestroiMonte(&lixo->pontos);
+        free(lixo);
+        lixo = atual;
+        partida->nJogadores--;
     }
+free(partida);
 }
 
 void MoveCabeca(tPartida *partida, int n)
@@ -189,7 +186,7 @@ int PC(tJogador *jogador)
     return jogador->PC;
 }
 
-int *ModoDev(tPartida *partida)
+int ModoDev(tPartida *partida)
 {
     return partida->modoDev;
 }
