@@ -19,6 +19,7 @@ tJogador *InsereJogador(tJogador *jogador)
     novo = (tJogador *)malloc(sizeof(tJogador));
     CriaMao(&novo->mao);
     FMVazio(&novo->pontos);
+    // novo->pontos = CMVazio();
 
     novo->prox = jogador;
     return novo;
@@ -29,6 +30,7 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
     partida->nJogadores = 0;
     partida->inicial = (tJogador *)malloc(sizeof(tJogador));
     CriaMao(&partida->inicial->mao);
+    // partida->inicial->pontos = CMVazio();
     FMVazio(&partida->inicial->pontos);
     partida->nJogadores++;
     partida->inicial->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
@@ -97,6 +99,7 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano)
     {
         printf("Informe a posicao da carta que quer jogar: ");
         scanf("%i", &p);
+        while (getchar() != '\n');
     }
 
     selecionada = PegaCarta(p, *Mao(humano));

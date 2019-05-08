@@ -17,8 +17,13 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     clrscr();
     printf("Iniciando partida de %i jogadores...\n", nJogadores);
     printf("-----------------------------------\n");
-    printf("Humano, escolha qual jogador voce deseja ser [1 a %i]: ", nJogadores);
-    scanf("%i", &posHumano);
+    while (posHumano < 1 || posHumano > nJogadores)
+    {
+        printf("Humano, escolha qual jogador voce deseja ser [1 a %i]: ", nJogadores);
+        scanf("%i", &posHumano);
+        while (getchar() != '\n');
+    }
+
     if(posHumano > nJogadores)
     {
         printf("Voce escolheu um jogador que nao existe! Assista a um belo jogo de computadores da XUXA!\n");
@@ -50,6 +55,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
         {
             printf("Jogador %i, escolha uma posicao de 1 a %i para cortar do baralho: ", jogadorEsquerda, QuantidadeMonte(baralho));
             scanf("%i", &posCorte);
+            while (getchar() != '\n');
         }
     }
     else
@@ -125,8 +131,7 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
     {
         printf("\n------------------- OPCOES -------------------\n");
         printf("[1] - Jogar carta\n");
-        printf("[2] - Sair\n");
-        printf("[3] - Ajuda\n");
+        printf("[2] - Ajuda\n");
 
         if(ModoDev(partida))
         {
@@ -139,6 +144,7 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
 
         printf("\nDigite sua escolha: ");
         scanf("%d", &op);
+        while (getchar() != '\n');
         switch (op)
         {
         case 1:
@@ -146,11 +152,6 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
             break;
 
         case 2:
-            DestroiPartida(partida);
-            DestroiMonte(baralho);
-            exit(0);
-
-        case 3:
             clrscr();
             exibeAjuda();
             break;
@@ -205,7 +206,12 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
             if (ModoDev(partida))
             {
                 printf("Escolha uma posicao de 1 a %i para cortar: ", QuantidadeMonte(baralho));
-                scanf("%i", &p);
+                while (p < 1 || p > QuantidadeMonte(baralho))
+                {
+                    scanf("%i", &p);
+                    while (getchar() != '\n');
+                }
+
                 printf("Corte:\n");
                 tCarta trunfo = Corta(baralho, p);
                 ImprimeCarta(trunfo);
@@ -227,7 +233,7 @@ void ExibeMenuInicial(tPartida *partida)
 {
     tMonte baralho;
     int nJogadores = -1;
-    int op = 1;
+    int op = -1;
 
     while(op != 0)
     {
@@ -239,25 +245,30 @@ void ExibeMenuInicial(tPartida *partida)
         printf("[3] - Jogar em modo desenvolvedor {h a c k e r m a n}\n");
         printf("[0] - Sair\n\n");
         printf("Digite sua escolha: ");
-        scanf("%d", &op);
+        if (op == -1)
+        {
+            scanf("%i", &op);
+        }
 
         switch(op)
         {
         case 1:
+            op = -1;
             nJogadores = -1;
             while(nJogadores != 2 && nJogadores != 4)
             {
                 printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
                 scanf("%i", &nJogadores);
+                while (getchar() != '\n');
             }
 
-                CriaBaralho(&baralho);
-                partida = CriaPartida(nJogadores, &baralho);
-                partida->modoDev = 0;
-                Partida(partida, &baralho);
-                FinalizaPartida(partida);
-                DestroiPartida(partida);
-                break;
+            CriaBaralho(&baralho);
+            partida = CriaPartida(nJogadores, &baralho);
+            partida->modoDev = 0;
+            Partida(partida, &baralho);
+            FinalizaPartida(partida);
+            DestroiPartida(partida);
+            break;
 
         case 2:
             clrscr();
@@ -265,27 +276,31 @@ void ExibeMenuInicial(tPartida *partida)
             break;
 
         case 3:
+            op = -1;
             nJogadores = -1;
             while(nJogadores != 2 && nJogadores != 4)
             {
                 printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
                 scanf("%i", &nJogadores);
+                while (getchar() != '\n');
             }
 
-                CriaBaralho(&baralho);
-                partida = CriaPartida(nJogadores, &baralho);
-                partida->modoDev = 1;
-                Partida(partida, &baralho);
-                FinalizaPartida(partida);
-                DestroiPartida(partida);
+            CriaBaralho(&baralho);
+            partida = CriaPartida(nJogadores, &baralho);
+            partida->modoDev = 1;
+            Partida(partida, &baralho);
+            FinalizaPartida(partida);
+            DestroiPartida(partida);
             break;
 
         default:
-            while(op < 0 || op > 3)
+            while (op < 0 || op > 3)
             {
                 printf("Opcao invalida. Tente novamente: ");
                 scanf("%d", &op);
+                while (getchar() != '\n');
             }
+            clrscr();
         }
     }
 }

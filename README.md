@@ -17,4 +17,4 @@ Clone este repositório em seu computador utilizando ```git clone``` ou baixe co
 
 ```make```
 
-Depois, basta utilizar o comando ```make run``` no mesmo diretório ou executar o arquivo "bisca.exe".
+Depois, basta utilizar o comando ```make run``` no mesmo diretório ou executar o arquivo "bisca".
