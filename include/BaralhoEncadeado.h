@@ -19,7 +19,7 @@ typedef struct tCelula
 typedef struct
 {
     int tamanho;
-    tCelula *primeiro, *ultimo;
+    tCelula *cabeca, *ultimo;
 } tMonte;
 
 
@@ -28,6 +28,9 @@ typedef struct
 int QuantidadeMonte(tMonte *monte);
 // Retorna a carta de uma célula
 tCarta Carta(tCelula *celula);
+
+// Cria a lista (monte) vazia
+tMonte *CMVazio();
 
 // Faz a lista (monte) ficar vazia
 void FMVazio(tMonte *monte);

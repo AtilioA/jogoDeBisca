@@ -19,6 +19,7 @@ struct tJogador
     int PC;
     int indice;
     tMao mao;
+    // tMonte *pontos;
     tMonte pontos;
     tJogador *prox;
 };
