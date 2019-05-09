@@ -36,7 +36,7 @@ tCarta PC4Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
     OrdenaMao (mao);
     int pontos;
     tCarta jogada, mesa;
-    pontos = 0;
+    pontos = ContaPontos(monte);
 
     mesa = MaiorMesa (monte, corte);
     if (pontos >= 10) {
@@ -57,7 +57,7 @@ tCarta PC4Jogadores3 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
     OrdenaMao (mao);
     int pontos;
     tCarta jogada, mesa;
-    pontos = 0;
+    pontos = ContaPontos(monte);
 
     mesa = MaiorMesa (monte, corte);
     if (CartasIguais (mesa, CartaNoIndice (2, monte))) {
@@ -102,7 +102,7 @@ tCarta PC4Jogadores4 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
     OrdenaMao (mao);
     int pontos;
     tCarta jogada, mesa;
-    pontos = 0;
+    pontos = ContaPontos(monte);
 
     mesa = MaiorMesa (monte, corte);
     if ((CartasIguais (mesa, CartaNoIndice (3, monte))) || (CartasIguais (mesa, CartaNoIndice (1, monte)))) {

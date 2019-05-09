@@ -30,7 +30,6 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
     partida->nJogadores = 0;
     partida->inicial = (tJogador *)malloc(sizeof(tJogador));
     CriaMao(&partida->inicial->mao);
-    // partida->inicial->pontos = CMVazio();
     FMVazio(&partida->inicial->pontos);
     partida->nJogadores++;
     partida->inicial->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
