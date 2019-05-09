@@ -5,10 +5,11 @@
 #include "include/BaralhoEncadeado.h"
 #include "include/PartidaCircular.h"
 #include "include/Jogo.h"
+#include <stdio.h>
 
 int main()
 {
-    tPartida *partida;
+    tPartida *partida = NULL;
     ExibeMenuInicial(partida);
 
     return 0;

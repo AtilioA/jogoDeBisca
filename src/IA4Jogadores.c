@@ -1,5 +1,7 @@
 #include "../include/IA4Jogadores.h"
 #include "../include/Cartas.h"
+#include <sys/time.h>
+#include <stdlib.h>
 
 tCarta MaiorMesa (tMonte *mesa, tCarta corte) {
     int valorMaior, valorAux;

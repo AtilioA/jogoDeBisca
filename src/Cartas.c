@@ -1,4 +1,5 @@
 #include "../include/Cartas.h"
+#include <stdio.h>
 
 int CartaValida(tCarta carta)
 {

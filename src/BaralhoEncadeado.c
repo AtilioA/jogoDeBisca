@@ -2,6 +2,7 @@
 #include "../include/Cartas.h"
 #include "../include/MaosSimples.h"
 #include <sys/time.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 tMonte *CMVazio()

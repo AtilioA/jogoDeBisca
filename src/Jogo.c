@@ -5,6 +5,7 @@
 #include "../include/IA2Jogadores.h"
 #include "../include/IA4Jogadores.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
 #define FACIL 1
@@ -230,6 +231,8 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
             break;
         }
     }
+
+    return CartaVazia();
 }
 
 void ExibeMenuInicial(tPartida *partida)

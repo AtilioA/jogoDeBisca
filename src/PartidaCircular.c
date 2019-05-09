@@ -1,4 +1,5 @@
 #include "../include/PartidaCircular.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 void MandaPontosJogador(tJogador *vencedor, tMonte *mesa)

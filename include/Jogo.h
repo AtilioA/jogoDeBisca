@@ -35,4 +35,7 @@ void FinalizaPartida(tPartida *partida);
 // Limpa a tela do terminal (para Windows E Linux)
 void clrscr();
 
+// Imprime o estado da mesa (Corte e cartas na mesa)
+void ImprimeMesa(tPartida *partida);
+
 #endif
