@@ -11,16 +11,16 @@
 #include "BaralhoEncadeado.h"
 #include "PartidaCircular.h"
 
-tPartida *CriaPartida(int nJogadores, tMonte *baralho);
+tPartida *CriaPartida(int nJogadores);
 
 // Exibe o menu inicial do jogo com suas devidas opções
 void ExibeMenuInicial(tPartida *partida);
 
 // Exibe o menu que aparece durante o jogo e suas devidas opções
-tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano);
+tCarta MenuPartida(tPartida *partida, tJogador *humano);
 
 // Distribui cartas do baralho para todos os jogadores da partida, de forma que todos tenham 3 cartas na mão
-void DistribuiCartas(tPartida *partida, int n, tMonte *baralho);
+void DistribuiCartas(tPartida *partida, int n);
 
 // Exibe informações sobre o estado do jogo
 void exibeInfo(tPartida *partida);
@@ -28,7 +28,7 @@ void exibeInfo(tPartida *partida);
 // Imprime informações de ajuda para o jogador
 void exibeAjuda();
 
-void Partida(tPartida *partida, tMonte *baralho);
+void Partida(tPartida *partida);
 
 void FinalizaPartida(tPartida *partida);
 

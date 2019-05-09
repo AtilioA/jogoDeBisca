@@ -228,6 +228,22 @@ void ImprimeMonte(tMonte *monte)
     }
 }
 
+void DestroiMonteP(tMonte *monte)
+{
+    tCelula *anterior, *atual;
+
+    atual = monte->cabeca;
+    while (atual != NULL)
+    {
+        anterior = atual;
+        atual = atual->prox;
+        free(anterior);
+    }
+    monte->tamanho = 0;
+
+    free(monte);
+}
+
 void DestroiMonte(tMonte *monte)
 {
     tCelula *anterior, *atual;

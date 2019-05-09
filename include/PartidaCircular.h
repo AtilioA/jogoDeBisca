@@ -19,7 +19,7 @@ struct tJogador
     int PC;
     int indice;
     tMao mao;
-    tMonte pontos;
+    tMonte *pontos;
     tJogador *prox;
 };
 
@@ -30,7 +30,7 @@ typedef struct
     int modoDev;
     int dificuldade;
     tCarta corte;
-    // tMonte *monte;
+    tMonte *monte;
     tMonte *mesa;
     tJogador *inicial;
 } tPartida;

@@ -18,8 +18,7 @@ tJogador *InsereJogador(tJogador *jogador)
     tJogador *novo;
     novo = (tJogador *)malloc(sizeof(tJogador));
     CriaMao(&novo->mao);
-    FMVazio(&novo->pontos);
-    // novo->pontos = CMVazio();
+    novo->pontos = CMVazio();
 
     novo->prox = jogador;
     return novo;
@@ -30,7 +29,8 @@ void PreparaPartida(tPartida *partida, int nJogadores, int posHumano)
     partida->nJogadores = 0;
     partida->inicial = (tJogador *)malloc(sizeof(tJogador));
     CriaMao(&partida->inicial->mao);
-    FMVazio(&partida->inicial->pontos);
+    partida->inicial->pontos = CMVazio();
+    partida->monte = CMVazio();
     partida->nJogadores++;
     partida->inicial->indice = (nJogadores - QuantidadeJogadores(partida)) + 1;
 
@@ -69,12 +69,13 @@ void DestroiPartida(tPartida *partida)
     {
         atual = lixo->prox;
         LiberaMao(&lixo->mao);
-        DestroiMonte(&lixo->pontos);
+        DestroiMonteP(lixo->pontos);
         free(lixo);
         lixo = atual;
         partida->nJogadores--;
     }
-free(partida);
+    DestroiMonteP(partida->monte);
+    free(partida);
 }
 
 void MoveCabeca(tPartida *partida, int n)

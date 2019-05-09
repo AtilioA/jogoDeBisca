@@ -4,13 +4,14 @@
 #include "../include/BaralhoEncadeado.h"
 #include "../include/IA2Jogadores.h"
 #include "../include/IA4Jogadores.h"
+#include <locale.h>
 #include <stdio.h>
 #include <sys/time.h>
 
 #define FACIL 1
 #define DIFICIL 2
 
-tPartida *CriaPartida(int nJogadores, tMonte *baralho)
+tPartida *CriaPartida(int nJogadores)
 {
     struct timeval t; // Para gerar números aleatórios
     int primeiroJogador = 0, jogadorEsquerda = 0, posCorte = 0, posHumano = 0;
@@ -20,17 +21,11 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     clrscr();
     printf("Iniciando partida de %i jogadores...\n", nJogadores);
     printf("-----------------------------------\n");
-    while (posHumano < 1 || posHumano > nJogadores)
-    {
-        printf("Humano, escolha qual jogador voce deseja ser [1 a %i]: ", nJogadores);
-        scanf("%i", &posHumano);
-        while (getchar() != '\n');
-    }
-
-    if(posHumano > nJogadores)
-    {
-        printf("Voce escolheu um jogador que nao existe! Assista a um belo jogo de computadores da XUXA!\n");
-    }
+    // while (posHumano < 1 || posHumano > nJogadores)
+    // {
+        printf("【Ｈｕｍａｎｏ】, escolha qual jogador você deseja ser [1 a %i]: ", nJogadores);        scanf("%i", &posHumano);
+        // while (getchar() != '\n'); // Para validar a entrada
+    // }
 
     PreparaPartida(partida, nJogadores, posHumano);
 
@@ -42,7 +37,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     printf("Sera o jogador %i!\n\n", primeiroJogador);
 
     printf("Embaralhando...\n");
-    Embaralha(baralho);
+    Embaralha(partida->monte);
     //sleep(1);
 
     jogadorEsquerda = primeiroJogador - 1;
@@ -54,11 +49,11 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     //sleep(1);
     if (jogadorEsquerda == posHumano)
     {
-        while (posCorte < 1 || posCorte > QuantidadeMonte(baralho))
+        while (posCorte < 1 || posCorte > QuantidadeMonte(partida->monte))
         {
-            printf("Jogador %i, escolha uma posicao de 1 a %i para cortar do baralho: ", jogadorEsquerda, QuantidadeMonte(baralho));
+            printf("Jogador %i, escolha uma posicao de 1 a %i para cortar do partida->monte: ", jogadorEsquerda, QuantidadeMonte(partida->monte));
             scanf("%i", &posCorte);
-            while (getchar() != '\n');
+            while (getchar() != '\n'); // Para validar a entrada
         }
     }
     else
@@ -66,14 +61,14 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
         printf("O computador %i cortara aleatoriamente.\n", jogadorEsquerda);
         posCorte = (rand() % 40) + 1;
     }
-    trunfo = Corta(baralho, posCorte);
+    trunfo = Corta(partida->monte, posCorte);
     partida->corte = trunfo;
     printf("\nCARTA ESCOLHIDA COMO TRUNFO:\n");
     ImprimeCarta(trunfo);
     //sleep(1);
 
     printf("\nAgora, serao entregues as cartas aos jogadores...\n");
-    DistribuiCartas(partida, nMAO, baralho);
+    DistribuiCartas(partida, nMAO);
 
     printf("Jogador %i, voce sera o primeiro a jogar!\n", primeiroJogador);
     MoveCabeca(partida, primeiroJogador); // O primeiro jogador será o primeiro da lista de jogadores da partida
@@ -82,7 +77,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     return partida;
 }
 
-void DistribuiCartas(tPartida *partida, int n, tMonte *baralho)
+void DistribuiCartas(tPartida *partida, int n)
 {
     tJogador *jogadorAtual = partida->inicial;
     tCarta cartaAtual;
@@ -92,9 +87,9 @@ void DistribuiCartas(tPartida *partida, int n, tMonte *baralho)
     {
         for (int j = 0; j < n; j++)
         {
-            cartaAtual = (CartaNoIndice(1, baralho));
+            cartaAtual = (CartaNoIndice(1, partida->monte));
             maoJogador = Mao(jogadorAtual);
-            MonteParaMao(&cartaAtual, baralho, maoJogador);
+            MonteParaMao(&cartaAtual, partida->monte, maoJogador);
         }
         jogadorAtual = jogadorAtual->prox;
     }
@@ -115,7 +110,7 @@ void exibeAjuda()
  * estarão disponíveis apenas quando o jogo começar e em modo desenvolvedor
  */
 
-tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
+tCarta MenuPartida(tPartida *partida, tJogador *humano)
 {
     int op = 0, p = 0;
 
@@ -123,9 +118,9 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
     if(ModoDev(partida))
     {
         ImprimePontuacao(partida);
-        printf("Rodadas restantes: %i\n", QuantidadeMonte(baralho) / 2 + TamanhoMao(*Mao(humano)));
+        printf("Rodadas restantes: %i\n", QuantidadeMonte(partida->monte) / 2 + TamanhoMao(*Mao(humano)));
     }
-    printf("Cartas restantes no baralho: %i\n", QuantidadeMonte(baralho));
+    printf("Cartas restantes no baralho: %i\n", QuantidadeMonte(partida->monte));
     // printf("\nQuantidade de cartas na mao: %i\n", TamanhoMao(*Mao(humano)));
 
     /* Tirar o print da JogaCartaHumano e mostrar mão do jogador antes? */
@@ -147,7 +142,7 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
 
         printf("\nDigite sua escolha: ");
         scanf("%d", &op);
-        while (getchar() != '\n');
+        while (getchar() != '\n'); // Para validar a entrada
         switch (op)
         {
         case 1:
@@ -162,8 +157,8 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
         case 10:
             if (ModoDev(partida))
             {
-                printf("Cartas restantes no jogo (%i):\n", QuantidadeMonte(baralho));
-                ImprimeMonte(baralho);
+                printf("Cartas restantes no jogo (%i):\n", QuantidadeMonte(partida->monte));
+                ImprimeMonte(partida->monte);
                 ImprimeMesa(partida);
             }
             break;
@@ -198,9 +193,9 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
             if (ModoDev(partida))
             {
                 printf("\nEmbaralhando...\n");
-                Embaralha(baralho);
+                Embaralha(partida->monte);
                 printf("Embaralhado:\n");
-                ImprimeMonte(baralho);
+                ImprimeMonte(partida->monte);
                 ImprimeMesa(partida);
             }
             break;
@@ -208,15 +203,15 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
         case 14:
             if (ModoDev(partida))
             {
-                printf("Escolha uma posicao de 1 a %i para cortar: ", QuantidadeMonte(baralho));
-                while (p < 1 || p > QuantidadeMonte(baralho))
+                printf("Escolha uma posicao de 1 a %i para cortar: ", QuantidadeMonte(partida->monte));
+                while (p < 1 || p > QuantidadeMonte(partida->monte))
                 {
                     scanf("%i", &p);
-                    while (getchar() != '\n');
+                    while (getchar() != '\n'); // Para validar a entrada
                 }
 
                 printf("Corte:\n");
-                tCarta trunfo = Corta(baralho, p);
+                tCarta trunfo = Corta(partida->monte, p);
                 ImprimeCarta(trunfo);
                 partida->corte = trunfo;
                 //sleep(1);
@@ -234,7 +229,6 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
 
 void ExibeMenuInicial(tPartida *partida)
 {
-    tMonte baralho;
     int nJogadores = -1;
     int op = -1;
     int dificuldade = -1;
@@ -259,27 +253,27 @@ void ExibeMenuInicial(tPartida *partida)
         case 1:
             op = -1;
             nJogadores = -1;
-            while(nJogadores != 2 && nJogadores != 4)
+            while (nJogadores != 2 && nJogadores != 4)
             {
                 printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
                 scanf("%i", &nJogadores);
-                while (getchar() != '\n');
+                while (getchar() != '\n'); // Para validar a entrada
             }
 
-            while(dificuldade != 1 && dificuldade != 2)
+            while (dificuldade != 1 && dificuldade != 2)
             {
                 printf("Digite o modo da partira:\n");
-                printf("[1] - Facil\n");
+                printf("[1] - Intermerdiario\n");
                 printf("[2] - Dificilimo\n");
                 scanf("%i", &dificuldade);
-                while (getchar() != '\n');
+                while (getchar() != '\n'); // Para validar a entrada
             }
 
-            CriaBaralho(&baralho);
-            partida = CriaPartida(nJogadores, &baralho);
+            // CriaBaralho(partida->monte);
+            partida = CriaPartida(nJogadores);
             partida->dificuldade = dificuldade;
             partida->modoDev = 0;
-            Partida(partida, &baralho);
+            Partida(partida);
             FinalizaPartida(partida);
             DestroiPartida(partida);
             break;
@@ -296,14 +290,14 @@ void ExibeMenuInicial(tPartida *partida)
             {
                 printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
                 scanf("%i", &nJogadores);
-                while (getchar() != '\n');
+                while (getchar() != '\n'); // Para validar a entrada
             }
 
-            CriaBaralho(&baralho);
-            partida = CriaPartida(nJogadores, &baralho);
+            CriaBaralho(partida->monte);
+            partida = CriaPartida(nJogadores);
             partida->dificuldade = dificuldade;
             partida->modoDev = 1;
-            Partida(partida, &baralho);
+            Partida(partida);
             FinalizaPartida(partida);
             DestroiPartida(partida);
             break;
@@ -313,14 +307,14 @@ void ExibeMenuInicial(tPartida *partida)
             {
                 printf("Opcao invalida. Tente novamente: ");
                 scanf("%d", &op);
-                while (getchar() != '\n');
+                while (getchar() != '\n'); // Para validar a entrada
             }
             clrscr();
         }
     }
 }
 
-void Partida(tPartida *partida, tMonte *baralho)
+void Partida(tPartida *partida)
 { // Alguns //sleep() estão repetindo nos loops e deixando lento demais
     int jogadas, rodadas, vez, seteSaiu;
     tCarta corte, escolhida;
@@ -350,7 +344,7 @@ void Partida(tPartida *partida, tMonte *baralho)
             case HUMANO:
                 if(ModoDev(partida))
                 {
-                    escolhida = MenuPartida(partida, baralho, atual);
+                    escolhida = MenuPartida(partida, atual);
                 }
                 else
                 {
@@ -420,11 +414,11 @@ void Partida(tPartida *partida, tMonte *baralho)
         printf("O jogador %i venceu essa rodada!\n", IndiceJogador(vencedor));
 
         //sleep(1);
-        if(QuantidadeMonte(baralho) > 0)
+        if(QuantidadeMonte(partida->monte) > 0)
         {
             printf("Comprando cartas para os jogadores...\n");
         }
-        DistribuiCartas(partida, 1, baralho);
+        DistribuiCartas(partida, 1);
 
         rodadas++;
         DestroiMonte(Mesa(partida));
@@ -433,7 +427,7 @@ void Partida(tPartida *partida, tMonte *baralho)
         //sleep(1);
     }
 
-    DestroiMonte(baralho);
+    // DestroiMonte(partida->monte);
 }
 
 void FinalizaPartida(tPartida *partida)
