@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <sys/time.h>
 
+#define FACIL 1
+#define DIFICIL 2
+
 tPartida *CriaPartida(int nJogadores, tMonte *baralho)
 {
     struct timeval t; // Para gerar números aleatórios
@@ -234,6 +237,7 @@ void ExibeMenuInicial(tPartida *partida)
     tMonte baralho;
     int nJogadores = -1;
     int op = -1;
+    int dificuldade = -1;
 
     while(op != 0)
     {
@@ -262,8 +266,18 @@ void ExibeMenuInicial(tPartida *partida)
                 while (getchar() != '\n');
             }
 
+            while(dificuldade != 1 && dificuldade != 2)
+            {
+                printf("Digite o modo da partira:\n");
+                printf("[1] - Facil\n");
+                printf("[2] - Dificilimo\n");
+                scanf("%i", &dificuldade);
+                while (getchar() != '\n');
+            }
+
             CriaBaralho(&baralho);
             partida = CriaPartida(nJogadores, &baralho);
+            partida->dificuldade = dificuldade;
             partida->modoDev = 0;
             Partida(partida, &baralho);
             FinalizaPartida(partida);
@@ -287,6 +301,7 @@ void ExibeMenuInicial(tPartida *partida)
 
             CriaBaralho(&baralho);
             partida = CriaPartida(nJogadores, &baralho);
+            partida->dificuldade = dificuldade;
             partida->modoDev = 1;
             Partida(partida, &baralho);
             FinalizaPartida(partida);
@@ -309,7 +324,6 @@ void Partida(tPartida *partida, tMonte *baralho)
 { // Alguns //sleep() estão repetindo nos loops e deixando lento demais
     int jogadas, rodadas, vez, seteSaiu;
     tCarta corte, escolhida;
-    tMonte mesa;
     tJogador *atual, *vencedor;
 
     corte = Corte(partida);
@@ -322,8 +336,7 @@ void Partida(tPartida *partida, tMonte *baralho)
         atual = JogadorInicial(partida);
         vez = PC(atual);
 
-        FMVazio(&mesa);
-        partida->mesa = &mesa;
+        partida->mesa = CMVazio();
 
         while(jogadas < QuantidadeJogadores(partida))
         {
@@ -358,27 +371,34 @@ void Partida(tPartida *partida, tMonte *baralho)
             case IA:
                 printf("Jogador %i:\n", IndiceJogador(atual));
                 // //sleep(1);
-                if(jogadas == 0)
+                if(Dificuldade (partida) == DIFICIL)
                 {
-                    if(QuantidadeJogadores(partida) == 2)
-                        escolhida = PC2Jogadores1(Mao(atual), Mesa(partida), corte, &seteSaiu);
-                    else
-                        escolhida = PC4Jogadores1(Mao(atual), Mesa(partida), corte, &seteSaiu);
+                    if(jogadas == 0)
+                    {
+                        if(QuantidadeJogadores(partida) == 2)
+                            escolhida = PC2Jogadores1(Mao(atual), Mesa(partida), corte, &seteSaiu);
+                        else
+                            escolhida = PC4Jogadores1(Mao(atual), Mesa(partida), corte, &seteSaiu);
+                    }
+                    else if(jogadas == 1)
+                    {
+                        if(QuantidadeJogadores(partida) == 2)
+                            escolhida = PC2Jogadores2(Mao(atual), Mesa(partida), corte, &seteSaiu);
+                        else
+                            escolhida = PC4Jogadores2(Mao(atual), Mesa(partida), corte, &seteSaiu);
+                    }
+                    else if(jogadas == 2)
+                    {
+                        escolhida = PC4Jogadores3(Mao(atual), Mesa(partida), corte, &seteSaiu);
+                    }
+                    else if(jogadas == 3)
+                    {
+                        escolhida = PC4Jogadores4(Mao(atual), Mesa(partida), corte, &seteSaiu);
+                    }
                 }
-                else if(jogadas == 1)
+                else if (Dificuldade(partida) == FACIL)
                 {
-                    if(QuantidadeJogadores(partida) == 2)
-                        escolhida = PC2Jogadores2(Mao(atual), Mesa(partida), corte, &seteSaiu);
-                    else
-                        escolhida = PC4Jogadores2(Mao(atual), Mesa(partida), corte, &seteSaiu);
-                }
-                else if(jogadas == 2)
-                {
-                    escolhida = PC4Jogadores3(Mao(atual), Mesa(partida), corte, &seteSaiu);
-                }
-                else if(jogadas == 3)
-                {
-                    escolhida = PC4Jogadores4(Mao(atual), Mesa(partida), corte, &seteSaiu);
+                    escolhida = PCXJogadoresAleatorio(Mao(atual), Mesa(partida), corte, &seteSaiu);
                 }
                 jogadas++;
                 vez = PC(atual->prox);
@@ -408,6 +428,7 @@ void Partida(tPartida *partida, tMonte *baralho)
 
         rodadas++;
         DestroiMonte(Mesa(partida));
+        free(Mesa(partida));
 
         //sleep(1);
     }

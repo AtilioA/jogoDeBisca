@@ -122,7 +122,7 @@ void ImprimePontuacao(tPartida *partida)
         {
             if (atual != NULL)
             {
-                if (!atual->PC)
+                if (PC(atual) == HUMANO)
                 {
                     printf("Jogador %i (VOCE): %i pontos\n", IndiceJogador(atual), ContaPontos(Pontuacao(atual)));
                 }
@@ -140,7 +140,7 @@ tJogador *Vencedor(tPartida *partida)
 {
     for (int i = 0; i < QuantidadeJogadores(partida); i++)
     {
-        if (CartasIguais(MaiorMesa(Mesa(partida), Corte(partida)), CartaNoIndice(1, Mesa(partida))))
+        if (CartasIguais(MaiorMesa(Mesa(partida), Corte(partida)), CartaNoIndice((i + 1), Mesa(partida))))
         {
             MoveCabeca(partida, i);
         }
@@ -187,6 +187,11 @@ tMonte *Mesa(tPartida *partida)
 int PC(tJogador *jogador)
 {
     return jogador->PC;
+}
+
+int Dificuldade(tPartida *partida)
+{
+    return partida->dificuldade;
 }
 
 int ModoDev(tPartida *partida)

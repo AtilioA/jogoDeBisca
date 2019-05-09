@@ -18,8 +18,4 @@ tCarta PC4Jogadores3 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 // Retorna a melhor carta que a IA pode jogar quando ela é a quarta jogar na rodada
 tCarta PC4Jogadores4 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 
-/* MODO INTERMEDIÁRIO */
-// Retorna uma carta aleatória da mão para a IA jogar
-tCarta PC4JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
-
 #endif

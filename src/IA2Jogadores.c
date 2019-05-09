@@ -255,7 +255,7 @@ tCarta PC2Jogadores2(tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu)
     return (jogada);
 }
 
-tCarta PC2JogadoresAleatorio(tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu)
+tCarta PCXJogadoresAleatorio(tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu)
 {
     struct timeval t;
     int posAleatoria;

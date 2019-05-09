@@ -14,6 +14,6 @@ tCarta PC2Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 tCarta PC2Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 
 // Retorna uma carta aleatória para a IA jogar
-tCarta PC2JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
+tCarta PCXJogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 
 #endif

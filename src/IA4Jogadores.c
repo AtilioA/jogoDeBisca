@@ -142,7 +142,3 @@ tCarta PC4Jogadores4 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
         *seteSaiu = 1;
     return (jogada);
 }
-
-tCarta PC4JogadoresAleatorio (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu) {
-    return (PC2JogadoresAleatorio (mao, monte, corte, seteSaiu));
-}

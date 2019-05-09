@@ -19,7 +19,6 @@ struct tJogador
     int PC;
     int indice;
     tMao mao;
-    // tMonte *pontos;
     tMonte pontos;
     tJogador *prox;
 };
@@ -29,8 +28,9 @@ typedef struct
 {
     int nJogadores;
     int modoDev;
+    int dificuldade;
     tCarta corte;
-    //tMonte *monte;
+    // tMonte *monte;
     tMonte *mesa;
     tJogador *inicial;
 } tPartida;
@@ -52,6 +52,8 @@ tMonte *Mesa(tPartida *partida);
 int ModoDev(tPartida *partida);
 // Retorna se o jogador é um humano ou computador
 int PC(tJogador *jogador);
+
+int Dificuldade(tPartida *partida);
 
 // Manda as cartas da mesa para o jogador que ganhou a rodada (contando como pontuação deste)
 void MandaPontosJogador(tJogador *vencedor, tMonte *mesa);
