@@ -94,7 +94,7 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano)
 
     printf("\nCartas da sua mao:\n");
     ImprimeMao(*Mao(humano));
-    while (p < 1 || p > 3)
+    while (p < 1 || p > TamanhoMao(*Mao(humano)))
     {
         printf("Informe a posicao da carta que quer jogar: ");
         scanf("%i", &p);

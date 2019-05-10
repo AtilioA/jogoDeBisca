@@ -257,6 +257,7 @@ void ExibeMenuInicial(tPartida *partida)
         case 1:
             op = -1;
             nJogadores = -1;
+            dificuldade = -1;
             while (nJogadores != 2 && nJogadores != 4)
             {
                 printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
@@ -266,7 +267,7 @@ void ExibeMenuInicial(tPartida *partida)
 
             while (dificuldade != 1 && dificuldade != 2)
             {
-                printf("Digite o modo da partiDa:\n");
+                printf("Digite o modo da partida:\n");
                 printf("[1] - Facil\n");
                 printf("[2] - Dificilimo\n");
                 scanf("%i", &dificuldade);
@@ -290,10 +291,20 @@ void ExibeMenuInicial(tPartida *partida)
         case 3:
             op = -1;
             nJogadores = -1;
+            dificuldade = -1;
             while (nJogadores != 2 && nJogadores != 4)
             {
                 printf("Digite 2 para jogar em 2 jogadores\nou 4 para jogar em 4 jogadores: ");
                 scanf("%i", &nJogadores);
+                while (getchar() != '\n');
+            }
+
+            while (dificuldade != 1 && dificuldade != 2)
+            {
+                printf("Digite o modo da partiDa:\n");
+                printf("[1] - Facil\n");
+                printf("[2] - Dificilimo\n");
+                scanf("%i", &dificuldade);
                 while (getchar() != '\n');
             }
 
@@ -313,6 +324,7 @@ void ExibeMenuInicial(tPartida *partida)
                 scanf("%d", &op);
                 while (getchar() != '\n');
             }
+
             clrscr();
         }
     }
@@ -466,24 +478,24 @@ void FinalizaPartida(tPartida *partida)
         printf("\nO campeao foi o jogador %i!\n", IndiceJogador(atual));
         if (PC(atual) == HUMANO)
         {
-            printf("PARABENS, HUMAN0! Voce GANHOU do carro autonomo da UFES\n");
+            printf("PARABENS, HUMAN0! Voce GANHOU do carro autonomo da UFES!\n");
         }
         else
         {
-            printf("PARABENS, HUMAN0! Voce PERDEU pro laptop da Xuxa\n");
+            printf("PARABENS, HUMAN0! Voce PERDEU para o laptop da Xuxa!\n");
         }
 
         break;
 
     case 4:
-        printf("A dupla campea foram os jogadores %i e %i!\n", IndiceJogador(atual), IndiceJogador((atual->prox)->prox));
-        if ((PC(atual) == HUMANO) || (IndiceJogador((atual->prox)->prox) == HUMANO))
+        printf("A dupla campea foram os jogadores %i e %i!\n", IndiceJogador(atual), IndiceJogador(atual->prox->prox));
+        if ((PC(atual) == HUMANO) || (PC((atual->prox->prox)) == HUMANO))
         {
-            printf("PARABENS, HUMAN0! Voce GANHOU da frota de carros autonomos da UFES\n");
+            printf("PARABENS, HUMAN0! Voce GANHOU da frota de carros autonomos da UFES!\n");
         }
         else
         {
-            printf("PARABENS, HUMAN0! Voce perdeu para os laptops da Xuxa\n");
+            printf("PARABENS, HUMAN0! Voce perdeu para os laptops da Xuxa!\n");
         }
         break;
     }

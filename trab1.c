@@ -5,7 +5,7 @@
 #include "include/BaralhoEncadeado.h"
 #include "include/PartidaCircular.h"
 #include "include/Jogo.h"
-#include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
