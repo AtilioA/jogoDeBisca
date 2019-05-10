@@ -20,7 +20,6 @@ tJogador *InsereJogador(tJogador *jogador)
     novo = (tJogador *)malloc(sizeof(tJogador));
     CriaMao(&novo->mao);
     FMVazio(&novo->pontos);
-    // novo->pontos = CMVazio();
 
     novo->prox = jogador;
     return novo;
@@ -104,7 +103,7 @@ tCarta JogaCartaHumano(tPartida *partida, tJogador *humano)
 
     selecionada = PegaCarta(p, *Mao(humano));
     ImprimeCarta(selecionada);
-    MaoParaMonte(selecionada, Mesa(partida), Mao(humano));
+    MaoParaMonte(&selecionada, Mesa(partida), Mao(humano));
 
     return selecionada;
 }

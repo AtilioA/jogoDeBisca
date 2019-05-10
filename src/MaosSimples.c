@@ -10,6 +10,11 @@ void CriaMao(tMao *mao)
     mao->n = 0;
 }
 
+tCarta *Cartas(tMao mao)
+{
+    return mao.carta;
+}
+
 void LiberaMao(tMao *mao)
 {
     free(mao->carta);

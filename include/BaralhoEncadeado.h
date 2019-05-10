@@ -22,7 +22,6 @@ typedef struct
     tCelula *cabeca, *ultimo;
 } tMonte;
 
-
 /* Funções para acessar estrutura opaca */
 // Retorna a quantidade de cartas do monte
 int QuantidadeMonte(tMonte *monte);
@@ -75,7 +74,7 @@ tCarta CartaNoIndice(int pos, tMonte *monte);
 void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao);
 
 // Manda uma carta da mão para o monte
-void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao);
+void MaoParaMonte(tCarta *carta, tMonte *monte, tMao *mao);
 
 // Retorna o total de pontos das cartas de um monte
 int ContaPontos(tMonte *monte);

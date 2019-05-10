@@ -5,11 +5,11 @@
 
 #include "IA2Jogadores.h"
 
-// Retorna a carta que prevalece na mesa (essa pode ir para o PartidaCircular.c ou BaralhoEncadeado.c)
+// Retorna a carta que prevalece na mesa
 tCarta MaiorMesa (tMonte *mesa, tCarta corte);
 
 /* MODO DIFÍCIL */
-// Retorna a melhor carta que a IA pode jogar quando ela é a segunda a jogar na rodada
+// Retorna a melhor carta que a IA pode jogar quando ela é a primeira a jogar na rodada
 tCarta PC4Jogadores1 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);
 // Retorna a melhor carta que a IA pode jogar quando ela é a segunda a jogar na rodada
 tCarta PC4Jogadores2 (tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu);

@@ -23,14 +23,13 @@ struct tJogador
     tJogador *prox;
 };
 
-// Estrutura de dados que abstrai uma partida, que possui monte, número de jogadores, corte e jogador inicial da rodada
+// Estrutura de dados que abstrai uma partida, que possui mesa, número de jogadores, corte e jogador inicial da rodada
 typedef struct
 {
     int nJogadores;
     int modoDev;
     int dificuldade;
     tCarta corte;
-    // tMonte *monte;
     tMonte *mesa;
     tJogador *inicial;
 } tPartida;
@@ -52,7 +51,7 @@ tMonte *Mesa(tPartida *partida);
 int ModoDev(tPartida *partida);
 // Retorna se o jogador é um humano ou computador
 int PC(tJogador *jogador);
-
+// Retorna a dificuldade da partida
 int Dificuldade(tPartida *partida);
 
 // Manda as cartas da mesa para o jogador que ganhou a rodada (contando como pontuação deste)
@@ -61,12 +60,13 @@ void MandaPontosJogador(tJogador *vencedor, tMonte *mesa);
 // Inicializa uma variável tJogador e insere na lista de jogadores
 tJogador *InsereJogador(tJogador *jogador);
 
+// Inicializa uma varíavel partida
 void PreparaPartida(tPartida *partida, int nJogadores, int posHumano);
 
 // Libera os elementos da partida da memória, como jogadores, mesa, etc.
 void DestroiPartida(tPartida *partida);
 
-// Move um jogador por n posições e torna ele o primeiro jogador (???)
+// Muda o jogador inicial para o jogador n posições após o inicial
 void MoveCabeca(tPartida *partida, int n);
 
 // Imprime as pontuações de todos os jogadores da partida

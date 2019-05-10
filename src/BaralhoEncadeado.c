@@ -141,7 +141,8 @@ tCarta Corta(tMonte *monte, int pos)
             atual->prox = NULL;
             corte = Carta(monte->ultimo);
         }
-        if ((Valor(corte) == 'A') || (Valor(corte) == '7')) {
+        if ((Valor(corte) == 'A') || (Valor(corte) == '7'))
+        {
             pos = ((pos + 1) % QuantidadeMonte(monte)) + 1;
             corte = Corta(monte, pos);
         }
@@ -266,10 +267,10 @@ tCarta CartaNoIndice(int pos, tMonte *monte)
     return CartaVazia();
 }
 
-void MaoParaMonte(tCarta carta, tMonte *monte, tMao *mao)
+void MaoParaMonte(tCarta *carta, tMonte *monte, tMao *mao)
 {
-    RetiraDaMao(carta, mao);
-    Insere(carta, monte);
+    RetiraDaMao(*carta, mao);
+    Insere(*carta, monte);
 }
 
 void MonteParaMao(tCarta *carta, tMonte *monte, tMao *mao)

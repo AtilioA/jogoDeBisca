@@ -7,6 +7,7 @@
 
 #include "Cartas.h"
 
+// Estrutura de dados que abstrai uma mão, que possui cartas
 typedef struct
 {
     tCarta *carta;
@@ -16,6 +17,8 @@ typedef struct
 /* Funções para acessar estrutura opaca */
 // Retorna o tamanho da mão
 int TamanhoMao(tMao mao);
+// Retorna todas as cartas de uma mão
+tCarta *Cartas(tMao mao);
 // Retorna a carta de uma dada posição na mão
 tCarta PegaCarta(int p, tMao mao);
 

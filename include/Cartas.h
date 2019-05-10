@@ -3,7 +3,7 @@
 #ifndef CARTAS_H_
 #define CARTAS_H_
 
-// Define os valores possíveis para número e naipe das cartas do baralho
+// Valores possíveis para números e naipes das cartas da bisca
 #define VALORES "23456QJK7A"
 #define NAIPES "COPE"
 #define nVALORES 10
@@ -34,24 +34,21 @@ tCarta PreencheCarta(char valor, char naipe);
 tCarta CartaVazia();
 
 // Verifica se duas cartas são iguais
-int CartasIguais (tCarta carta1, tCarta carta2);
+int CartasIguais(tCarta carta1, tCarta carta2);
 
 // Imprime uma carta
 void ImprimeCarta(tCarta carta);
 
 // Verifica se uma carta é ponto alto (7 ou A)
-int PontoAlto (tCarta carta);
+int PontoAlto(tCarta carta);
 
 // Verifica se uma carta é ponto baixo (J, Q ou K)
-int PontoBaixo (tCarta carta);
+int PontoBaixo(tCarta carta);
 
 // Verifica se uma carta é trunfo
-int ETrunfo (tCarta carta, tCarta corte);
+int ETrunfo(tCarta carta, tCarta corte);
 
-// Retorna a pontuação de uma carta
+// Retorna a pontuação de uma carta de acordo com a pontuação da bisca
 int PontuacaoCarta(tCarta x);
-
-
-
 
 #endif
