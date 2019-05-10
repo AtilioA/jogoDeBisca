@@ -168,7 +168,6 @@ void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
         {
             i++;
             atual = atual->prox;
-            // printf("Buscando celula original...\n");
         }
         if (atual == NULL)
         {
@@ -181,11 +180,11 @@ void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
     }
     else
     {
-        printf("A posicao fica fora da monte.\n");
+        printf("A posicao fica fora do monte.\n");
     }
 }
 
-// Para cada célula da monte, gerar uma posição aleatória dentro da monte e mover a célula pra esta posição
+// Para cada célula do monte, gerar uma posição aleatória dentro do monte e mover a célula pra esta posição
 void Embaralha(tMonte *monte)
 {
     int posAleatoria = 0, tamMonte = QuantidadeMonte(monte);
@@ -209,7 +208,6 @@ void Embaralha(tMonte *monte)
                 posAleatoria = 1;
             }
 
-            // printf("%i, %i\n\n", tamMonte, posAleatoria);
             TrocaCarta(monte, anterior, posAleatoria);
         }
     }
