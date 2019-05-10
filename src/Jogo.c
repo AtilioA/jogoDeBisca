@@ -126,7 +126,7 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
 
     /* Tirar o print da JogaCartaHumano e mostrar mão do jogador antes? */
 
-    while (op != 1 && op != 2)
+    while (op != 1)
     {
         printf("\n------------------- OPCOES -------------------\n");
         printf("[1] - Jogar carta\n");
@@ -284,6 +284,7 @@ void ExibeMenuInicial(tPartida *partida)
             break;
 
         case 2:
+            op = -1;
             clrscr();
             exibeAjuda();
             break;
