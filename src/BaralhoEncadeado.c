@@ -156,7 +156,7 @@ void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
 {
     int i = 1;
 
-    if (pos < QuantidadeMonte(monte))
+    if (pos <= QuantidadeMonte(monte))
     {
         tCarta primeiraCarta = Carta(celula);
         tCarta segundaCarta = CartaNoIndice(pos, monte);
@@ -202,11 +202,12 @@ void Embaralha(tMonte *monte)
             anterior = atual;
             atual = atual->prox;
 
-            posAleatoria = (rand() % tamMonte);
-            if (posAleatoria < 1)
+            posAleatoria = rand() % (tamMonte + 1);
+            if (posAleatoria < 1) // Índice começa em 1
             {
                 posAleatoria = 1;
             }
+            printf("posAleatoria: %i\n", posAleatoria);
 
             TrocaCarta(monte, anterior, posAleatoria);
         }
@@ -245,10 +246,10 @@ void DestroiMonte(tMonte *monte)
 
 tCarta CartaNoIndice(int pos, tMonte *monte)
 {
-    if (pos >= 1) // 1 como sendo o primeiro elemento
+    if (pos >= 1) // 1 como sendo o primeiro elemento (não é índice de vetor)
     {
         int i = 1;
-        tCelula *atual = monte->cabeca->prox; // cabeça da lista
+        tCelula *atual = monte->cabeca->prox; // primeiro elemento da lista
 
         while (atual != NULL && i < pos)
         {

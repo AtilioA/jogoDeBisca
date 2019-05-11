@@ -119,12 +119,10 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
     if (ModoDev(partida))
     {
         ImprimePontuacao(partida);
-        printf("Rodadas restantes: %i\n", QuantidadeMonte(baralho) / 2 + TamanhoMao(*Mao(humano)));
     }
+    printf("Rodadas restantes: %i\n", QuantidadeMonte(baralho) / QuantidadeJogadores(partida) + TamanhoMao(*Mao(humano)));
     printf("Cartas restantes no baralho: %i\n", QuantidadeMonte(baralho));
-    // printf("\nQuantidade de cartas na mao: %i\n", TamanhoMao(*Mao(humano)));
-
-    /* Tirar o print da JogaCartaHumano e mostrar mão do jogador antes? */
+    printf("Quantidade de cartas na mao: %i\n", TamanhoMao(*Mao(humano)));
 
     while (op != 1)
     {
@@ -144,6 +142,7 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
         printf("\nDigite sua escolha: ");
         scanf("%d", &op);
         while (getchar() != '\n');
+
         switch (op)
         {
         case 1:
@@ -358,14 +357,7 @@ void Partida(tPartida *partida, tMonte *baralho)
             switch (vez)
             {
             case HUMANO:
-                if (ModoDev(partida))
-                {
-                    escolhida = MenuPartida(partida, baralho, atual);
-                }
-                else
-                {
-                    escolhida = JogaCartaHumano(partida, atual);
-                }
+                escolhida = MenuPartida(partida, baralho, atual);
 
                 if (jogadas == 0)
                 {
