@@ -1,7 +1,7 @@
 OBJ      := obj
 SRC      := src
 INC      := include
-CFLAGS   := -lm -g -Wall -O3
+CFLAGS   := -g -w -O3
 EXE 	 := bisca
 
 
@@ -38,7 +38,7 @@ run:
 	./$(EXE)
 
 # Compila e roda o programa
-voado: clean main run
+play: main run
 
 # Roda o programa com valgrind e flags úteis
 val:
