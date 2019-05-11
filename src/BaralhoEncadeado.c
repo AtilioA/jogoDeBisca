@@ -159,8 +159,7 @@ void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
     if (pos <= QuantidadeMonte(monte))
     {
         tCarta primeiraCarta = Carta(celula);
-        tCarta segundaCarta = CartaNoIndice(pos, monte);
-        celula->carta = segundaCarta;
+        tCarta segundaCarta;
 
         // Agora basta substituir a carta da célula no índice pela carta da célula de entrada
         tCelula *atual = monte->cabeca->prox;
@@ -175,6 +174,8 @@ void TrocaCarta(tMonte *monte, tCelula *celula, int pos)
         }
         else
         {
+            segundaCarta = Carta(atual);
+            celula->carta = segundaCarta;
             atual->carta = primeiraCarta;
         }
     }
@@ -192,16 +193,12 @@ void Embaralha(tMonte *monte)
     if (tamMonte != 0)
     {
         struct timeval t;
-        tCelula *anterior = NULL;
         tCelula *atual = monte->cabeca->prox;
 
         gettimeofday(&t, NULL);
         srand((unsigned int)t.tv_usec); // Inicializa o gerador de números aleatórios
         while (atual != NULL)
         {
-            anterior = atual;
-            atual = atual->prox;
-
             posAleatoria = rand() % (tamMonte + 1);
             if (posAleatoria < 1) // Índice começa em 1
             {
@@ -209,7 +206,9 @@ void Embaralha(tMonte *monte)
             }
             printf("posAleatoria: %i\n", posAleatoria);
 
-            TrocaCarta(monte, anterior, posAleatoria);
+            TrocaCarta(monte, atual, posAleatoria);
+
+            atual = atual->prox;
         }
     }
 }

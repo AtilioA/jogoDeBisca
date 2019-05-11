@@ -12,5 +12,24 @@ int main()
     tPartida *partida = NULL;
     ExibeMenuInicial(partida);
 
+    /*
+    tMonte baralho;
+    CriaBaralho(&baralho);
+    ImprimeMonte(&baralho);
+    printf("%i\n", QuantidadeMonte(&baralho));
+    printf("Embaralhando...\n");
+    Embaralha(&baralho);
+    ImprimeMonte(&baralho);
+    printf("%i\n", QuantidadeMonte(&baralho));
+    Embaralha(&baralho);
+
+    Embaralha(&baralho);
+    Embaralha(&baralho);
+    Embaralha(&baralho);
+    ImprimeMonte(&baralho);
+
+    DestroiMonte(&baralho);
+    */
+
     return 0;
 }
