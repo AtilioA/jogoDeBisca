@@ -29,7 +29,6 @@
 *.so
 *.so.*
 *.dylib
-.vscode/
 
 # Executables
 *.exe
@@ -348,7 +347,7 @@ $RECYCLE.BIN/
 *.tmp*/
 
 # Configurações do Visual Studio Code
-.vscode/*
+.vscode/
 # !.vscode/settings.json
 # !.vscode/tasks.json
 # !.vscode/launch.json
