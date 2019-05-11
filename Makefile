@@ -5,7 +5,7 @@ CFLAGS   := -g -w -O3
 EXE 	 := bisca
 
 
-# Cria objetos de todos os arquivos de código-fonte para então linká-los no executável final
+# Cria objetos de todos os arquivos de código-fonte para então linká-los no programa final
 main: $(OBJ)/Cartas.o $(OBJ)/MaosSimples.o $(OBJ)/BaralhoEncadeado.o $(OBJ)/IA2Jogadores.o $(OBJ)/IA4Jogadores.o $(OBJ)/PartidaCircular.o $(OBJ)/Jogo.o $(OBJ)/trab1.o
 	gcc $(OBJ)/*.o -o $(EXE) $(CFLAGS)
 
@@ -42,7 +42,8 @@ play: main run
 
 # Roda o programa com valgrind e flags úteis
 val:
-	valgrind --leak-check=full -v --show-leak-kinds=all --track-origins=yes --verbose ./$(EXE)
+	valgrind --leak-check=full -v --track-origins=yes \
+	--show-leak-kinds=all ./$(EXE)
 
 # Roda o programa com valgrind sem flags
 valzin:
