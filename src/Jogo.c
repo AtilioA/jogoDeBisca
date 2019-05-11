@@ -78,7 +78,7 @@ tPartida *CriaPartida(int nJogadores, tMonte *baralho)
     return partida;
 }
 
-void DistribuiCartas(tPartida *partida, int n, tMonte *baralho)
+void DistribuiCartas(tPartida *partida, int nCartas, tMonte *baralho)
 {
     tJogador *jogadorAtual = partida->inicial;
     tCarta cartaAtual;
@@ -86,7 +86,7 @@ void DistribuiCartas(tPartida *partida, int n, tMonte *baralho)
 
     for (int i = 1; i <= QuantidadeJogadores(partida); i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 1; j <= nCartas; j++)
         {
             cartaAtual = (CartaNoIndice(1, baralho));
             maoJogador = Mao(jogadorAtual);

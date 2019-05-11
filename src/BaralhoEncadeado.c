@@ -204,7 +204,6 @@ void Embaralha(tMonte *monte)
             {
                 posAleatoria = 1;
             }
-            printf("posAleatoria: %i\n", posAleatoria);
 
             TrocaCarta(monte, atual, posAleatoria);
 

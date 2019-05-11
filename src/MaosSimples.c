@@ -83,26 +83,6 @@ void RetiraDaMao(tCarta carta, tMao *mao)
     }
 }
 
-void RemoveDaMao(tCarta carta, tMao *mao, tCarta *cartaRetirada)
-{
-    if (!(EstaNaMao(Valor(carta), Naipe(carta), *mao)))
-        return;
-
-    for (int i = 0; i < (TamanhoMao(*mao)); i++)
-    {
-        if ((Valor(carta) == Valor(PegaCarta(i + 1, *mao))) &&
-            (Naipe(carta) == Naipe(PegaCarta(i + 1, *mao))))
-        {
-            *cartaRetirada = mao->carta[i];
-            mao->n--;
-            for (int j = i; j < (TamanhoMao(*mao)); j++)
-            {
-                mao->carta[j] = mao->carta[j + 1];
-            }
-        }
-    }
-}
-
 int TamanhoMao(tMao mao)
 {
     return (mao.n);
