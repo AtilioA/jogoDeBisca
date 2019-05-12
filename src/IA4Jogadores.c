@@ -180,7 +180,14 @@ tCarta PC4Jogadores4(tMao *mao, tMonte *monte, tCarta corte, int *seteSaiu)
             }
         }
     }
-    jogada = PegaCarta(1, *mao);
+    for (int i = 1; i <= TamanhoMao(*mao); i++) {
+        jogada = PegaCarta(i, *mao);
+        if (!((ETrunfo(jogada, corte)) && (Valor(jogada) == '7')))
+        {
+            MaoParaMonte(&jogada, monte, mao);
+            return (jogada);
+        }
+    }
     MaoParaMonte(&jogada, monte, mao);
     if ((ETrunfo(jogada, corte)) && (Valor(jogada) == '7'))
     {
