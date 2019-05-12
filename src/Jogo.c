@@ -134,7 +134,7 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
         {
             printf("[10] - Mostrar cartas do monte\n");
             printf("[11] - Mostrar cartas de todos os jogadores\n");
-            printf("[12] - Pontuacao de todos os jogadores\n");
+            printf("[12] - Mostrar pontuacao de todos os jogadores\n");
             printf("[13] - Embaralhar\n");
             printf("[14] - Cortar\n");
         }
@@ -358,19 +358,15 @@ void Partida(tPartida *partida, tMonte *baralho)
             {
             case HUMANO:
                 escolhida = MenuPartida(partida, baralho, atual);
+                //sleep(1);
 
-                if (jogadas == 0)
-                {
-                    //sleep(1);
-                }
                 clrscr();
-
                 jogadas++;
                 vez = PC(atual->prox);
                 break;
 
             case IA:
-                printf("Jogador %i:\n", IndiceJogador(atual));
+                printf("Carta do jogador %i:\n", IndiceJogador(atual));
                 //sleep(1);
                 if (Dificuldade(partida) == DIFICIL)
                 {
