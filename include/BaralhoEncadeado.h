@@ -37,7 +37,7 @@ void FMVazio(tMonte *monte);
 // Preenche o baralho com todas as cartas possíveis de um baralho padrão de bisca
 void CriaBaralho(tMonte *monte);
 
-// Verifica se o monte está vazia
+// Verifica se o monte está vazio
 int EstaVazio(tMonte *monte);
 
 // Cria uma célula vazia e retorna-a

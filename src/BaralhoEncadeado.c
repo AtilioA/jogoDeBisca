@@ -74,7 +74,9 @@ int ExisteCarta(tCarta x, tMonte *monte)
     while (atual != NULL)
     {
         if ((Valor(Carta(atual)) == Valor(x)) && (Naipe(Carta(atual)) == Naipe(x)))
+        {
             return 1;
+        }
         atual = atual->prox;
     }
     return 0;
