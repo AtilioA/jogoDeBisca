@@ -203,9 +203,10 @@ tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano)
         case 14:
             if (ModoDev(partida))
             {
-                printf("Escolha uma posicao de 1 a %i para cortar: ", QuantidadeMonte(baralho));
+                p = -1;
                 while (p < 1 || p > QuantidadeMonte(baralho))
                 {
+                    printf("Escolha uma posicao de 1 a %i para cortar: ", QuantidadeMonte(baralho));
                     scanf("%i", &p);
                     while (getchar() != '\n');
                 }
@@ -464,27 +465,41 @@ void FinalizaPartida(tPartida *partida)
     switch (QuantidadeJogadores(partida))
     {
     case 2:
-        printf("\nO campeao foi o jogador %i!\n", IndiceJogador(atual));
-        if (PC(atual) == HUMANO)
+        if (PJ1 != PJ2)
         {
-            printf("PARABENS, HUMAN0! Voce GANHOU do carro autonomo da UFES!\n");
+            printf("\nO campeao foi o jogador %i!\n", IndiceJogador(atual));
+            if (PC(atual) == HUMANO)
+            {
+                printf("PARABENS, HUMAN0! Voce GANHOU do carro autonomo da UFES!\n");
+            }
+            else
+            {
+                printf("PARABENS, HUMAN0! Voce PERDEU para o laptop da Xuxa!\n");
+            }
         }
         else
         {
-            printf("PARABENS, HUMAN0! Voce PERDEU para o laptop da Xuxa!\n");
+            printf("EMPATE! Nao houve campeao!\n");
         }
 
         break;
 
     case 4:
-        printf("A dupla campea foram os jogadores %i e %i!\n", IndiceJogador(atual), IndiceJogador(atual->prox->prox));
-        if ((PC(atual) == HUMANO) || (PC((atual->prox->prox)) == HUMANO))
+        if (PJ1 != PJ2)
         {
-            printf("PARABENS, HUMAN0! Voce GANHOU da frota de carros autonomos da UFES!\n");
+            printf("A dupla campea foram os jogadores %i e %i!\n", IndiceJogador(atual), IndiceJogador(atual->prox->prox));
+            if ((PC(atual) == HUMANO) || (PC((atual->prox->prox)) == HUMANO))
+            {
+                printf("PARABENS, HUMAN0! Voce GANHOU da frota de carros autonomos da UFES!\n");
+            }
+            else
+            {
+                printf("PARABENS, HUMAN0! Voce perdeu para os laptops da Xuxa!\n");
+            }
         }
         else
         {
-            printf("PARABENS, HUMAN0! Voce perdeu para os laptops da Xuxa!\n");
+            printf("EMPATE! Nao houve dupla campea!\n");
         }
         break;
     }
