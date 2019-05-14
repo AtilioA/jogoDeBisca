@@ -27,7 +27,7 @@ void exibeAjuda();
 tCarta MenuPartida(tPartida *partida, tMonte *baralho, tJogador *humano);
 
 // Imprime o estado da mesa (corte e cartas na mesa)
-void ImprimeMesa(tPartida *partida);
+void ImprimeMesa(tPartida *partida, tMonte *baralho);
 
 // Distribui cartas do baralho para todos os jogadores da partida, de forma que todos tenham 3 cartas na mão
 void DistribuiCartas(tPartida *partida, int n, tMonte *baralho);
